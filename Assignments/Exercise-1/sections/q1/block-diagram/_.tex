@@ -1,31 +1,26 @@
 \documentclass{standalone}
 \usepackage{tikz}
-\usetikzlibrary{shapes.geometric, arrows}
-
-\tikzstyle{block} = [rectangle, draw, fill=blue!20,
-    text centered, minimum height=3em, minimum width=6em]
-\tikzstyle{line} = [draw, -latex']
 
 \begin{document}
-\begin{tikzpicture}[node distance=2cm, auto]
+\begin{tikzpicture}
 
-    \node [block] (cpu) {CPU};
-    \node [block, below of=cpu] (rom) {ROM};
-    \node [block, below of=rom] (ram) {RAM};
-    \node [block, right of=cpu, node distance=4cm] (ports) {Peripheral Ports};
+    \draw[thick] (0, 0) rectangle (10, 6);
 
-    \path [line] (cpu) -- (rom);
-    \path [line] (rom) -- (ram);
-    \path [line] (cpu) -- (ports);
-    \path [line] (ports) -- (cpu);
+    \draw[thick] (0.5, 1) rectangle (3.5, 5);
+    \node at (2, 3) {Ports};
 
-    \node [block, right of=ports, node distance=4cm] (gpio) {GPIO Pins};
-    \node [block, above of=gpio, node distance=1.5cm] (i2c) {I2C};
-    \node [block, below of=gpio, node distance=1.5cm] (spi) {SPI};
+    \draw[thick] (4, 1) rectangle (8, 5);
+    \node at (6, 3) {CPU};
 
-    \path [line] (ports) -- (gpio);
-    \path [line] (ports) -- (i2c);
-    \path [line] (ports) -- (spi);
+    \draw[thick] (8.5, 4) rectangle (9.5, 5);
+    \node at (9, 4.5) {RAM};
+
+    \draw[thick] (8.5, 2.5) rectangle (9.5, 3.5);
+    \node at (9, 3) {ROM};
+
+    \draw[thick] (3.5, 3) -- (4, 3);
+    \draw[thick] (8, 4.5) -- (8.5, 4.5);
+    \draw[thick] (8, 3) -- (8.5, 3);
 
 \end{tikzpicture}
 \end{document}
