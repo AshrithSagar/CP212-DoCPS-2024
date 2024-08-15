@@ -2,7 +2,8 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{latexsym,amsfonts,amssymb,amsthm,amsmath}
-\usepackage{enumitem, geometry, graphicx}
+\usepackage{enumitem, geometry, graphicx, fancybox}
+
 \geometry{
   left=1in,
   right=1in,
@@ -10,15 +11,21 @@
   bottom=1in
 }
 
-\title{CP 212: Design of Cyber-Physical Systems}
-\author{Ashrith Sagar Yedlapalli}
-\date{\today}
-
 \begin{document}
 
-\maketitle
-\renewcommand{\baselinestretch}{1.5}
+\begin{center}
+  \doublebox{
+    \begin{minipage}{0.95\textwidth}
+      \centering
+      \textbf{Course:} CP 212: Design of Cyber-Physical Systems\\
+      \textbf{Assignment:} Exercise 1. Have fun \verb|:)|\\
+      \textbf{Student Name:} Ashrith Sagar Yedlapalli\\
+      \textbf{Due Date:} 19th August 2024
+    \end{minipage}
+  }
+\end{center}
 
+\renewcommand{\baselinestretch}{1.5}
 \input{sections/q1/_.tex}
 \input{sections/q2/_.tex}
 \input{sections/q3/_.tex}
