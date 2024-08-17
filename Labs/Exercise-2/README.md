@@ -14,43 +14,43 @@ Please feel free to use these or any other resource on the internet.
 We will implement a subset of many formats supported by printf.
 First, let us write down which formats we want to support:
 
-- %c: character
-- %s: string
-- %d: signed and unsigned integer in decimal format
-- %x: unsigned integer in hexadecimal format
-- %f: floating point number up to two decimal points
+- `%c`: character
+- `%s`: string
+- `%d`: signed and unsigned integer in decimal format
+- `%x`: unsigned integer in hexadecimal format
+- `%f`: floating point number up to two decimal points
 
-These are some basic formats that will help us in debugging; we will leave out complex ones like “%06d”, “%3.2f” etc.
+These are some basic formats that will help us in debugging; we will leave out complex ones like “`%06d`”, “`%3.2f`” etc.
 
 ## Defining interface
 
 Next, let us define the prototypes for these functions.
 
-- int myputchar(int c);
+- `int myputchar(int c);`
 
     This function prints the least significant byte of integer c as ASCII character.
 
     Returns the character printed or EOF on error.
 
-- int myputs(const char *s);
+- `int myputs(const char *s);`
 
     This function prints the string.
 
     Returns number of characters printed or EOF on error.
 
-- int myputd(int d);
+- `int myputd(int d);`
 
     This function prints a signed number in decimal format.
 
     Returns the number printed or EOF on error.
 
-- int myputx(int d);
+- `int myputx(int d);`
 
     This function prints a signed number in decimal format.
 
     Returns the number printed or EOF on error.
 
-- int myputf(float f);
+- `int myputf(float f);`
 
     This function prints a float up to two decimal points.
 
@@ -58,7 +58,7 @@ Next, let us define the prototypes for these functions.
 
 ## Implementation
 
-1. To implement myputchar, let us take a buffer, say 4kb in size, and write characters into the buffer using an index.
+1. To implement `myputchar`, let us take a buffer, say 4kb in size, and write characters into the buffer using an index.
     Later, we will replace this function to transmit characters over the serial port.
 
     ```C
@@ -81,9 +81,9 @@ Next, let us define the prototypes for these functions.
     }
     ```
 
-2. To print a string, we can simply scan the string and print characters one-by-one using myputchar.
+2. To print a string, we can simply scan the string and print characters one-by-one using `myputchar`.
 
-3. To print numbers, implement a common function called myputnum with the following interface:
+3. To print numbers, implement a common function called `myputnum` with the following interface:
 
     ```C
     int myputnum(unsigned int num, int base, int precision);
@@ -95,7 +95,7 @@ Next, let us define the prototypes for these functions.
     myputf  myputnum(num, 10, 2);
     ```
 
-    You may find myputnum-like functions in public-domain implementation of myprintf.
+    You may find `myputnum`-like functions in public-domain implementation of myprintf.
     However, you may find it easier to code afresh then porting them 😊
 
 ## Deliverables
