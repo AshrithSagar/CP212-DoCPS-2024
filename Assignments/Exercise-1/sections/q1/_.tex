@@ -14,14 +14,24 @@ Draw a block diagram of microbit board including the following: CPU, ROM, RAM an
     \centering
     \includegraphics{sections/q1/block-diagram/_}
     \caption{
-        Block diagram of the micro:bit v2 board
+        Simplified block diagram
+    }\label{fig:simple-block-diagram}
+\end{figure*}
+
+\begin{figure*}[htbp]
+    \centering
+    \includesvg[width=\linewidth]{sections/q1/images/v2-block.svg}
+    \caption{
+        Hardware block diagram of BBC micro:bit v2 board
     }\label{fig:block-diagram-microbit}
 \end{figure*}
 
 \newcommand{\hex}[1]{\texttt{#1}}
 \begin{enumerate}[label = (\alph*)]
-    \item The micro:bit v2 board uses the \textbf{Nordic Semiconductor nRF52833} System-on-Chip (SoC) as its CPU.\@
-    \item The micro:bit v2 board has \textbf{512 KB} of ROM.\@
+    \item The \texttt{micro:bit\;v2} board uses the \textbf{Nordic Semiconductor nRF52833} System-on-Chip (SoC) as its CPU, which is an ARM Cortex-M4, with 64 MHz maximum clock frequency, 128 KB RAM and 512 KB flash.
+          The exact part number is nRF52833-QIAA.\@
+    \item The \texttt{micro:bit\;v2} board has \textbf{512 KB} of ROM.\\
           The address range mapped to it is \hex{0x00000} to \hex{0x7FFFF}.
-    \item The micro:bit v2 board has \textbf{128 KB} of RAM. The address range mapped to it is \hex{0x20000000} to \hex{0x2001FFFF}.
+    \item The \texttt{micro:bit\;v2} board has \textbf{128 KB} of RAM.\\
+          The address range mapped to it is \hex{0x20000000} to \hex{0x2001FFFF}.
 \end{enumerate}
