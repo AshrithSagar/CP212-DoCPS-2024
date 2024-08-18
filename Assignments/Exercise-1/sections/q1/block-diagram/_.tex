@@ -1,4 +1,4 @@
-\documentclass{standalone}
+\documentclass[border=3pt]{standalone}
 \usepackage{tikz}
 
 \begin{document}
@@ -7,7 +7,7 @@
     \draw[thick] (0, 0) rectangle (10, 6);
 
     \draw[thick] (0.5, 1) rectangle (3.5, 5);
-    \node at (2, 3) {Ports};
+    \node at (2, 3) {Peripheral ports};
 
     \draw[thick] (4, 1) rectangle (8, 5);
     \node at (6, 3) {CPU};
@@ -21,6 +21,8 @@
     \draw[thick] (3.5, 3) -- (4, 3);
     \draw[thick] (8, 4.5) -- (8.5, 4.5);
     \draw[thick] (8, 3) -- (8.5, 3);
+
+    \node at (6, 5.5) {MicroController};
 
 \end{tikzpicture}
 \end{document}
