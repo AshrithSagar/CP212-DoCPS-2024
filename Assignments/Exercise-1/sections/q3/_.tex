@@ -4,12 +4,18 @@ Indicate the port on which these devices interface.
 
 \subsection*{Solution}
 
-\textbf{LED Matrix:}: Interfaces with the \texttt{micro:bit\;v2} board through GPIO pins configured in a matrix arrangement.
+\textbf{LED Matrix:}: Interfaces with the \texttt{micro:bit\;v2} board through GPIO pins configured in a matrix arrangement, as seen in Figure~\ref{fig:led-config}.
+
+\begin{table}[htbp]
+    \centering
+    \input{tables/led-matrix/_.tex}
+    \caption{Port configuration of the LED matrix}
+\end{table}
 
 \begin{figure*}[htbp]
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/images/led-config.png}
+    \includegraphics[width=0.95\linewidth]{figures/images/led-config.png}
     \caption{
-        LED Matrix Configuration
+        LED matrix configuration
     }\label{fig:led-config}
 \end{figure*}
