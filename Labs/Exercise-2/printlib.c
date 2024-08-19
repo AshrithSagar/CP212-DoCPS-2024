@@ -35,8 +35,52 @@ int myputs(const char *s)
     return rc;
 };
 
-int myputnum(unsigned int num, int base, int precision) {
-
+int myputnum(unsigned int num, int base, int precision)
+{
+    int rc;
+    char numbuf[BUFSIZ];
+    char hexdigits[] = "0123456789ABCDEF";
+    int numindex = 0;
+    if (num == 0) {
+        numbuf[numindex++] = '0';
+    } else {
+        while (num > 0) {
+            int digit = num % base;
+            char chardigit;
+            if (digit < 10) {
+                chardigit = digit + '0';
+            } else {
+                chardigit = hexdigits[digit];
+            }
+            numbuf[numindex++] = chardigit;
+            num /= base;
+        }
+    }
+    int left = 0;
+    int right = numindex - 1;
+    while (left < right)
+    {
+        char temp = numbuf[left];
+        numbuf[left] = numbuf[right];
+        numbuf[right] = temp;
+        left++;
+        right--;
+    }
+    for (int i = 0; i < numindex; i++) {
+        rc = myputchar(numbuf[i]);
+        if (rc == EOF) {
+            return rc;
+        }
+    }
+    if (precision > 0)
+    {
+        rc = myputchar('.');
+        if (rc == EOF) {
+            return rc;
+        }
+        // ...
+    }
+    return rc;
 };
 
 int myputd(int d)
