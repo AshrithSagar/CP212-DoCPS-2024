@@ -41,6 +41,10 @@ int myputnum(unsigned int num, int base, int precision)
     char numbuf[BUFSIZ];
     char hexdigits[] = "0123456789ABCDEF";
     int numindex = 0;
+    if (precision > 0) {
+        float fractional = num % 1;
+        num /= 1;
+    }
     if (num == 0) {
         numbuf[numindex++] = '0';
     } else {
@@ -78,7 +82,26 @@ int myputnum(unsigned int num, int base, int precision)
         if (rc == EOF) {
             return rc;
         }
-        // ...
+        char fracbuf[BUFSIZ];
+        int fracindex = 0;
+        while (precision > 0) {
+            int digit = (fractional * base) % 1;
+            fractional = fractional / 1;
+            char chardigit;
+            if (digit < 10) {
+                chardigit = digit + '0';
+            } else {
+                chardigit = hexdigits[digit];
+            }
+            fracbuf[fracindex++] = chardigit;
+            precision--;
+        }
+        for (int i = 0; i < fracindex; i++) {
+            rc = myputchar(fracbuf[i]);
+            if (rc == EOF) {
+                return rc;
+            }
+        }
     }
     return rc;
 };
