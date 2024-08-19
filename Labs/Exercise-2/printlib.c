@@ -39,14 +39,28 @@ int myputnum(unsigned int num, int base, int precision) {
 
 };
 
-int myputd(int d) {
-
+int myputd(int d)
+{
+    int rc;
+    if (d < 0)
+    {
+        rc = myputchar('-');
+        d = -d;
+    }
+    rc = myputnum(d, 10, 0);
+    return rc;
 };
 
-int myputx(int d) {
-
+int myputx(int x)
+{
+    int rc;
+    rc = myputnum(x, 16, 0);
+    return rc;
 };
 
-int myputf(float f) {
-
+int myputf(float f)
+{
+    int rc;
+    rc = myputnum(f, 10, 2);
+    return rc;
 };
