@@ -42,20 +42,28 @@ int myputnum(unsigned int num, int base, int precision)
     char hexdigits[] = "0123456789ABCDEF";
     int numindex = 0;
 
-    if (precision > 0) {
+    if (precision > 0)
+    {
         float fractional = num % 1;
         num /= 1;
     }
 
-    if (num == 0) {
+    if (num == 0)
+    {
         numbuf[numindex++] = '0';
-    } else {
-        while (num > 0) {
+    }
+    else
+    {
+        while (num > 0)
+        {
             int digit = num % base;
             char chardigit;
-            if (digit < 10) {
+            if (digit < 10)
+            {
                 chardigit = digit + '0';
-            } else {
+            }
+            else
+            {
                 chardigit = hexdigits[digit];
             }
             numbuf[numindex++] = chardigit;
@@ -76,9 +84,11 @@ int myputnum(unsigned int num, int base, int precision)
     }
 
     // Output
-    for (int i = 0; i < numindex; i++) {
+    for (int i = 0; i < numindex; i++)
+    {
         rc = myputchar(numbuf[i]);
-        if (rc == EOF) {
+        if (rc == EOF)
+        {
             return rc;
         }
     }
@@ -86,26 +96,33 @@ int myputnum(unsigned int num, int base, int precision)
     if (precision > 0)
     {
         rc = myputchar('.');
-        if (rc == EOF) {
+        if (rc == EOF)
+        {
             return rc;
         }
         char fracbuf[BUFSIZ];
         int fracindex = 0;
-        while (precision > 0) {
-            int digit = (int) (fractional * base);
+        while (precision > 0)
+        {
+            int digit = (int)(fractional * base);
             fractional -= digit;
             char chardigit;
-            if (digit < 10) {
+            if (digit < 10)
+            {
                 chardigit = digit + '0';
-            } else {
+            }
+            else
+            {
                 chardigit = hexdigits[digit];
             }
             fracbuf[fracindex++] = chardigit;
             precision--;
         }
-        for (int i = 0; i < fracindex; i++) {
+        for (int i = 0; i < fracindex; i++)
+        {
             rc = myputchar(fracbuf[i]);
-            if (rc == EOF) {
+            if (rc == EOF)
+            {
                 return rc;
             }
         }
