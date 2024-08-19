@@ -20,7 +20,22 @@ int myputchar(int c)
     return rc;
 }
 
-int myputs(const char *s) {
+int myputs(const char *s)
+{
+    int rc;
+    while (*s != '\0')
+    {
+        rc = myputchar(*s);
+        if (rc == EOF)
+        {
+            break;
+        }
+        s++;
+    }
+    return rc;
+};
+
+int myputnum(unsigned int num, int base, int precision) {
 
 };
 
