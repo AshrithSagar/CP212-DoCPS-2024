@@ -66,18 +66,16 @@ Next, let us define the prototypes for these functions.
     #define EOF -1 // also defined in stdio.h
     char mybuf[BUFSIZ];
     int myindex;
-    int myputchar(int c)
-    {
-    int rc; // return code
-    if (myindex < BUFSIZ) {
-    mybuf[myindex] = (char) c;
-    myindex++;
-    rc = c;
-    }
-    else {
-    rc = EOF;
-    }
-    return rc;
+    int myputchar(int c) {
+        int rc; // return code
+        if (myindex < BUFSIZ) {
+            mybuf[myindex] = (char) c;
+            myindex++;
+            rc = c;
+        } else {
+            rc = EOF;
+        }
+        return rc;
     }
     ```
 
