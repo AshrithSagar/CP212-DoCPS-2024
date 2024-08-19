@@ -41,10 +41,12 @@ int myputnum(unsigned int num, int base, int precision)
     char numbuf[BUFSIZ];
     char hexdigits[] = "0123456789ABCDEF";
     int numindex = 0;
+
     if (precision > 0) {
         float fractional = num % 1;
         num /= 1;
     }
+
     if (num == 0) {
         numbuf[numindex++] = '0';
     } else {
@@ -60,6 +62,8 @@ int myputnum(unsigned int num, int base, int precision)
             num /= base;
         }
     }
+
+    // Reverse the num buffer
     int left = 0;
     int right = numindex - 1;
     while (left < right)
@@ -70,12 +74,15 @@ int myputnum(unsigned int num, int base, int precision)
         left++;
         right--;
     }
+
+    // Output
     for (int i = 0; i < numindex; i++) {
         rc = myputchar(numbuf[i]);
         if (rc == EOF) {
             return rc;
         }
     }
+
     if (precision > 0)
     {
         rc = myputchar('.');
@@ -85,8 +92,8 @@ int myputnum(unsigned int num, int base, int precision)
         char fracbuf[BUFSIZ];
         int fracindex = 0;
         while (precision > 0) {
-            int digit = (fractional * base) % 1;
-            fractional = fractional / 1;
+            int digit = (int) (fractional * base);
+            fractional -= digit;
             char chardigit;
             if (digit < 10) {
                 chardigit = digit + '0';
