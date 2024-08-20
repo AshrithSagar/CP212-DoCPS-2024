@@ -36,25 +36,26 @@ Next, let us define the prototypes for these functions.
 
     This function prints the string.
 
-    Returns number of characters printed or EOF on error.
+    Returns the number of characters printed or EOF on error.
 
 - `int myputd(int d);`
 
     This function prints a signed number in decimal format.
 
-    Returns the number printed or EOF on error.
+    Returns the number of characters or EOF on error.
 
 - `int myputx(int d);`
 
-    This function prints a signed number in decimal format.
+    This function prints an unsigned number in hexadecimal format.
+    (For negative numbers, print 2’s complement. For example, -1 should be printed as 0xFFFFFFFF.)
 
-    Returns the number printed or EOF on error.
+    Returns the number of characters or EOF on error.
 
 - `int myputf(float f);`
 
     This function prints a float up to two decimal points.
 
-    Returns the number printed or EOF on error.
+    Returns the number of characters printed or EOF on error.
 
 ## Implementation
 
