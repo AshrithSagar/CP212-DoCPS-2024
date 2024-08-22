@@ -22,6 +22,7 @@ int myputchar(int c)
 int myputs(const char *s)
 {
     int rc;
+    int length = 0;
     while (*s != '\0')
     {
         rc = myputchar(*s);
@@ -30,8 +31,9 @@ int myputs(const char *s)
             break;
         }
         s++;
+        length++;
     }
-    return rc;
+    return length; // Return the number of characters printed
 };
 
 int myputnum(unsigned int num, int base, int precision)
