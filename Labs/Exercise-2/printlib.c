@@ -1,8 +1,4 @@
-#define BUFSIZ 4096
-#define EOF -1
-
-char mybuf[BUFSIZ];
-int myindex;
+#include "printlib.h"
 
 int myputchar(int c)
 {
@@ -41,10 +37,11 @@ int myputnum(unsigned int num, int base, int precision)
     char numbuf[BUFSIZ];
     char hexdigits[] = "0123456789ABCDEF";
     int numindex = 0;
+    float fractional;
 
     if (precision > 0)
     {
-        float fractional = num % 1;
+        fractional = num % 1;
         num /= 1;
     }
 
