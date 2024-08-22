@@ -46,27 +46,26 @@ int myputnum(unsigned int num, int base, int precision)
         num /= 1;
     }
 
+    // Handle the case where the number is 0 separately
     if (num == 0)
     {
         numbuf[numindex++] = '0';
     }
-    else
+
+    while (num > 0)
     {
-        while (num > 0)
+        int digit = num % base;
+        char chardigit;
+        if (digit < 10)
         {
-            int digit = num % base;
-            char chardigit;
-            if (digit < 10)
-            {
-                chardigit = digit + '0';
-            }
-            else
-            {
-                chardigit = hexdigits[digit];
-            }
-            numbuf[numindex++] = chardigit;
-            num /= base;
+            chardigit = digit + '0';
         }
+        else
+        {
+            chardigit = hexdigits[digit];
+        }
+        numbuf[numindex++] = chardigit;
+        num /= base;
     }
 
     // Reverse the num buffer
@@ -74,9 +73,11 @@ int myputnum(unsigned int num, int base, int precision)
     int right = numindex - 1;
     while (left < right)
     {
+        // Swap
         char temp = numbuf[left];
         numbuf[left] = numbuf[right];
         numbuf[right] = temp;
+
         left++;
         right--;
     }

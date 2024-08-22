@@ -5,9 +5,11 @@ int main(void)
     myputs("Hello, World!\n");
     myputchar('A');
     myputchar('\n');
-    myputd(123);
+    myputd(1230);
     myputchar('\n');
-    myputx(0x456ABC);
+    myputd(-456);
+    myputchar('\n');
+    myputx(0x789ABC);
     myputchar('\n');
     myputf(123.456);
 
