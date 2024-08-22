@@ -1,14 +1,17 @@
-#include <stdio.h>
+#ifndef PRINTLIB_H // Include Guard: Prevent multiple inclusions
+#define PRINTLIB_H
 
-// Already defined in stdio.h
-// #define BUFSIZ 4096
-// #define EOF -1
+#include <stdio.h> // For BUFSIZ and EOF
 
-char mybuf[BUFSIZ];
-int myindex;
+// Buffer to which the output is written to
+extern char mybuf[BUFSIZ];
+extern int myindex;
 
+// Function prototypes
 int myputchar(int c);
 int myputs(const char *s);
 int myputd(int d);
 int myputx(int d);
 int myputf(float f);
+
+#endif // PRINTLIB_H
