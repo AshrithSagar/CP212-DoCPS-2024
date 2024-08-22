@@ -24,7 +24,12 @@ int main(void)
     myputchar('\n');
 
     // Test printing a positive hexadecimal number, inputted in hexadecimal
-    myputx(0x789ABC);
+    // myputx(0x789ABC);
+    myputd(0xFF);
+    myputchar('\n');
+
+    // Test printing a negative hexadecimal number, inputted in hexadecimal
+    myputx(-0xDEF);
     myputchar('\n');
 
     // Test printing a positive hexadecimal number, inputted in decimal
