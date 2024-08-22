@@ -1,5 +1,6 @@
 #include "printlib.h"
 
+// Print a character
 int myputchar(int c)
 {
     int rc;
@@ -17,6 +18,7 @@ int myputchar(int c)
     return rc;
 }
 
+// Print a string (character array)
 int myputs(const char *s)
 {
     int rc;
@@ -52,16 +54,19 @@ int myputnum(unsigned int num, int base, int precision)
         numbuf[numindex++] = '0';
     }
 
+    // Base conversion
     while (num > 0)
     {
         int digit = num % base;
         char chardigit;
         if (digit < 10)
         {
+            // Handle decimal digits, using an ASCII offset
             chardigit = digit + '0';
         }
         else
         {
+            // Handle hexadecimal digits
             chardigit = hexdigits[digit];
         }
         numbuf[numindex++] = chardigit;
@@ -92,6 +97,7 @@ int myputnum(unsigned int num, int base, int precision)
         }
     }
 
+    // Handle floating point precision
     if (precision > 0)
     {
         rc = myputchar('.');
@@ -99,8 +105,10 @@ int myputnum(unsigned int num, int base, int precision)
         {
             return rc;
         }
+
         char fracbuf[BUFSIZ];
         int fracindex = 0;
+
         while (precision > 0)
         {
             int digit = (int)(fractional * base);
@@ -129,6 +137,7 @@ int myputnum(unsigned int num, int base, int precision)
     return rc;
 };
 
+// Print a signed integer
 int myputd(int d)
 {
     int rc;
@@ -141,6 +150,8 @@ int myputd(int d)
     return rc;
 };
 
+// Print a hexadecimal number.
+// Input number is converted to hexadecimal and printed, if necessary
 int myputx(int x)
 {
     int rc;
@@ -158,6 +169,7 @@ int myputx(int x)
     return rc;
 };
 
+// Print a floating point number, upto 2 decimal places
 int myputf(float f)
 {
     int rc;

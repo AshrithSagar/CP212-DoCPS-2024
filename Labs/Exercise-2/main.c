@@ -17,6 +17,7 @@ int main(void)
     myputx(255);
     myputchar('\n');
     myputf(123.45);
+    myputchar('\n');
 
     // Print the buffer for now. Will be replaced later
     printf("%s", mybuf);
