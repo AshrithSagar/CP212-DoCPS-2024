@@ -197,7 +197,14 @@ int myputf(float f)
     {
         fractional_part = -fractional_part;
     }
-    fractional_part = fractional_part * 100.0 + 0.005; // Shift decimal places
+    float shift = 0.5;
+    int precision = 2; // 2 decimal places by default
+    for (int i = 0; i < precision; i++)
+    {
+        shift *= 0.1;
+        fractional_part = fractional_part * 10.0; // Shift decimal places
+    }
+    fractional_part += shift; // Round off
     rc = myputnum((int)fractional_part, 10, 0);
 
     return rc;
