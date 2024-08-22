@@ -3,15 +3,16 @@
 int myputchar(int c)
 {
     int rc;
-    if (myindex < BUFSIZ)
+    if (myindex < BUFSIZ) // Check if the buffer is full
     {
-        mybuf[myindex] = (char)c;
-        myindex++;
+        // Add the character to the buffer and increment the index
+        mybuf[myindex++] = (char)c;
+
         rc = c;
     }
     else
     {
-        rc = EOF;
+        rc = EOF; // Return EOF if the buffer is full
     }
     return rc;
 }

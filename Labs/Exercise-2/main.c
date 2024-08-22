@@ -2,7 +2,6 @@
 
 int main(void)
 {
-
     myputs("Hello, World!\n");
     myputchar('A');
     myputchar('\n');
