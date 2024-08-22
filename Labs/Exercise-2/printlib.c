@@ -39,9 +39,9 @@ int myputs(const char *s)
 int myputnum(unsigned int num, int base, int precision)
 {
     int rc;
-    char numbuf[BUFSIZ];
-    char hexdigits[] = "0123456789ABCDEF";
-    int numindex = 0;
+    char numbuf[BUFSIZ];                   // Buffer to store the number
+    int numindex = 0;                      // Index to the buffer `numbuf`
+    char hexdigits[] = "0123456789ABCDEF"; // Map for Hexadecimal digits
     float fractional;
 
     if (precision > 0)
@@ -75,7 +75,7 @@ int myputnum(unsigned int num, int base, int precision)
         num /= base;
     }
 
-    // Reverse the num buffer
+    // Reverse the buffer `numbuf`
     int left = 0;
     int right = numindex - 1;
     while (left < right)
@@ -108,8 +108,8 @@ int myputnum(unsigned int num, int base, int precision)
             return rc;
         }
 
-        char fracbuf[BUFSIZ];
-        int fracindex = 0;
+        char fracbuf[BUFSIZ]; // Buffer to store the fractional part
+        int fracindex = 0;    // Index to the buffer `fracbuf`
 
         while (precision > 0)
         {
