@@ -35,8 +35,12 @@ int main(void)
     myputx(-1);
     myputchar('\n');
 
-    // Test printing a floating point number
+    // Test printing a positive floating point number
     myputf(123.45);
+    myputchar('\n');
+
+    // Test printing a negative floating point number
+    myputf(-67.89);
     myputchar('\n');
 
     // Print the buffer for now. Will be replaced later

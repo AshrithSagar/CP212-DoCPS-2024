@@ -171,10 +171,30 @@ int myputx(int x)
     return rc;
 };
 
-// Print a floating point number, upto 2 decimal places
+// Print a floating-point number up to 2 decimal places
 int myputf(float f)
 {
     int rc;
-    rc = myputnum(f, 10, 2);
+    int integer_part = (int)f;
+    float fractional_part = f - integer_part;
+
+    // Print the integer part
+    rc = myputd(integer_part);
+    if (rc == EOF)
+    {
+        return rc;
+    }
+
+    // Print the decimal point
+    rc = myputchar('.');
+    if (rc == EOF)
+    {
+        return rc;
+    }
+
+    // Print the fractional part with two decimal places
+    fractional_part *= 100; // Shift decimal places
+    rc = myputnum((unsigned int)fractional_part, 10, 0);
+
     return rc;
-};
+}
