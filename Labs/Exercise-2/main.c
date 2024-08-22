@@ -14,7 +14,9 @@ int main(void)
     myputchar('\n');
     myputx(0x789ABC);
     myputchar('\n');
-    myputx(255);
+    myputx(127);
+    myputchar('\n');
+    myputx(-1);
     myputchar('\n');
     myputf(123.45);
     myputchar('\n');
