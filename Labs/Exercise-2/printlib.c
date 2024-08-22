@@ -8,7 +8,7 @@ int myputchar(int c)
         // Add the character to the buffer and increment the index
         mybuf[myindex++] = (char)c;
 
-        rc = c;
+        rc = c; // Return the character printed
     }
     else
     {
