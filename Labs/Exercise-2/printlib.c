@@ -142,6 +142,16 @@ int myputd(int d)
 int myputx(int x)
 {
     int rc;
+    rc = myputchar('0');
+    if (rc == EOF)
+    {
+        return rc;
+    }
+    rc = myputchar('x');
+    if (rc == EOF)
+    {
+        return rc;
+    }
     rc = myputnum(x, 16, 0);
     return rc;
 };
