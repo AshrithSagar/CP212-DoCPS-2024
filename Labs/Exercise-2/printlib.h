@@ -4,8 +4,8 @@
 #include <stdio.h> // For BUFSIZ and EOF
 
 // Buffer to which the output is written to
-extern char mybuf[BUFSIZ];
-extern int myindex;
+char mybuf[BUFSIZ];
+int myindex = 0;
 
 // Function prototypes
 int myputchar(int c);
