@@ -46,8 +46,31 @@ int myputnum(unsigned int num, int base, int precision)
 
     if (precision > 0)
     {
-        fractional = num % 1;
-        num /= 1;
+        // Revert back to float
+        float *f_ptr = (float *)&num;
+        float f = *f_ptr;
+
+        // Handle negative floats
+        if (f < 0)
+        {
+            rc = myputchar('-');
+            if (rc == EOF)
+            {
+                return rc;
+            }
+            f = -f;
+        }
+
+        // Extract the fractional part
+        fractional = f - (unsigned int)f;
+        float shift = 0.5;
+        for (unsigned int i = 0; i < precision; i++)
+        {
+            shift /= base;
+            fractional *= base;
+        }
+        fractional += shift;
+        num = (unsigned int)f;
     }
 
     // Handle the case where the number is 0 separately
@@ -108,33 +131,7 @@ int myputnum(unsigned int num, int base, int precision)
             return rc;
         }
 
-        char fracbuf[BUFSIZ]; // Buffer to store the fractional part
-        int fracindex = 0;    // Index to the buffer `fracbuf`
-
-        while (precision > 0)
-        {
-            int digit = (int)(fractional * base);
-            fractional -= digit;
-            char chardigit;
-            if (digit < 10)
-            {
-                chardigit = digit + '0';
-            }
-            else
-            {
-                chardigit = hexdigits[digit];
-            }
-            fracbuf[fracindex++] = chardigit;
-            precision--;
-        }
-        for (int i = 0; i < fracindex; i++)
-        {
-            rc = myputchar(fracbuf[i]);
-            if (rc == EOF)
-            {
-                return rc;
-            }
-        }
+        myputnum((unsigned int)fractional, base, 0);
     }
     return rc;
 };
@@ -175,37 +172,8 @@ int myputx(int x)
 int myputf(float f)
 {
     int rc;
-    int integer_part = (int)f;
-    float fractional_part = f - integer_part;
-
-    // Print the integer part
-    rc = myputd(integer_part);
-    if (rc == EOF)
-    {
-        return rc;
-    }
-
-    // Print the decimal point
-    rc = myputchar('.');
-    if (rc == EOF)
-    {
-        return rc;
-    }
-
-    // Print the fractional part with two decimal places
-    if (fractional_part < 0)
-    {
-        fractional_part = -fractional_part;
-    }
-    float shift = 0.5;
-    int precision = 2; // 2 decimal places by default
-    for (int i = 0; i < precision; i++)
-    {
-        shift *= 0.1;
-        fractional_part = fractional_part * 10.0; // Shift decimal places
-    }
-    fractional_part += shift; // Round off
-    rc = myputnum((int)fractional_part, 10, 0);
-
+    unsigned int *uint_ptr = (unsigned int *)&f;
+    unsigned int uint_f = *uint_ptr;
+    rc = myputnum(uint_f, 10, 2);
     return rc;
 }
