@@ -193,8 +193,12 @@ int myputf(float f)
     }
 
     // Print the fractional part with two decimal places
+    if (fractional_part < 0)
+    {
+        fractional_part = -fractional_part;
+    }
     fractional_part = fractional_part * 100.0 + 0.005; // Shift decimal places
-    rc = myputnum((unsigned int)fractional_part, 10, 0);
+    rc = myputnum((int)fractional_part, 10, 0);
 
     return rc;
 }
