@@ -47,8 +47,7 @@ int myputnum(unsigned int num, int base, int precision)
     if (precision > 0)
     {
         // Revert back to float
-        float *f_ptr = (float *)&num;
-        float f = *f_ptr;
+        float f = *(float *)&num;
 
         // Handle negative floats
         if (f < 0)
@@ -172,8 +171,7 @@ int myputx(int x)
 int myputf(float f)
 {
     int rc;
-    unsigned int *uint_ptr = (unsigned int *)&f;
-    unsigned int uint_f = *uint_ptr;
+    unsigned int uint_f = *(unsigned int *)&f;
     rc = myputnum(uint_f, 10, 2);
     return rc;
 }
