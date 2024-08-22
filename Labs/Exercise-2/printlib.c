@@ -36,7 +36,7 @@ int myputs(const char *s)
     return length; // Return the number of characters printed
 };
 
-int myputnum(unsigned int num, int base, int precision)
+int myputnum(int num, int base, int precision)
 {
     int rc;
     char numbuf[BUFSIZ];                   // Buffer to store the number
@@ -140,7 +140,7 @@ int myputnum(unsigned int num, int base, int precision)
 };
 
 // Print a signed integer
-int myputd(int d)
+int myputd(signed int d)
 {
     int rc;
     if (d < 0)
@@ -153,8 +153,8 @@ int myputd(int d)
 };
 
 // Print a hexadecimal number.
-// Input number is converted to hexadecimal and printed, if necessary
-int myputx(int x)
+// Input unsigned number is converted to hexadecimal and printed, if necessary
+int myputx(unsigned int x)
 {
     int rc;
     rc = myputchar('0');
