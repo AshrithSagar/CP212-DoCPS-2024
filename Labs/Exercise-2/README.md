@@ -30,32 +30,32 @@ Next, let us define the prototypes for these functions.
 
     This function prints the least significant byte of integer c as ASCII character.
 
-    Returns the character printed or EOF on error.
+    Returns the character printed or `EOF` on error.
 
 - `int myputs(const char *s);`
 
     This function prints the string.
 
-    Returns the number of characters printed or EOF on error.
+    Returns the number of characters printed or `EOF` on error.
 
 - `int myputd(int d);`
 
     This function prints a signed number in decimal format.
 
-    Returns the number of characters or EOF on error.
+    Returns the number of characters or `EOF` on error.
 
 - `int myputx(int d);`
 
     This function prints an unsigned number in hexadecimal format.
-    (For negative numbers, print 2’s complement. For example, -1 should be printed as 0xFFFFFFFF.)
+    (For negative numbers, print 2’s complement. For example, -1 should be printed as `0xFFFFFFFF`.)
 
-    Returns the number of characters or EOF on error.
+    Returns the number of characters or `EOF` on error.
 
 - `int myputf(float f);`
 
     This function prints a float up to two decimal points.
 
-    Returns the number of characters printed or EOF on error.
+    Returns the number of characters printed or `EOF` on error.
 
 ## Implementation
 
@@ -64,7 +64,7 @@ Next, let us define the prototypes for these functions.
 
     ```C
     #define BUFSIZ 4096 // also defined in stdio.h
-    #define EOF -1 // also defined in stdio.h
+    #define `EOF` -1 // also defined in stdio.h
     char mybuf[BUFSIZ];
     int myindex;
     int myputchar(int c) {
@@ -74,7 +74,7 @@ Next, let us define the prototypes for these functions.
             myindex++;
             rc = c;
         } else {
-            rc = EOF;
+            rc = `EOF`;
         }
         return rc;
     }
@@ -88,10 +88,10 @@ Next, let us define the prototypes for these functions.
     int myputnum(unsigned int num, int base, int precision);
     Remember to send the output using myputchar.
     All the functions can use myputnum like this:
-    myputd zero or positive  myputnum(num, 10, 0);
-    myputd negaitive  myputchar('-'); myputnum(-num, 10, 0);
-    myputx  myputnum(num, 16, 0);
-    myputf  myputnum(num, 10, 2);
+    myputd zero or positive => myputnum(num, 10, 0);
+    myputd negaitive => myputchar('-'); myputnum(-num, 10, 0);
+    myputx => myputnum(num, 16, 0);
+    myputf => myputnum(num, 10, 2);
     ```
 
     You may find `myputnum`-like functions in public-domain implementation of myprintf.
