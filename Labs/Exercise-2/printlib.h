@@ -12,8 +12,8 @@ int myindex;
 // Function prototypes
 int myputchar(int c);
 int myputs(const char *s);
-int myputd(signed int d);
-int myputx(unsigned int x);
+int myputd(int d);
+int myputx(int d);
 int myputf(float f);
 
 #endif // PRINTLIB_H
