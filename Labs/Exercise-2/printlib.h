@@ -5,7 +5,7 @@
 
 // Buffer to which the output is written to
 char mybuf[BUFSIZ];
-int myindex = 0;
+int myindex;
 
 // Function prototypes
 int myputchar(int c);
