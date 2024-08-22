@@ -23,6 +23,10 @@ int main(void)
     myputd(-456);
     myputchar('\n');
 
+    // Test printing a positive decimal number with trailing zeros
+    myputd(7890);
+    myputchar('\n');
+
     // Test printing a positive hexadecimal number, inputted in hexadecimal
     // myputx(0x789ABC);
     myputd(0xFF);
