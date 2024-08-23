@@ -39,9 +39,8 @@ int myputs(const char *s)
 int myputnum(unsigned int num, int base, int precision)
 {
     int rc;
-    char numbuf[BUFSIZ];                   // Buffer to store the number
-    int numindex = 0;                      // Index to the buffer `numbuf`
-    char hexdigits[] = "0123456789ABCDEF"; // Map for Hexadecimal digits
+    char numbuf[BUFSIZ]; // Buffer to store the number
+    int numindex = 0;    // Index to the buffer `numbuf`
     float fractional;
 
     if (precision > 0)
@@ -62,7 +61,7 @@ int myputnum(unsigned int num, int base, int precision)
 
         // Extract the fractional part
         fractional = f - (unsigned int)f;
-        float shift = 0.5;
+        float shift = 0.5; // Rounding off
         for (unsigned int i = 0; i < precision; i++)
         {
             shift /= base;
@@ -81,19 +80,11 @@ int myputnum(unsigned int num, int base, int precision)
     // Base conversion
     while (num > 0)
     {
+        int offset;
         int digit = num % base;
-        char chardigit;
-        if (digit < 10)
-        {
-            // Handle decimal digits, using an ASCII offset
-            chardigit = digit + '0';
-        }
-        else
-        {
-            // Handle hexadecimal digits
-            chardigit = hexdigits[digit];
-        }
-        numbuf[numindex++] = chardigit;
+        offset = (digit < 10) ? '0' : 'A' - 10; // Handle char digit
+        digit = digit + offset;
+        numbuf[numindex++] = (char)digit;
         num /= base;
     }
 
@@ -116,6 +107,7 @@ int myputnum(unsigned int num, int base, int precision)
             return rc;
         }
 
+        // Call `myputnum` for the converted fractional part with precision 0
         myputnum((unsigned int)fractional, base, 0);
     }
     return rc;
