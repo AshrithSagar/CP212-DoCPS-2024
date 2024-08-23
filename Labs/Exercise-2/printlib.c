@@ -52,7 +52,6 @@ int myputnum(unsigned int num, int base, int precision)
             rc = myputchar('-');
             if (rc == EOF)
                 return rc;
-
             f = -f;
         }
 
@@ -70,9 +69,7 @@ int myputnum(unsigned int num, int base, int precision)
 
     // Handle the case where the number is 0 separately
     if (num == 0)
-    {
         numbuf[numindex++] = '0';
-    }
 
     // Base conversion
     while (num > 0)
@@ -120,7 +117,9 @@ int myputd(int d)
 };
 
 // Print a hexadecimal number.
-// Input number is converted to hexadecimal and printed, if necessary
+// Input number is converted to hexadecimal and printed, if necessary.
+// If number is negative, internally it represented in it's 2's complement form,
+// which can be accessed by type casting to unsigned int.
 int myputx(int x)
 {
     int rc;
