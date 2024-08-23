@@ -97,24 +97,10 @@ int myputnum(unsigned int num, int base, int precision)
         num /= base;
     }
 
-    // Reverse the buffer `numbuf`
-    int left = 0;
-    int right = numindex - 1;
-    while (left < right)
-    {
-        // Swap
-        char temp = numbuf[left];
-        numbuf[left] = numbuf[right];
-        numbuf[right] = temp;
-
-        left++;
-        right--;
-    }
-
     // Output
-    for (int i = 0; i < numindex; i++)
+    while (numindex > 0)
     {
-        rc = myputchar(numbuf[i]);
+        rc = myputchar(numbuf[--numindex]);
         if (rc == EOF)
         {
             return rc;
