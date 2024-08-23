@@ -27,9 +27,7 @@ int myputs(const char *s)
     {
         rc = myputchar(*s);
         if (rc == EOF)
-        {
             break;
-        }
         s++;
         length++;
     }
@@ -53,9 +51,8 @@ int myputnum(unsigned int num, int base, int precision)
         {
             rc = myputchar('-');
             if (rc == EOF)
-            {
                 return rc;
-            }
+
             f = -f;
         }
 
@@ -93,9 +90,7 @@ int myputnum(unsigned int num, int base, int precision)
     {
         rc = myputchar(numbuf[--numindex]);
         if (rc == EOF)
-        {
             return rc;
-        }
     }
 
     // Handle floating point precision
@@ -103,9 +98,7 @@ int myputnum(unsigned int num, int base, int precision)
     {
         rc = myputchar('.');
         if (rc == EOF)
-        {
             return rc;
-        }
 
         // Call `myputnum` for the converted fractional part with precision 0
         myputnum((unsigned int)fractional, base, 0);
@@ -133,14 +126,10 @@ int myputx(int x)
     int rc;
     rc = myputchar('0');
     if (rc == EOF)
-    {
         return rc;
-    }
     rc = myputchar('x');
     if (rc == EOF)
-    {
         return rc;
-    }
     rc = myputnum(x, 16, 0);
     return rc;
 };
