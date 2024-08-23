@@ -52,8 +52,5 @@ int main(void)
     myputf(-67.89);
     myputchar('\n');
 
-    // Print the buffer for now. Will be replaced later
-    printf("%s", mybuf);
-
     return 0;
 }
