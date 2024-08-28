@@ -8,9 +8,8 @@ char mybuf[BUFSIZ];
 int myindex;
 
 // Variables for unpacking formatted string
-char c_val;
 int i_val;
-float f_val;
+double f_val;
 
 // Print a formatted string
 int myprintf(const char *format, ...)
@@ -25,8 +24,8 @@ int myprintf(const char *format, ...)
         {
         // char, decimal, hexadecimal, float
         case 'c':
-            c_val = (char)va_arg(args, int);
-            rc = myputchar(c_val);
+            i_val = (char)va_arg(args, int);
+            rc = myputchar(i_val);
             break;
         case 'd':
             i_val = (int)va_arg(args, int);
