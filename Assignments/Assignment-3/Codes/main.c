@@ -3,10 +3,6 @@
 // Test all the myput* functions
 int main(void)
 {
-    // Test printing a normal string
-    myprintf("s", "Hello, World!");
-    myprintf("c", '\n');
-
     // Test printing a single character
     myprintf("c", 'A');
     myprintf("c", '\n');

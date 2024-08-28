@@ -5,45 +5,43 @@
 char c_val;
 int i_val;
 float f_val;
-char *p_val;
 
 // Print a formatted string
 int myprintf(const char *format, ...)
 {
-    char *p = format;
+    int rc;
+    const char *p = format;
     va_list args;
     va_start(args, format);
     while (*p != '\0')
     {
         switch (*p)
         {
-        // char, string, decimal, hexadecimal, float
+        // char, decimal, hexadecimal, float
         case 'c':
             c_val = (char)va_arg(args, int);
-            myputchar(c_val);
-            break;
-        case 's': // char array
-            c_val = (char *)va_arg(args, int *);
-            myputs(c_val);
+            rc = myputchar(c_val);
             break;
         case 'd':
             i_val = (int)va_arg(args, int);
-            myputd(i_val);
+            rc = myputd(i_val);
             break;
         case 'x':
             i_val = (int)va_arg(args, int);
-            myputx(i_val);
+            rc = myputx(i_val);
             break;
         case 'f':
             f_val = (float)va_arg(args, double);
-            myputf(f_val);
+            rc = myputf(f_val);
             break;
         default:
+            rc = EOF;
             break;
         }
         p++;
     }
     va_end(args);
+    return rc;
 }
 
 // Print a character
