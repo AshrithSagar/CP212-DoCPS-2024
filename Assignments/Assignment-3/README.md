@@ -21,7 +21,7 @@ myprintf("Area of the circle: r = %f, a = %f\n", r, a);
 
 `myprintf` is a variable-argument function, which accepts a format string and a number of arguments according to the format string.
 
-Attached file 'varargs.pdf' contains a note with a sample program on how to implement varargs functions, which could be a good starting point for `myprintf`.
+Attached file ['varargs.pdf'](varargs.md) contains a note with a sample program on how to implement varargs functions, which could be a good starting point for `myprintf`.
 
 > Please note: The objectives of this exercise are (1) to understand various data formats and (2) write our own `printf` function so that it will be helpful in debugging later.
 So it’s okay if you don’t understand how varargs functions work now – until we take a deeper look at the compilation process and how argument passing works.
