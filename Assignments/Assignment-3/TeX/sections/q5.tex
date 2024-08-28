@@ -3,3 +3,20 @@
 What does FPU do?
 
 \subsection*{Solution}
+
+A floating-point unit (FPU), also called math co-processor, is a hardware unit dedicated to perform floating point calculations effectively and efficiently.
+Traditionally, floating point operations were carried out using libraries, i.e., in software.
+An FPU tries to offload these operations from the CPU to improve performance, and does it in hardware.
+FPUs support floating point addition, subtraction, multiplication, division, and other operations.
+Now-a-days, FPUs are usually integrated into the CPU itself, and are not separate units.
+
+When a CPU is executing a program and requires a floating point operation to be carried out, there are three possible ways to perform it:
+\begin{enumerate}[itemsep=3pt,parsep=0pt,topsep=5pt,partopsep=0pt]
+    \item In software, by using a floating point emulator / library.
+    \item In hardware, using add-on FPUs.
+    \item In hardware, using integrated FPUs.
+\end{enumerate}
+
+FPUs are quite fast and efficient compared to the software alternatives.
+One limitation of FPUs is that they cannot perform arbitrary-precision arithmetic on their own, i.e., they only support a finite number of operations due to hardware limitations.
+Using libraries, it is possible to perform arbitrary-precision arithmetic, if need be.
