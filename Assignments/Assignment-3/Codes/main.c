@@ -48,8 +48,5 @@ int main(void)
     myprintf("%f", -67.89);
     myprintf("%c", '\n');
 
-    // Print the buffer for now. Will be replaced later
-    printf("%s", mybuf);
-
     return 0;
 }
