@@ -48,5 +48,15 @@ int main(void)
     myprintf("%f", -67.89);
     myprintf("%c", '\n');
 
+    // Examples
+    int n = 123;
+    int x = 0xABC;
+    double r = 3.14;
+    double a = 3.14 * r * r;
+    myprintf("Hello, world!\n");
+    myprintf("n = %d, x = %x\n", n, x);
+    myprintf("ASCII code for %c is %d\n", 'A', 'A');
+    myprintf("Area of the circle: r = %f, a = %f\n", r, a);
+
     return 0;
 }
