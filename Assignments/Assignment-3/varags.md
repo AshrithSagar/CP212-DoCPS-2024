@@ -21,24 +21,41 @@ These are defined in the header file `<stdarg.h>`.
 
 ```c
 #include <stdarg.h>
+
 void printNumbers(char *type_string, ...);
-int main() {
-printNumbers("fcfd", 3.14, '@', 77.0, 99); return 0;
+int main()
+{
+    printNumbers("fcfd", 3.14, '@', 77.0, 99);
+    return 0;
 }
 char c_val;
 int i_val;
 float f_val;
 char *p_val;
-void printNumbers(char *type_string, ...) { char *p = type_string;
-va_list args;
-va_start(args, type_string); while (*p != '\0')
+void printNumbers(char *type_string, ...)
 {
-switch (*p) {
-// float, char, float, int
-case 'c': c_val = (char) va_arg(args, int); break; case 'd': i_val = (int) va_arg(args, int); break;
-case 'f': f_val = (float) va_arg(args, double); break; default: break;
-}
-p++; }
+    char *p = type_string;
+    va_list args;
+    va_start(args, type_string);
+    while (*p != '\0')
+    {
+        switch (*p)
+        {
+        // float, char, float, int
+        case 'c':
+            c_val = (char)va_arg(args, int);
+            break;
+        case 'd':
+            i_val = (int)va_arg(args, int);
+            break;
+        case 'f':
+            f_val = (float)va_arg(args, double);
+            break;
+        default:
+            break;
+        }
+        p++;
+    }
     va_end(args);
 }
 ```
