@@ -33,7 +33,8 @@ So it’s okay if you don’t understand how varargs functions work now – unti
 - `printlib.c` containing implementation printf and of all the `put*` functions as mentioned above.
 
 - `printlib.h` containing prototypes of the interface functions.
-    A screenshot of the output as shown below:
+
+- A screenshot of the output as shown below:
 
     ![Memory window](TeX/figures/images/memory-window.png)
 
