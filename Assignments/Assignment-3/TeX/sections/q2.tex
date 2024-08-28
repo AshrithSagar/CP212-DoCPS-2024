@@ -3,3 +3,12 @@
 Convert to hex: -100, -200, -400, -800
 
 \subsection*{Solution}
+
+Negative numbers are represented in their 2's complement form internally.
+
+\begin{align*}
+    -100_{10} & = -6 \cdot 16^1 - 4 \cdot 16^0                & \implies \hex{0xFFFF\,FF9C} \\
+    -200_{10} & = -12 \cdot 16^1 - 8 \cdot 16^0               & \implies \hex{0xFFFF\,FF38} \\
+    -400_{10} & = -1 \cdot 16^2 - 9 \cdot 16^1 - 0 \cdot 16^0 & \implies \hex{0xFFFF\,FE70} \\
+    -800_{10} & = -3 \cdot 16^2 - 2 \cdot 16^1 - 0 \cdot 16^0 & \implies \hex{0xFFFF\,FCE0}
+\end{align*}
