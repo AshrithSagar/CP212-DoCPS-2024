@@ -1,9 +1,56 @@
-#define BUFSIZ  1024
+#include <stdarg.h>
+
+#define BUFSIZ 1024
 #define EOF (-1)
 
 // Buffer to which the output is written to
 char mybuf[BUFSIZ];
 int myindex;
+
+// Variables for unpacking formatted string
+char c_val;
+int i_val;
+float f_val;
+char *p_val;
+
+// Print a formatted string
+int myprintf(const char *format, ...)
+{
+    char *p = format;
+    va_list args;
+    va_start(args, format);
+    while (*p != '\0')
+    {
+        switch (*p)
+        {
+        // char, string, decimal, hexadecimal, float
+        case 'c':
+            c_val = (char)va_arg(args, int);
+            myputchar(c_val);
+            break;
+        case 's': // char array
+            c_val = (char *)va_arg(args, int *);
+            myputs(c_val);
+            break;
+        case 'd':
+            i_val = (int)va_arg(args, int);
+            myputd(i_val);
+            break;
+        case 'x':
+            i_val = (int)va_arg(args, int);
+            myputx(i_val);
+            break;
+        case 'f':
+            f_val = (float)va_arg(args, double);
+            myputf(f_val);
+            break;
+        default:
+            break;
+        }
+        p++;
+    }
+    va_end(args);
+}
 
 // Print a character
 int myputchar(int c)
