@@ -1,11 +1,5 @@
 #include <stdarg.h>
-
-#define BUFSIZ 1024
-#define EOF (-1)
-
-// Buffer to which the output is written to
-char mybuf[BUFSIZ];
-int myindex;
+#include "printlib.h"
 
 // Variables for unpacking formatted string
 char c_val;
