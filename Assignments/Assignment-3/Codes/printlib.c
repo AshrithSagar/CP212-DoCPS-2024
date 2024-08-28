@@ -20,28 +20,43 @@ int myprintf(const char *format, ...)
     va_start(args, format);
     while (*p != '\0')
     {
-        switch (*p)
+        // Check for the format specifier
+        if (*p == '%')
         {
-        // char, decimal, hexadecimal, float
-        case 'c':
-            i_val = (char)va_arg(args, int);
-            rc = myputchar(i_val);
-            break;
-        case 'd':
-            i_val = (int)va_arg(args, int);
-            rc = myputd(i_val);
-            break;
-        case 'x':
-            i_val = (int)va_arg(args, int);
-            rc = myputx(i_val);
-            break;
-        case 'f':
-            f_val = (float)va_arg(args, double);
-            rc = myputf(f_val);
-            break;
-        default:
-            rc = EOF;
-            break;
+            p++;
+            if (*p == '\0')
+            {
+                break;
+            }
+
+            // Handle the format specifiers
+            switch (*p)
+            {
+            // char, decimal, hexadecimal, float
+            case 'c':
+                i_val = (char)va_arg(args, int);
+                rc = myputchar(i_val);
+                break;
+            case 'd':
+                i_val = (int)va_arg(args, int);
+                rc = myputd(i_val);
+                break;
+            case 'x':
+                i_val = (int)va_arg(args, int);
+                rc = myputx(i_val);
+                break;
+            case 'f':
+                f_val = (float)va_arg(args, double);
+                rc = myputf(f_val);
+                break;
+            default:
+                rc = EOF;
+                break;
+            }
+        }
+        else
+        {
+            rc = myputchar(*p); // Print the character as it is
         }
         p++;
     }
