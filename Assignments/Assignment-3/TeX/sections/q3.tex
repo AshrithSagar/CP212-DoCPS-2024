@@ -8,12 +8,21 @@ Explain it theoretically.
 \subsection*{Solution}
 
 Floating-point numbers are stored in the memory according to the IEEE 754 standard.
-According to it, the variable \texttt{float x = 1.0} is stored internally as following:
+According to it, the variable \texttt{float x = 1.0} is stored internally as shown below in Figure~\ref{fig:q3}.
 
 \begin{figure*}[htb]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/q3/_}
     \caption{
-        Memory representation of \texttt{float x = 1.0}
-    }
+        Memory representation of \texttt{float x = 1.0} according to the IEEE 754 standard.
+    }\label{fig:q3}
 \end{figure*}
+
+For 32-bit processors, the standard specifies the following format for single-precision floating-point numbers, with the MSB bit for the sign, the next 8 bits for the exponent and the next 23 bits for the mantissa.
+The sign bit is 0 for positive numbers and 1 for negative numbers.
+The exponent is stored in excess-127 notation, i.e., the actual exponent is the stored value minus 127.
+The mantissa is stored in normalized form.
+
+For \texttt{float x = 1.0}, the sign bit is 0 and the exponent is 127.
+
+Therefore, the variable \texttt{float x = 1.0} is stored as \(\boxed{\texttt{0x3F800000}}\) in memory.
