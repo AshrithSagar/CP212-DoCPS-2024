@@ -7,16 +7,19 @@
 
 mystrlen:
 // Return length of input string
-
-	// Read string
 	MOV R1, #0				// Initialise length
-	LDR R2,	[R0]			// Read string head
+
+_mystrlen__loop:
+	// Read string
+	LDRB R2, [R0]			// Read string head
 	CMP R2, #0				// Check Null character
 	BEQ _mystrlen__exit		// Exit reading loop
 
 	// Update
-	ADDS R1, #1				// Increment length
-	ADDS R0, #1				// Increment string pointer
+	ADD R1, R1, #1			// Increment length
+	ADD R0, R0, #1			// Increment string pointer
+
+	B _mystrlen__loop		// Continue string parsing
 
 _mystrlen__exit:
 	MOV R0, R1				// Return value in R0
@@ -29,16 +32,16 @@ mystrcopy:
 
 _mystrcopy_loop:
 	// Copy string head
-	LDR R2, [R1]			// Read source string head
-	STR R2, [R0]			// Copy to destination
+	LDRB R2, [R1]			// Read source string head
+	STRB R2, [R0]			// Copy to destination
 
 	// Continue?
 	CMP R2, #0				// Check Null character
 	BEQ _mystrcopy__exit	// Exit reading loop
 
 	// Increment string pointers
-	ADDS R1, #1
-	ADDS R0, #1
+	ADD R1, R1, #1
+	ADD R0, R0, #1
 
 	B _mystrcopy_loop		// Continue string copying
 
@@ -52,8 +55,8 @@ mystrcmp:
 Return 0 if strings are equal, else return the difference
 in characters at their first point of difference */
 	// Read strings
-	LDR R2, [R0]			// Read string1 head
-	LDR R3, [R1]			// Read string2 head
+	LDRB R2, [R0]			// Read string1 head
+	LDRB R3, [R1]			// Read string2 head
 
 	// Compare
 	CMP R2, R3
@@ -64,8 +67,8 @@ in characters at their first point of difference */
 	BEQ _mystrcmp__equal
 
 	// Increment string pointers
-	ADDS R0, #1
-	ADDS R1, #1
+	ADD R0, R0, #1
+	ADD R1, R1, #1
 
 	B mystrcmp		// Continue string parsing
 
