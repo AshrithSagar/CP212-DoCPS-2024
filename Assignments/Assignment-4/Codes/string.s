@@ -61,13 +61,11 @@ _mystrcmp_loop:
 
 	; Compare
 	CMP R2, R3
-	BNE _mystrcmp__exit
+	BNE _mystrcmp__diff
 
 	; Check Null character
 	CMP R2, #0
-	BEQ _mystrcmp__str1
-	CMP R3, #0
-	BEQ _mystrcmp__str2
+	BEQ _mystrcmp__equal
 
 	; Increment string pointers
 	ADDS R0, R0, #1
@@ -75,14 +73,9 @@ _mystrcmp_loop:
 
 	B _mystrcmp_loop		; Continue string parsing
 
-_mystrcmp__str1:
-	MOV R4, R3				; Copy
-
-_mystrcmp__str2:
-	MOV R4, R2				; Copy
-
-_mystrcmp__exit:			; Exit reading loop
-	BEQ _mystrcmp__return
+_mystrcmp__equal:			; Identical strings
+	MOV R0, #0				; Return 0
+	B _mystrcmp__return
 
 _mystrcmp__diff:
 ; Compute string difference at first non-matching character
