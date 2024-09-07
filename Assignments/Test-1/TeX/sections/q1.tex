@@ -1,0 +1,41 @@
+\section*{Question 1}
+
+I wrote the following code in two files:
+\begin{lstlisting}[language=C, frame=single, caption={main.c}]
+int linear(int x);
+
+int x = 10;
+int y;
+
+int main(void) {
+  y = linear(x);
+
+  return 0;
+}
+\end{lstlisting}
+\begin{lstlisting}[language=C, frame=single, caption={linear.c}]
+int linear(int x)
+{
+  int y;
+  y = 5 * x + 2;
+
+  return y;
+}
+\end{lstlisting}
+
+I compiled the code for Cortex-M4 processor and loaded on the simulator. The disassembly code looked like this:
+
+\begin{tabular}{llll}
+  \textbf{Address} & \textbf{Code}  & \textbf{Disassembly} &                              \\
+  \hex{0x00000500} & \hex{EB000080} & \texttt{ADD}         & \texttt{r0, r0, r0, LSL \#2} \\
+  \hex{0x00000504} & \hex{3002}     & \texttt{ADDS}        & \texttt{r0, r0, \#0x02}      \\
+  \hex{0x00000506} & \hex{4770}     & \texttt{BX}          & \texttt{lr}                  \\
+\end{tabular}
+
+Answer the following:
+\begin{enumerate}[itemsep=0mm]
+  \item Explain briefly what each instruction does.
+  \item Explain the instruction encoding of the arithmetic instructions.
+\end{enumerate}
+
+\subsection*{Solution}
