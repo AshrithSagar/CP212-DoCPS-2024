@@ -1,0 +1,29 @@
+\section*{Question 2}
+
+I ``upgraded'' the code to floating point operations, and modified linear.c as shown below.
+\begin{lstlisting}[language=C, frame=single, caption={linear.c}]
+float linear(float x)
+{
+  float y;
+  y = 5 * x + 2;
+
+  return y;
+}
+\end{lstlisting}
+
+The disassembled code looked like this:
+\vspace*{1em}
+
+\begin{tabular}{llll}
+  \textbf{Address} & \textbf{Code}  & \textbf{Disassembly} &                     \\
+  \hex{0x00000500} & \hex{EEB11A04} & \texttt{VMOV.F32}    & \texttt{s2, \#5}    \\
+  \hex{0x00000504} & \hex{EE200A01} & \texttt{VMUL.F32}    & \texttt{s0, s0, s2} \\
+  \hex{0x00000508} & \hex{EEB01A00} & \texttt{VMOV.F32}    & \texttt{s2, \#2}    \\
+  \hex{0x0000050C} & \hex{EE300A01} & \texttt{VADD.F32}    & \texttt{s0, s0, s2} \\
+  \hex{0x00000510} & \hex{4770}     & \texttt{BX}          & \texttt{lr}         \\
+\end{tabular}
+\vspace*{1em}
+
+Briefly explain what these instructions do.
+
+\subsection*{Solution}

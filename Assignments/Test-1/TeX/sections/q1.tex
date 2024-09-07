@@ -23,7 +23,9 @@ int linear(int x)
 }
 \end{lstlisting}
 
-I compiled the code for Cortex-M4 processor and loaded on the simulator. The disassembly code looked like this:
+I compiled the code for Cortex-M4 processor and loaded on the simulator.\\
+The disassembly code looked like this:
+\vspace*{1em}
 
 \begin{tabular}{llll}
   \textbf{Address} & \textbf{Code}  & \textbf{Disassembly} &                              \\
@@ -31,6 +33,7 @@ I compiled the code for Cortex-M4 processor and loaded on the simulator. The dis
   \hex{0x00000504} & \hex{3002}     & \texttt{ADDS}        & \texttt{r0, r0, \#0x02}      \\
   \hex{0x00000506} & \hex{4770}     & \texttt{BX}          & \texttt{lr}                  \\
 \end{tabular}
+\vspace*{1em}
 
 Answer the following:
 \begin{enumerate}[itemsep=0mm]
