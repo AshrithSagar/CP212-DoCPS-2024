@@ -1,0 +1,18 @@
+\section*{Question 4}
+
+I continued running the code.
+However, while running the code, I forgot to update the prototype in main.c, which remained:
+\begin{lstlisting}[language=C]
+int linear(int x);
+\end{lstlisting}
+
+I stepped through the code from main onwards.
+
+In main, the value of global variable x was correctly shown as 10.
+But when I stepped into linear, I saw the argument x to have the value 1.40129846e-44.
+And when the function returned, the value of global variable y was shown as 1073741824.
+
+Why is this happening?
+Is the compiler buggy?
+
+\subsection*{Solution}
