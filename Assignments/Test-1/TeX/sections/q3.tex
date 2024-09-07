@@ -1,0 +1,20 @@
+\section*{Question 3}
+
+To understand about hard and soft floating-point libraries, I then changed the ``Floating Point Hardware'' option ``Target'' tab from ``Single Precision'' to ``Not used''.
+
+I saw that arithmetic operations in the disassembled code changed to:
+\vspace*{1em}
+
+\begin{tabular}{llll}
+  \textbf{Address} & \textbf{Code}  & \textbf{Disassembly} &                                         \\
+  \hex{0x000004F6} & \hex{2100}     & \texttt{MOVS}        & \texttt{r1, \#0x00}                     \\
+  \hex{0x000004F8} & \hex{F2C401A0} & \texttt{MOVT}        & \texttt{r1, \#0x40A0}                   \\
+  \hex{0x000004FC} & \hex{F000F878} & \texttt{BL.W}        & \texttt{0x000005F0} \verb|__aeabi_fmul| \\
+  \hex{0x00000500} & \hex{F04F4180} & \texttt{MOV}         & \texttt{r1, \#0x40000000}               \\
+  \hex{0x00000504} & \hex{F000F812} & \texttt{BL.W}        & \texttt{0x0000052C} \verb|__aeabi_fadd| \\
+\end{tabular}
+\vspace*{1em}
+
+What do you think these operations do?
+
+\subsection*{Solution}
