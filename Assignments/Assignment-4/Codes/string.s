@@ -60,11 +60,11 @@ in characters at their first point of difference */
 
 	// Compare
 	CMP R2, R3
-	BNE _mystrcmp__diff
+	BNE _mystrcmp__neq
 
 	// Check Null character
 	CMP R2, #0
-	BEQ _mystrcmp__equal
+	BEQ _mystrcmp__eq
 
 	// Increment string pointers
 	ADD R0, R0, #1
@@ -72,11 +72,11 @@ in characters at their first point of difference */
 
 	B mystrcmp		// Continue string parsing
 
-_mystrcmp__equal:			// Identical strings
+_mystrcmp__eq:				// Identical strings
 	MOV R0, #0				// Return 0
 	BX LR					// Return
 
-_mystrcmp__diff:
+_mystrcmp__neq:
 // Compute string difference at first non-matching character
-	SUBS R0, R3, R2
+	SUBS R0, R2, R3
 	BX LR					// Return
