@@ -26,26 +26,26 @@ _mystrlen__exit:
 	BX LR					// Return
 
 
-mystrcopy:
+mystrcpy:
 // Copy a source string to a destination
 	MOV R3, R0				// Save destination
 
-_mystrcopy_loop:
+_mystrcpy_loop:
 	// Copy string head
 	LDRB R2, [R1]			// Read source string head
 	STRB R2, [R0]			// Copy to destination
 
 	// Continue?
 	CMP R2, #0				// Check Null character
-	BEQ _mystrcopy__exit	// Exit reading loop
+	BEQ _mystrcpy__exit	// Exit reading loop
 
 	// Increment string pointers
 	ADD R1, R1, #1
 	ADD R0, R0, #1
 
-	B _mystrcopy_loop		// Continue string copying
+	B _mystrcpy_loop		// Continue string copying
 
-_mystrcopy__exit:
+_mystrcpy__exit:
 	MOV R0, R3				// Return value in R0
 	BX LR					// Return
 
