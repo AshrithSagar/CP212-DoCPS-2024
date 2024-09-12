@@ -1,7 +1,26 @@
 \documentclass[tikz, border=5pt]{standalone}
-\usetikzlibrary{decorations.pathreplacing}
+\usepackage{xstring}
+\usetikzlibrary{decorations.pathreplacing,
+positioning}
+
+\newcommand{\GetBit}[2]{%
+    \edef\BitPos{#2}%
+    \StrLen{#1}[\StringLen]%
+    \ifnum\BitPos>\StringLen
+        \edef\Bit{0}%
+    \else
+        \StrChar{#1}{#2}[\Bit]%
+    \fi
+}
+\newcommand{\SetBits}[1]{%
+    \foreach \i in {1,...,16} {%
+            \GetBit{#1}{\i}%
+            \node at (\i - 0.5, 0.5) {\LARGE \textbf{\Bit}};
+        }%
+}
 
 \begin{document}
+
 \begin{tikzpicture}
 
     % Colors
@@ -9,46 +28,30 @@
     \fill [green!10] (1, 0) rectangle (9, 1);
     \fill [blue!10] (9, 0) rectangle (16, 1);
 
-    % Boxes
-    \foreach \i in {0,...,12} {
+    \foreach \i in {0,...,15} {
+            % Boxes
             \draw (\i, 0) rectangle (\i + 1, 1);
         }
-    \draw (15, 0) rectangle (16, 1);
-    \draw (13, 0) rectangle (15, 0);
-    \draw (13, 1) rectangle (15, 1);
+    \foreach \i in {16,...,31} {
+            % Position
+            \node [above] at (31.5 - \i, 1) {\i};
+        }
+    \SetBits{0100000010100000}
 
-    % Bits
-    \node at (0.5, 0.5) {\LARGE \textbf 0};
-    \node at (1.5, 0.5) {\LARGE \textbf 1};
-    \node at (2.5, 0.5) {\LARGE \textbf 0};
-    \node at (3.5, 0.5) {\LARGE \textbf 0};
-    \node at (4.5, 0.5) {\LARGE \textbf 0};
-    \node at (5.5, 0.5) {\LARGE \textbf 0};
-    \node at (6.5, 0.5) {\LARGE \textbf 0};
-    \node at (7.5, 0.5) {\LARGE \textbf 0};
-    \node at (8.5, 0.5) {\LARGE \textbf 1};
-    \node at (9.5, 0.5) {\LARGE \textbf 0};
-    \node at (10.5, 0.5) {\LARGE \textbf 1};
-    \node at (11.5, 0.5) {\LARGE \textbf 0};
-    \node at (12.5, 0.5) {\LARGE \textbf 0};
-    \node at (14, 0.5) {\LARGE \textbf \dots};
-    \node at (15.5, 0.5) {\LARGE \textbf 0};
+    % Colors
+    \fill [blue!10] (0, -1.5) rectangle (16, -2.5);
 
-    % Positions
-    \node [above] at (0.5, 1) {\texttt{31}};
-    \node [above] at (1.5, 1) {\texttt{30}};
-    \node [above] at (2.5, 1) {\texttt{29}};
-    \node [above] at (3.5, 1) {\texttt{28}};
-    \node [above] at (4.5, 1) {\texttt{27}};
-    \node [above] at (5.5, 1) {\texttt{26}};
-    \node [above] at (6.5, 1) {\texttt{25}};
-    \node [above] at (7.5, 1) {\texttt{24}};
-    \node [above] at (8.5, 1) {\texttt{23}};
-    \node [above] at (9.5, 1) {\texttt{22}};
-    \node [above] at (10.5, 1) {\texttt{21}};
-    \node [above] at (11.5, 1) {\texttt{20}};
-    \node [above] at (12.5, 1) {\texttt{19}};
-    \node [above] at (15.5, 1) {\texttt{0}};
+    \foreach \i in {0,...,15} {
+            % Boxes
+            \draw (\i, -2.5) rectangle (\i + 1, -1.5);
+
+            % Position
+            \node [above] at (15.5 - \i, -1.5) {\i};
+        }
+    \foreach \i in {1,...,16} {%
+            \GetBit{0000000000000000}{\i}%
+            \node at (\i - 0.5, -2) {\LARGE \textbf{\Bit}};
+        }%
 
     %% IEEE 754 standard
     % Signed bit label
@@ -62,6 +65,58 @@
     % Mantissa label
     \draw [decorate, decoration={brace, amplitude=5pt}] (16+0.025, -0.1) -- (9+0.025, -0.1);
     \node [below] at (12.5, -0.3) {\texttt{Mantissa}};
+    \draw [decorate, decoration={brace, amplitude=5pt}] (16+0.025, -2.5-0.1) -- (0+0.025, -2.5-0.1);
+    \node [below] at (8, -2.5-0.3) {\texttt{Mantissa}};
 
 \end{tikzpicture}
+
+\begin{tikzpicture}
+
+    % Colors
+    \fill [red!10] (0, 0) rectangle (1, 1);
+    \fill [green!10] (1, 0) rectangle (9, 1);
+    \fill [blue!10] (9, 0) rectangle (16, 1);
+
+    \foreach \i in {0,...,15} {
+            % Boxes
+            \draw (\i, 0) rectangle (\i + 1, 1);
+        }
+    \foreach \i in {16,...,31} {
+            % Position
+            \node [above] at (31.5 - \i, 1) {\i};
+        }
+    \SetBits{0100000000000000}
+
+    % Colors
+    \fill [blue!10] (0, -1.5) rectangle (16, -2.5);
+
+    \foreach \i in {0,...,15} {
+            % Boxes
+            \draw (\i, -2.5) rectangle (\i + 1, -1.5);
+
+            % Position
+            \node [above] at (15.5 - \i, -1.5) {\i};
+        }
+    \foreach \i in {1,...,16} {%
+            \GetBit{0000000000000000}{\i}%
+            \node at (\i - 0.5, -2) {\LARGE \textbf{\Bit}};
+        }%
+
+    %% IEEE 754 standard
+    % Signed bit label
+    \draw [decorate, decoration={brace, amplitude=5pt}] (1-0.025, -0.1) -- (0, -0.1);
+    \node [below] at (0.45, -0.3) {\texttt{Sign bit}};
+
+    % Exponent label
+    \draw [decorate, decoration={brace, amplitude=5pt}] (9-0.025, -0.1) -- (1+0.025, -0.1);
+    \node [below] at (5, -0.3) {\texttt{Exponent}};
+
+    % Mantissa label
+    \draw [decorate, decoration={brace, amplitude=5pt}] (16+0.025, -0.1) -- (9+0.025, -0.1);
+    \node [below] at (12.5, -0.3) {\texttt{Mantissa}};
+    \draw [decorate, decoration={brace, amplitude=5pt}] (16+0.025, -2.5-0.1) -- (0+0.025, -2.5-0.1);
+    \node [below] at (8, -2.5-0.3) {\texttt{Mantissa}};
+
+\end{tikzpicture}
+
 \end{document}

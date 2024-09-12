@@ -28,7 +28,28 @@ We can see that the floating point routines are being branched to using the \tex
 These routines are provided in \( \texttt{fplib}\), which is the software floating-point library.
 They are a part of the ARM EABI (Embedded Application Binary Interface).
 
-\vspace*{1em}
+\vspace*{-1em}
+
+\begin{figure*}[htbp]
+  \centering
+  \includegraphics[page=1, width=0.9\textwidth]{figures/q3/_}
+  \setlength{\abovecaptionskip}{-12pt}
+  \caption{
+    The number \( 5 \) in the IEEE 754 format is \( \hex{0x40A00000} \).
+  }
+\end{figure*}
+
+\begin{figure*}[htbp]
+  \centering
+  \includegraphics[page=2, width=0.9\textwidth]{figures/q3/_}
+  \setlength{\abovecaptionskip}{-12pt}
+  \caption{
+    The number \( 2 \) in the IEEE 754 format is \( \hex{0x40000000} \).
+  }
+\end{figure*}
+
+\clearpage
+\subsubsection*{Instruction breakdown}
 
 \begin{tabular}{llll}
   \hex{0x000004F6} & \hex{2100} & \texttt{MOVS} & \texttt{r1, \#0x00} \\
