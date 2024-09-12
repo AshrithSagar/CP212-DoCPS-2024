@@ -45,4 +45,30 @@ Answer the following:
 
 \subsubsection*{Instruction breakdown}
 
+\begin{tabular}{llll}
+  \hex{0x00000500} & \hex{EB000080} & \texttt{ADD} & \texttt{r0, r0, r0, LSL \#2} \\
+\end{tabular}
+\vspace*{1em}
+
+This instruction effectively \underline{multiplies the number present in register \( \texttt{R0} \) by 5}, and stores it in \( \texttt{R0} \).
+A left shifted version of \( \texttt{R0} \) by 2 bits is added to \( \texttt{R0} \), which effectively computes \( 4 \times \texttt{R0} \) and adds this to \( \texttt{R0} \), thereby producing \( 5 \times \texttt{R0} \) at the end.
+\vspace*{1em}
+
+\begin{tabular}{llll}
+  \hex{0x00000504} & \hex{3002} & \texttt{ADDS} & \texttt{r0, r0, \#0x02} \\
+\end{tabular}
+\vspace*{1em}
+
+This instruction \underline{adds the number 2} to the number present in \( \texttt{R0} \), and stores the result back in \( \texttt{R0} \), and updates the flags accordingly.
+
+\vspace*{1em}
+
+\begin{tabular}{llll}
+  \hex{0x00000506} & \hex{4770} & \texttt{BX} & \texttt{lr} \\
+\end{tabular}
+\vspace*{1em}
+
+This instruction branches to the address present in the link register, which acts as a \underline{return to the function call}.
+The function call \( \texttt{linear(.)} \) accepts one input in \( \texttt{R0} \) and returns \( (5 \times \texttt{R0} + 2) \) back in \( \texttt{R0} \), as required by the AAPCS specification.
+
 \subsubsection*{Instruction encoding}
