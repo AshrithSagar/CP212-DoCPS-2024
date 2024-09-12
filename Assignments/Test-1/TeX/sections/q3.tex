@@ -18,3 +18,9 @@ I saw that arithmetic operations in the disassembled code changed to:
 What do you think these operations do?
 
 \subsection*{Solution}
+
+When we disable the FPU, the processor performs floating point operations using software libraries instead.
+As seen from the disassembly window, we can see that the processor tries to call the respective floating point multiplication function \verb|__aeabi_fmul| and floating point addition function \verb|__aeabi_fadd|.
+This computation may take a few clock cycles to complete, before the processor resumes to execute the following instructions.
+
+We can see that the floating point functions are being branched to using the \texttt{BL.W} instruction, which is a branch with link instruction.
