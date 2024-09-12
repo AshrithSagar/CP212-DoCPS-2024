@@ -100,11 +100,19 @@ The function call \( \texttt{linear(.)} \) accepts one input in \( \texttt{R0} \
   }
 \end{figure*}
 
-For \( \texttt{LSL} \), i.e., the left shift operation, the \( \texttt{type} \) is to be set to \( \texttt{00} \), i.e., \( \texttt{00} \) in bits 5--4.
+For \( \texttt{LSL} \), i.e., the left shift operation, the \( \texttt{type} \) is to be set to \( \texttt{00} \), as mentioned in Figure~\ref{fig:decode_imm_shift}, i.e., \( \texttt{00} \) in bits 5--4.
 
 The registers \( \texttt{Rd} \), \( \texttt{Rn} \), and \( \texttt{Rm} \) are all set to \( \texttt{R0} \) in this case, i.e., to \( \texttt{0000} \), in bits 19--16, 11--8 and 3--0, respectively.
 
 The shift amount is set to \( \texttt{2} \), which is \( \texttt{10} \) in binary, in bits 7--6.
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/images/1-1t.png}
+  \caption{
+    \( \texttt{DecodeImmShift()} \), which takes in an appropriate \( \texttt{type} \)
+  }\label{fig:decode_imm_shift}
+\end{figure*}
 
 
 \clearpage
