@@ -72,3 +72,50 @@ This instruction branches to the address present in the link register, which act
 The function call \( \texttt{linear(.)} \) accepts one input in \( \texttt{R0} \) and returns \( (5 \times \texttt{R0} + 2) \) back in \( \texttt{R0} \), as required by the AAPCS specification.
 
 \subsubsection*{Instruction encoding}
+
+\begin{tabular}{llll}
+  \hex{0x00000500} & \hex{EB000080} & \texttt{ADD} & \texttt{r0, r0, r0, LSL \#2} \\
+\end{tabular}
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/images/1-1.png}
+\end{figure*}
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[page=1, width=0.9\textwidth]{figures/q1/_}
+\end{figure*}
+
+\begin{tabular}{llll}
+  \hex{0x00000504} & \hex{3002} & \texttt{ADDS} & \texttt{r0, r0, \#0x02} \\
+\end{tabular}
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/images/1-2a.png}
+\end{figure*}
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/images/1-2b.png}
+\end{figure*}
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[page=2, width=0.9\textwidth]{figures/q1/_}
+\end{figure*}
+
+\begin{tabular}{llll}
+  \hex{0x00000506} & \hex{4770} & \texttt{BX} & \texttt{lr} \\
+\end{tabular}
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/images/1-3.png}
+\end{figure*}
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[page=3, width=0.9\textwidth]{figures/q1/_}
+\end{figure*}
