@@ -3,7 +3,7 @@
 To understand about hard and soft floating-point libraries, I then changed the ``Floating Point Hardware'' option ``Target'' tab from ``Single Precision'' to ``Not used''.
 
 I saw that arithmetic operations in the disassembled code changed to:
-\vspace*{1em}
+\vspace*{0.5em}
 
 \begin{tabular}{llll}
   \textbf{Address} & \textbf{Code}  & \textbf{Disassembly} &                                         \\
@@ -13,14 +13,61 @@ I saw that arithmetic operations in the disassembled code changed to:
   \hex{0x00000500} & \hex{F04F4180} & \texttt{MOV}         & \texttt{r1, \#0x40000000}               \\
   \hex{0x00000504} & \hex{F000F812} & \texttt{BL.W}        & \texttt{0x0000052C} \verb|__aeabi_fadd| \\
 \end{tabular}
-\vspace*{1em}
+\vspace*{0.5em}
 
 What do you think these operations do?
 
+\vspace*{-2em}
 \subsection*{Solution}
 
-When we disable the FPU, the processor performs floating point operations using software libraries instead.
-As seen from the disassembly window, we can see that the processor tries to call the respective floating point multiplication function \verb|__aeabi_fmul| and floating point addition function \verb|__aeabi_fadd|.
+The processor performs \underline{floating point operations using software libraries} instead when the FPU is disabled.
+As seen from the disassembly window, we can see that the processor tries to call the respective floating point multiplication routine \verb|__aeabi_fmul| and floating point addition routine \verb|__aeabi_fadd|.
 This computation may take a few clock cycles to complete, before the processor resumes to execute the following instructions.
 
-We can see that the floating point functions are being branched to using the \texttt{BL.W} instruction, which is a branch with link instruction.
+We can see that the floating point routines are being branched to using the \texttt{BL.W} instruction, which is the branch with link instruction.
+These routines are provided in \( \texttt{fplib}\), which is the software floating-point library.
+They are a part of the ARM EABI (Embedded Application Binary Interface).
+
+\vspace*{1em}
+
+\begin{tabular}{llll}
+  \hex{0x000004F6} & \hex{2100} & \texttt{MOVS} & \texttt{r1, \#0x00} \\
+\end{tabular}
+
+Moves the immediate value \( 0 \) into register \( \texttt{R1} \).
+The \texttt{S} suffix indicates to sets the flags based on the result.
+
+\vspace*{1em}
+
+\begin{tabular}{llll}
+  \hex{0x000004F8} & \hex{F2C401A0} & \texttt{MOVT} & \texttt{r1, \#0x40A0} \\
+\end{tabular}
+
+Moves the immediate value \( \hex{0x40A0} \) into the upper half of register \( \texttt{R1} \).
+\( \texttt{MOVT} \) indicates Move Top, and writes an immediate value to the top halfword of the register while the bottom halfword remains unchanged.
+Thereby, the register \( \texttt{R1} \) now contains the value \( \hex{0x40A00000} \).
+This can be seen to be the floating point representation of the number \( 5 \) in IEEE 754 format.
+
+\vspace*{1em}
+
+\begin{tabular}{llll}
+  \hex{0x000004FC} & \hex{F000F878} & \texttt{BL.W} & \texttt{0x000005F0} \verb|__aeabi_fmul| \\
+\end{tabular}
+
+Branch with Link (Immediate) calls the subroutine \verb|__aeabi_fmul| relative to the PC-relative address.
+
+\vspace*{1em}
+
+\begin{tabular}{llll}
+  \hex{0x00000500} & \hex{F04F4180} & \texttt{MOV} & \texttt{r1, \#0x40000000} \\
+\end{tabular}
+
+Moves the immediate value \( \hex{0x40000000} \) into register \( \texttt{R1} \), which is the number floating point representation of the number \( 2 \) in IEEE 754 format.
+
+\vspace*{1em}
+
+\begin{tabular}{llll}
+  \hex{0x00000504} & \hex{F000F812} & \texttt{BL.W} & \texttt{0x0000052C} \verb|__aeabi_fadd| \\
+\end{tabular}
+
+Branch with Link (Immediate) calls the subroutine \verb|__aeabi_fadd| relative to the PC-relative address.
