@@ -117,18 +117,21 @@ The shift amount is set to \( \texttt{2} \), which is \( \texttt{10} \) in binar
 
 \begin{figure*}[h]
   \centering
-  \includegraphics[width=0.9\textwidth]{figures/images/1-2a.png}
-  \caption{
-    The instruction encoding of the \texttt{ADDS} (Immediate) instruction.
-  }
-\end{figure*}
-
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=0.9\textwidth]{figures/images/1-2b.png}
-  \caption{
-    The instruction encoding of the \texttt{ADDS} (Immediate) instruction.
-  }
+  \begin{minipage}{\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/images/1-2a.png}
+    \caption{
+      The instruction encoding of the \texttt{ADDS} (Immediate) instruction.
+    }\label{fig:adds_immediate}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.9\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/images/1-2b.png}
+    \caption{
+      The instruction encoding of the \texttt{ADDS} (Register) instruction.
+    }\label{fig:adds_register}
+  \end{minipage}
 \end{figure*}
 
 \begin{figure*}[h]
@@ -138,6 +141,11 @@ The shift amount is set to \( \texttt{2} \), which is \( \texttt{10} \) in binar
     The corresponding encoding of the instruction \hex{0x3002}.
   }
 \end{figure*}
+
+Encoding T2 is used, which just adds to a given register with an immediate value.
+
+The register \( \texttt{Rdn} \) is set to \( \texttt{R0} \), i.e., to \( \texttt{000} \), in bits 10--8.
+
 
 \clearpage
 \subsubsection*{Instruction encoding}
@@ -162,3 +170,5 @@ The shift amount is set to \( \texttt{2} \), which is \( \texttt{10} \) in binar
     The corresponding encoding of the instruction \hex{0x4770}.
   }
 \end{figure*}
+
+The register \( \texttt{Rm} \) here is set to the Link Register \( \texttt{LR} \) (\( \texttt{R14} \)), i.e., \( \hex{1110} \) in bits 6--3.
