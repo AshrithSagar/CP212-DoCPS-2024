@@ -45,6 +45,8 @@ Answer the following:
 
 \subsubsection*{Instruction breakdown}
 
+\subsubsection*{(a)}
+
 \begin{tabular}{llll}
   \hex{0x00000500} & \hex{EB000080} & \texttt{ADD} & \texttt{r0, r0, r0, LSL \#2} \\
 \end{tabular}
@@ -54,14 +56,17 @@ This instruction effectively \underline{multiplies the number present in registe
 A left shifted version of \( \texttt{R0} \) by 2 bits is added to \( \texttt{R0} \), which effectively computes \( 4 \times \texttt{R0} \) and adds this to \( \texttt{R0} \), thereby producing \( 5 \times \texttt{R0} \) at the end.
 \vspace*{1em}
 
+\subsubsection*{(b)}
+
 \begin{tabular}{llll}
   \hex{0x00000504} & \hex{3002} & \texttt{ADDS} & \texttt{r0, r0, \#0x02} \\
 \end{tabular}
 \vspace*{1em}
 
 This instruction \underline{adds the number 2} to the number present in \( \texttt{R0} \), and stores the result back in \( \texttt{R0} \), and updates the flags accordingly.
-
 \vspace*{1em}
+
+\subsubsection*{(c)}
 
 \begin{tabular}{llll}
   \hex{0x00000506} & \hex{4770} & \texttt{BX} & \texttt{lr} \\
@@ -71,7 +76,9 @@ This instruction \underline{adds the number 2} to the number present in \( \text
 This instruction branches to the address present in the link register, which acts as a \underline{return to the function call}.
 The function call \( \texttt{linear(.)} \) accepts one input in \( \texttt{R0} \) and returns \( (5 \times \texttt{R0} + 2) \) back in \( \texttt{R0} \), as required by the AAPCS specification.
 
+\newpage
 \subsubsection*{Instruction encoding}
+\subsubsection*{(a)}
 
 \begin{tabular}{llll}
   \hex{0x00000500} & \hex{EB000080} & \texttt{ADD} & \texttt{r0, r0, r0, LSL \#2} \\
@@ -80,12 +87,22 @@ The function call \( \texttt{linear(.)} \) accepts one input in \( \texttt{R0} \
 \begin{figure*}[h]
   \centering
   \includegraphics[width=0.9\textwidth]{figures/images/1-1.png}
+  \caption{
+    The instruction encoding of the \texttt{ADD} (Register) instruction.
+  }
 \end{figure*}
 
 \begin{figure*}[h]
   \centering
   \includegraphics[page=1, width=0.9\textwidth]{figures/q1/_}
+  \caption{
+    The corresponding encoding of the instruction \hex{0xEB000080}.
+  }
 \end{figure*}
+
+\clearpage
+\subsubsection*{Instruction encoding}
+\subsubsection*{(b)}
 
 \begin{tabular}{llll}
   \hex{0x00000504} & \hex{3002} & \texttt{ADDS} & \texttt{r0, r0, \#0x02} \\
@@ -94,17 +111,30 @@ The function call \( \texttt{linear(.)} \) accepts one input in \( \texttt{R0} \
 \begin{figure*}[h]
   \centering
   \includegraphics[width=0.9\textwidth]{figures/images/1-2a.png}
+  \caption{
+    The instruction encoding of the \texttt{ADDS} (Immediate) instruction.
+  }
 \end{figure*}
 
 \begin{figure*}[h]
   \centering
   \includegraphics[width=0.9\textwidth]{figures/images/1-2b.png}
+  \caption{
+    The instruction encoding of the \texttt{ADDS} (Immediate) instruction.
+  }
 \end{figure*}
 
 \begin{figure*}[h]
   \centering
   \includegraphics[page=2, width=0.9\textwidth]{figures/q1/_}
+  \caption{
+    The corresponding encoding of the instruction \hex{0x3002}.
+  }
 \end{figure*}
+
+\clearpage
+\subsubsection*{Instruction encoding}
+\subsubsection*{(c)}
 
 \begin{tabular}{llll}
   \hex{0x00000506} & \hex{4770} & \texttt{BX} & \texttt{lr} \\
@@ -113,9 +143,15 @@ The function call \( \texttt{linear(.)} \) accepts one input in \( \texttt{R0} \
 \begin{figure*}[h]
   \centering
   \includegraphics[width=0.9\textwidth]{figures/images/1-3.png}
+  \caption{
+    The instruction encoding of the \texttt{BX} instruction.
+  }
 \end{figure*}
 
 \begin{figure*}[h]
   \centering
   \includegraphics[page=3, width=0.9\textwidth]{figures/q1/_}
+  \caption{
+    The corresponding encoding of the instruction \hex{0x4770}.
+  }
 \end{figure*}
