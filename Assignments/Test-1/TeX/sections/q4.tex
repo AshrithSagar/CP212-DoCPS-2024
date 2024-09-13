@@ -16,3 +16,76 @@ Why is this happening?
 Is the compiler buggy?
 
 \subsection*{Solution}
+
+\begin{figure*}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/q4/_}
+    \setlength{\abovecaptionskip}{-12pt}
+    \caption{
+        The value \( \hex{0xA} \) interpreted as in the IEEE 754 format
+    }\label{fig:q4}
+\end{figure*}
+
+The issue caused by the type mismatch causes the compiler to interpret the value of \( x \) as a floating point number.
+Initially, the value of \( x \) is correctly interpreted as \( 10 \), as an integer.
+Since the prototype specifies the type to be an integer, the compiler doesn't perform any type conversion when it is passed to the function \texttt{linear}.
+Thereby the contents of the register are as shown in Figure~\ref{fig:q4}.
+However, the function \texttt{linear} expects a floating point number as per what was written the function body, thereby causing the compiler to interpret the value of \( x \) as a floating point number.
+This is \underline{not the compiler's fault}, but rather just a programming error.
+
+To check what this number is actually, we can compute it as follows:
+When the exponent is \( \hex{00000000} \), a special rule is followed, where the value is treated as a \textit{denormalised number}, thereby the leading 1 in the mantissa is not considered and the actual exponent is taken as \( -126 \), i.e., the value here is given by:
+\[
+    \implies
+    + 2^{ -126 } \times 0.\underbrace{0000000000000000000}_{19\text{ zeros}}1010_{2}
+\]
+\begin{equation*}
+    \implies
+    2^{ - 126 } \times (2^{-20} + 2^{-22})
+    =
+    1.4012984643 \times 10^{-44}
+\end{equation*}
+
+Now, when the function \texttt{linear} is run, it returns the value \( 5x + 2 \), which is computed in floating point arithmetic by first having \( 5 \) and \( 2 \) represented as floating point numbers, as seen previously in Figure~\ref{fig:q3-5} and Figure~\ref{fig:q3-2}, respectively.
+
+Multiplying the mantissa's, we get
+\begin{align*}
+    \implies
+    (2^{-20} + 2^{-22}) \times (1 + 2^{-2})
+     & =
+    2^{-20} + 2^{-22} + 2^{-22} + 2^{-24}
+    \\ & =
+    (2^{-20} + 2^{-21}+ 2^{-24})
+    \\ & =
+    2^{-20} \times (1 + 2^{-1}+ 2^{-4})
+\end{align*}
+Adding the exponents, we get
+\[
+    \implies
+    (-126) + (129 - 127)
+    =
+    (3 - 127)
+\]
+Normalising the mantissa, we get
+\begin{align*}
+    \implies
+     &
+    + 2^{3 - 127} \times 2^{-20} \times (1 + 2^{-1}+ 2^{-4})
+    \\ & =
+    + 2^{-17 - 127} \times (1 + 2^{-1}+ 2^{-4})
+\end{align*}
+This is the value of \( 5x \).
+Now, addition with \( 2 \) can be done by
+\begin{align*}
+     &
+    \Big( + 2^{-17 - 127} \times (1 + 2^{-1}+ 2^{-4}) \Big)
+    +
+    \Big( + 2^{128 - 127} \times (1) \Big)
+    \\ & =
+    2^{-127} \times (2^{-17} + 2^{-18} + 2^{-21} + 2^{128})
+    \\ & =
+    2^{128 - 127} \times (1 + 2^{-145} + 2^{-146} + 2^{-149})
+    \\ & \implies
+    + 2^{128 - 127} \times (1)
+\end{align*}
+Thereby, the value remains as 2, since the other term is too small.
