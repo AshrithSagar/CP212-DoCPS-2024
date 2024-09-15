@@ -53,7 +53,7 @@ Answer the following:
 \vspace*{1em}
 
 This instruction effectively \underline{multiplies the number present in register \( \texttt{R0} \) by 5}, and stores it in \( \texttt{R0} \).
-A left shifted version of \( \texttt{R0} \) by 2 bits is added to \( \texttt{R0} \), which effectively computes \( 4 \times \texttt{R0} \) and adds this to \( \texttt{R0} \), thereby producing \( 5 \times \texttt{R0} \) at the end.
+A left shifted version of \( \texttt{R0} \) by 2 bits yields the value \( 4 \times \texttt{R0} \), which when added to \( \texttt{R0} \) gives the value \( 5 \times \texttt{R0} \).
 \vspace*{1em}
 
 \subsubsection*{(b)}
@@ -74,7 +74,7 @@ This instruction \underline{adds the number 2} to the number present in \( \text
 \vspace*{1em}
 
 This instruction branches to the address present in the link register, which acts as a \underline{return to the function call}.
-The function call \( \texttt{linear(.)} \) accepts one input in \( \texttt{R0} \) and returns \( (5 \times \texttt{R0} + 2) \) back in \( \texttt{R0} \), as required by the AAPCS specification.
+The function call \( \texttt{linear(.)} \) accepts one input in \( \texttt{R0} \) and returns \( (5 \times \texttt{R0} + 2) \) back in \( \texttt{R0} \), following the AAPCS specification.
 
 \newpage
 \subsubsection*{Instruction encoding}
@@ -100,7 +100,8 @@ The function call \( \texttt{linear(.)} \) accepts one input in \( \texttt{R0} \
   }
 \end{figure*}
 
-For \( \texttt{LSL} \), i.e., the left shift operation, the \( \texttt{type} \) is to be set to \( \texttt{00} \), as mentioned in Figure~\ref{fig:decode_imm_shift}, i.e., \( \texttt{00} \) in bits 5--4.
+For \( \texttt{LSL} \), i.e., the left shift operation, the \( \texttt{type} \) is to be set to \( \texttt{00} \), as seen from Figure~\ref{fig:decode_imm_shift}.
+Thereby, bits 5--4 are set to \( \texttt{00} \).
 
 The registers \( \texttt{Rd} \), \( \texttt{Rn} \), and \( \texttt{Rm} \) are all set to \( \texttt{R0} \) in this case, i.e., to \( \texttt{0000} \), in bits 19--16, 11--8 and 3--0, respectively.
 
@@ -110,7 +111,8 @@ The shift amount is set to \( \texttt{2} \), which is \( \texttt{10} \) in binar
   \centering
   \includegraphics[width=0.9\textwidth]{figures/images/1-1t.png}
   \caption{
-    \( \texttt{DecodeImmShift()} \), which takes in an appropriate \( \texttt{type} \)
+    \( \texttt{DecodeImmShift()} \), which takes in an appropriate \( \texttt{type} \).\\
+    For left shift, set the \( \texttt{type} \) to \( \texttt{00} \).
   }\label{fig:decode_imm_shift}
 \end{figure*}
 
@@ -125,21 +127,18 @@ The shift amount is set to \( \texttt{2} \), which is \( \texttt{10} \) in binar
 
 \begin{figure*}[h]
   \centering
-  \begin{minipage}{\textwidth}
-    \centering
-    \includegraphics[width=0.9\textwidth]{figures/images/1-2a.png}
-    \caption{
-      The instruction encoding of the \texttt{ADDS} (Immediate) instruction.
-    }\label{fig:adds_immediate}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.9\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figures/images/1-2b.png}
-    \caption{
-      The instruction encoding of the \texttt{ADDS} (Register) instruction.
-    }\label{fig:adds_register}
-  \end{minipage}
+  \includegraphics[width=0.9\textwidth]{figures/images/1-2a.png}
+  \caption{
+    The instruction encoding of the \texttt{ADDS} (Immediate) instruction.
+  }\label{fig:adds_immediate}
+\end{figure*}
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/images/1-2b.png}
+  \caption{
+    The instruction encoding of the \texttt{ADDS} (Register) instruction.
+  }\label{fig:adds_register}
 \end{figure*}
 
 \begin{figure*}[h]
@@ -150,7 +149,7 @@ The shift amount is set to \( \texttt{2} \), which is \( \texttt{10} \) in binar
   }
 \end{figure*}
 
-Encoding T2 is used, which just adds to a given register with an immediate value.
+Encoding T2 is used here, which just adds to a given register with an immediate value.
 
 The register \( \texttt{Rdn} \) is set to \( \texttt{R0} \), i.e., to \( \texttt{000} \), in bits 10--8.
 
