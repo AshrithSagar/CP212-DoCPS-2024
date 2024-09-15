@@ -34,10 +34,10 @@ However, the function \texttt{linear} expects a floating point number as per wha
 This is \underline{not the compiler's fault}, but rather just a programming error.
 
 To check what this number is actually, we can compute it as follows:
-When the exponent is \( \hex{00000000} \), a special rule is followed, where the value is treated as a \textit{denormalised number}, thereby the leading 1 in the mantissa is not considered and the actual exponent is taken as \( -126 \), i.e., the value here is given by:
+When the exponent is \( \hex{00000000} \), a special rule is followed, where the value is treated as a \textit{denormalised number} /\textit{subnormal number}, thereby the hidden leading 1 in the mantissa is not considered and the actual exponent is taken as \( -126 \), i.e., the value here is given by:
 \[
     \implies
-    + 2^{ -126 } \times 0.\underbrace{0000000000000000000}_{19\text{ zeros}}1010_{2}
+    {(-1)}^0 \times 2^{ -126 } \times 0.\underbrace{0000000000000000000}_{19\text{ zeros}}1010_{2}
 \]
 \begin{equation*}
     \implies
