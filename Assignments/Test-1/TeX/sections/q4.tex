@@ -26,8 +26,8 @@ Is the compiler buggy?
     }\label{fig:q4}
 \end{figure*}
 
-There is an issue of type mismatch here, which causes the compiler to interpret the value of \( x \) as a floating point number.
-Initially, the value of \( x \) is correctly interpreted as \( 10 \), i.e., as an integer.
+The issue arises from type mismatch in the function prototype.
+Initially, before passing to the function \( \texttt{linear} \), the value of \( x \) is correctly interpreted as \( 10 \), i.e., as an integer.
 Thereby the contents of the register are \( \hex{0xA} \).
 However, the function \texttt{linear} expects a floating point number as per what was written the function body, thereby causing the compiler to interpret the value of \( x \) as a floating point number, as shown in Figure~\ref{fig:q4}.
 This is \underline{not the compiler's fault}, but rather just a programming error.
@@ -47,7 +47,8 @@ When the exponent is \( \hex{00000000} \), a special rule is followed, where the
     }
 \end{equation*}
 
-Now, when the function \texttt{linear} is run, it returns the value \( 5x + 2 \), which is computed in floating point arithmetic by first having \( 5 \) and \( 2 \) represented as floating point numbers, as seen previously in Figure~\ref{fig:q3-5} and Figure~\ref{fig:q3-2}, respectively.
+Thereby, the integer 10 is treated as a very small floating-point number \( 1.4012984643 \times 10^{-44} \) and the function \texttt{linear} computes the value \( 5x + 2 \) based on this value.
+The value of \( 5x \) is computed as \( 5 \times 1.4012984643 \times 10^{-44} \), which is effectively zero, due to limitations of the floating point representation.
 
 We can verify the computations  manually.
 Multiplying the mantissa's, we get
@@ -57,7 +58,7 @@ Multiplying the mantissa's, we get
      & =
     2^{-20} + 2^{-22} + 2^{-22} + 2^{-24}
     \\ & =
-    (2^{-20} + 2^{-21}+ 2^{-24})
+    2^{-20} + 2^{-21}+ 2^{-24}
     \\ & =
     2^{-20} \times (1 + 2^{-1}+ 2^{-4})
 \end{align*}
@@ -76,13 +77,12 @@ Normalising the mantissa, we get
     \\ & =
     + 2^{-17 - 127} \times (1 + 2^{-1}+ 2^{-4})
 \end{align*}
-But this value can't be represented in the conventional floating point representation, since the exponent is too small.
+But this value can't be represented in the conventional floating point representation, since the exponent (-17) is too small.
 Hence, this value becomes zero, which is the value of \( 5x \) in floating point representation.
 
-Now, addition of the above value to 2 yields 2.0.
-Thereby, the result of the operation \( 5x + 2 \) \underline{yields 2.0} here.
-At the end of the function call, this value is stored as a floating point number, i.e., as \( \hex{0x40000000} \), which is the IEEE 754 representation of the number \( 2.0 \).
+When the function computes \( 5x + 2\), the result is dominated by the constant 2.
+Therefore, the result of \( 5x + 2\) yields 2.0, i.e., \( \hex{0x40000000} \) in the IEEE 754 format, which is the value that is stored at the end of the function call.
 But since the prototype defines the return type as \( \texttt{int} \), the value is interpreted as an integer.
-The decimal representation of \( \hex{0x40000000} \) is \( 2^{30} = \boxed{1073741824} \), which is the value that is stored in the global variable \( y \).
+The decimal representation of \( \hex{0x40000000} \) is \( 2^{30} = \boxed{1073741824} \), which is the value that is shown in the global variable \( y \).
 
 The \underline{compiler is not buggy}, but rather it is the fault of the programmer here.
