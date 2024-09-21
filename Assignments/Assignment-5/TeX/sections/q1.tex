@@ -11,6 +11,7 @@ Why or why not?
     \includegraphics[width=0.8\textwidth]{figures/images/m.png}
     \caption{
         Memory Window for \texttt{\&m}.
+        \( \quad \texttt{m} = \hex{0x00000007} \)
     }\label{fig:m}
 \end{figure*}
 
@@ -19,5 +20,16 @@ Why or why not?
     \includegraphics[width=0.8\textwidth]{figures/images/c.png}
     \caption{
         Memory Window for \texttt{\&c}.
+        \( \quad \texttt{c} = \hex{0x0000000B} \)
     }\label{fig:c}
 \end{figure*}
+
+The Memory Windows for \(\texttt{\&m}\) and \(\texttt{\&c}\) are shown in Figure~\ref{fig:m} and Figure~\ref{fig:c} respectively.
+
+The values of \(\texttt{m}\) and \(\texttt{c}\) are initialised properly when we run the program with the \( \texttt{--no\_remove} \) option set.
+If not, the default optimisations by the compiler would remove these constants and hardcode them in the instructions, since they are only used once.
+Thereby, we wouldn't be able to see these values as shown in the Symbols window in Figure~\ref{fig:symbols}.
+
+The values of \(\texttt{m}\) and \(\texttt{c}\) are stored in the read-only data section, which is copied to RAM during startup, since they are read-only initialised data.
+
+Hence, \underline{both \(\texttt{m}\) and \(\texttt{c}\) are initialised properly} with the \( \texttt{--no\_remove} \) option enabled.

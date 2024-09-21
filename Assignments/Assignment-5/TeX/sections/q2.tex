@@ -31,10 +31,17 @@ Why or why not?
     }\label{fig:initial}
 \end{figure*}
 
-\begin{figure*}[htbp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/images/final.png}
-    \caption{
-        Watch window after running the program.
-    }\label{fig:final}
-\end{figure*}
+When the \( \texttt{\_\_main} \) function is overridden in \( \texttt{start.c} \), the C Runtime initialisation code is not executed, which is responsible for initialising the values from the ROM into the RAM.\@
+Thereby, for \( \texttt{x\_array} \), which is supposed to be Read-Write initialised value, has it's values as some garbage values as shown in Figure~\ref{fig:x_array}.
+
+For \( \texttt{y\_array} \), which is supposed to be Read-Write uninitialised value, has it's values as some garbage values as shown in Figure~\ref{fig:y_array}, which is expected.
+
+The Watch Window before running the program is shown in Figure~\ref{fig:initial} where we can observe the garbage values that are stored in the two arrays.
+
+If we had not overrided the original \( \texttt{\_\_main} \) function that performs the C Runtime initialisations, we would have observed the correct initialised values in the RAM.\@
+
+Hence,
+\begin{enumerate}[itemsep=0pt, topsep=0pt, partopsep=0pt, parsep=0pt]
+    \item No, \underline{\( \texttt{x\_array} \) is not properly initialised}, when \( \texttt{\_\_main} \) function is overridden.
+    \item The \underline{initialisation for \( \texttt{y\_array} \) doesn't matter} in this case, since it is anyway expected to be garbage values due to it being Read-Write uninitialised data.
+\end{enumerate}

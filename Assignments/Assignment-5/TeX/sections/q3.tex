@@ -4,3 +4,41 @@ What are the sizes of various sections in your executable?\\
 What is the total ROM and RAM requirement?
 
 \subsection*{Solution}
+
+\subsubsection*{Sizes of various sections}
+
+We can observe the size of each of the section in the third column in Table~\ref{tab:map}.
+
+\begin{table}[htbp]
+    \centering
+    \resizebox{0.9\textwidth}{!}{
+        \input{tables/map.tex}
+    }
+    \caption{
+        Memory Map
+    }\label{tab:map}
+\end{table}
+
+\clearpage
+\subsubsection*{Total ROM and RAM requirements}
+
+When the program is compiled, we get the following log,
+\[
+    \texttt{
+        Program Size: Code=104 RO-data=72 RW-data=32 ZI-data=144
+    }
+\]
+where
+\begin{itemize}[itemsep=0pt, topsep=0pt, partopsep=0pt, parsep=0pt]
+    \item \( \texttt{RO} \): Read-Only data
+    \item \( \texttt{RW} \): Read-Write data
+    \item \( \texttt{ZI} \): Zero-Initialised data
+\end{itemize}
+
+\vspace*{1em}
+The total ROM and RAM requirements for the program can be seen in the \( \texttt{.map} \) file that is generated after compilation.
+
+\begin{table}[htbp]
+    \centering
+    \input{tables/size.tex}
+\end{table}

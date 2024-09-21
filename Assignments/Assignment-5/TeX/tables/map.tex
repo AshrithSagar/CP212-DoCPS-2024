@@ -1,0 +1,29 @@
+\begin{tabular}{@{}ccccccc@{}}
+	\toprule
+	\textbf{Exec Addr} & \textbf{Load Addr} & \textbf{Size}    & \textbf{Type} & \textbf{Attr} & \textbf{Idx} & \textbf{Section Name}  \\
+	\midrule
+	\multicolumn{7}{c}{\textbf{Execution Region ER\_RO}}                                                                               \\
+	\hex{0x00000000}   & \hex{0x00000000}   & \hex{0x00000040} & Data          & RO            & 9            & .rodata.\_\_Vectors    \\
+	\hex{0x00000040}   & \hex{0x00000040}   & \hex{0x00000000} & Code          & RO            & 1            & .text                  \\
+	\hex{0x00000040}   & \hex{0x00000040}   & \hex{0x00000000} & Code          & RO            & 16           & .text                  \\
+	\hex{0x00000040}   & \hex{0x00000040}   & \hex{0x00000000} & Code          & RO            & 27           & .text                  \\
+	\hex{0x00000040}   & \hex{0x00000040}   & \hex{0x00000004} & Code          & RO            & 4            & .text.Default\_Handler \\
+	\hex{0x00000044}   & \hex{0x00000044}   & \hex{0x0000000a} & Code          & RO            & 2            & * .text.Reset\_Handler \\
+	\hex{0x0000004e}   & \hex{0x0000004e}   & \hex{0x00000002} & PAD           & -             & -            & -                      \\
+	\hex{0x00000050}   & \hex{0x00000050}   & \hex{0x00000002} & Code          & RO            & 6            & .text.\_\_main         \\
+	\hex{0x00000052}   & \hex{0x00000052}   & \hex{0x00000002} & PAD           & -             & -            & -                      \\
+	\hex{0x00000054}   & \hex{0x00000054}   & \hex{0x00000010} & Code          & RO            & 28           & .text.linear           \\
+	\hex{0x00000064}   & \hex{0x00000064}   & \hex{0x00000042} & Code          & RO            & 17           & .text.main             \\
+	\hex{0x000000a6}   & \hex{0x000000a6}   & \hex{0x00000002} & PAD           & -             & -            & -                      \\
+	\hex{0x000000a8}   & \hex{0x000000a8}   & \hex{0x00000004} & Data          & RO            & 31           & .rodata.c              \\
+	\hex{0x000000ac}   & \hex{0x000000ac}   & \hex{0x00000004} & Data          & RO            & 30           & .rodata.m              \\
+	\midrule
+	\multicolumn{7}{c}{\textbf{Execution Region ER\_RW}}                                                                               \\
+	\hex{0x20000000}   & \hex{0x000000b0}   & \hex{0x00000004} & Data          & RW            & 21           & .ARM.use\_no\_argv     \\
+	\hex{0x20000004}   & \hex{0x000000b4}   & \hex{0x00000010} & Data          & RW            & 19           & .data.x\_array         \\
+	\midrule
+	\multicolumn{7}{c}{\textbf{Execution Region ER\_ZI}}                                                                               \\
+	\hex{0x20000014}   & -                  & \hex{0x00000080} & Zero          & RW            & 8            & .bss.stack\_memory     \\
+	\hex{0x20000094}   & -                  & \hex{0x00000010} & Zero          & RW            & 20           & .bss.y\_array          \\
+	\bottomrule
+\end{tabular}

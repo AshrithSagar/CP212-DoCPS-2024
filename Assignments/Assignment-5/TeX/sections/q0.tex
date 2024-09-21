@@ -6,20 +6,20 @@ In this exercise, you will implement a standalone system with your own startup c
     \item Create project without CMSIS Core and Device.
     \item Create a \(\texttt{start.c}\) file as discussed in the lab session.
     \item Add two files supplied with this assignment:
-        \begin{itemize}
-            \item \(\texttt{linear.c}\): Implements integer \(y = mx + c\), where \(m\) and \(c\) are 32-bit constants.
-            \item \(\texttt{main.c}\): Calls \(\texttt{linear()}\) with diﬀerent values of \(x\).
-        \end{itemize}
+          \begin{itemize}
+              \item \(\texttt{linear.c}\): Implements integer \(y = mx + c\), where \(m\) and \(c\) are 32-bit constants.
+              \item \(\texttt{main.c}\): Calls \(\texttt{linear()}\) with diﬀerent values of \(x\).
+          \end{itemize}
     \item Fill in the following table.
-        Specify the type to be one of:
-        function, read-only data, initialized data, uninitialized data, local data.
+          Specify the type to be one of:
+          function, read-only data, initialized data, uninitialized data, local data.
 \end{enumerate}
 
 \subsection*{Solution}
 
 \begin{table}[htbp]
     \centering
-    \input{tables/data/_.tex}
+    \input{tables/data.tex}
 \end{table}
 
 \begin{figure*}[htbp]
@@ -29,3 +29,5 @@ In this exercise, you will implement a standalone system with your own startup c
         Symbols window
     }\label{fig:symbols}
 \end{figure*}
+
+The corresponding symbols window is shown in Figure~\ref{fig:symbols}.
