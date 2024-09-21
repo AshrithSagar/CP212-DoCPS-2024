@@ -36,9 +36,35 @@ where
 \end{itemize}
 
 \vspace*{1em}
+In the program, the stack size was considered to be of 128 bytes.
+
 The total ROM and RAM requirements for the program can be seen in the \( \texttt{.map} \) file that is generated after compilation.
 
 \begin{table}[htbp]
     \centering
     \input{tables/size.tex}
 \end{table}
+
+It can also be calculated from the sizes as given in the third column of Table~\ref{tab:map}.
+\begin{align*}
+    \text{Total RO size}
+     & =
+    \text{Code} + \text{RO Data}
+    \\ & =
+    (64 + 4 + 10 + 2 + 2 + 2 + 16 + 66 + 2 + 4 + 4)
+    = 176 \text{ bytes}
+    \\
+    \text{Total RW size}
+     & =
+    \text{RW Data} + \text{ZI Data}
+    \\ & =
+    (4 + 16) + (128 + 16) = 164 \text{ bytes}
+    \\
+    \text{Total ROM size}
+     & =
+    \text{Code} + \text{RO Data} + \text{RW Data}
+    \\ & =
+    (176) + (4 + 16) = 196 \text{ bytes}
+\end{align*}
+
+\( \therefore \) The \underline{total ROM requirement is 196 bytes} while the \underline{total RAM requirement is 164 bytes}.

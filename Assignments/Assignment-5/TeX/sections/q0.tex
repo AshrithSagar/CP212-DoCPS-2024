@@ -22,12 +22,19 @@ In this exercise, you will implement a standalone system with your own startup c
     \input{tables/data.tex}
 \end{table}
 
-\begin{figure*}[htbp]
+The corresponding symbols window is shown in Figure~\ref{fig:symbols}.
+
+\newpage
+As for the local variable \( \texttt{i} \), it is stored in the stack as and when required, on run-time.
+It turns out that the Stack Pointer (SP) points to \( \hex{0x2000001C} \) when the program was running, which is where the variable \( \texttt{i} \) is stored.
+
+The \( \texttt{.bss} \) section indicates ``block starting symbol'', indicating that the variables are declared but not being assigned a value yet.
+
+\vspace*{3em}
+\begin{figure*}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/images/symbols.png}
     \caption{
         Symbols window
     }\label{fig:symbols}
 \end{figure*}
-
-The corresponding symbols window is shown in Figure~\ref{fig:symbols}.

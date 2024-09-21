@@ -2,15 +2,15 @@
 	\hline
 	\textbf{\large symbol} & \textbf{\large type} & \textbf{\large section}      & \textbf{\large address} \\
 	\hline
-	\(\texttt{main}\)      & function             & \verb|.text.main|            & \hex{0x00000064}        \\
+	\(\texttt{main}\)      & function             & \verb|.text.main|            & \hex{0x00000065}        \\
 	\hline
-	\(\texttt{i}\)         & stack                &                              &                         \\
+	\(\texttt{i}\)         & local data           & \verb|.bss.stack_memory|     & \hex{0x2000001C}        \\
 	\hline
-	\(\texttt{linear}\)    & function             & \verb|.text.linear|          & \hex{0x00000054}        \\
+	\(\texttt{linear}\)    & function             & \verb|.text.linear|          & \hex{0x00000055}        \\
 	\hline
-	\(\texttt{x\_array}\)  & initialised data*    & \verb|.data.x_array|         & \hex{0x20000010}        \\
+	\(\texttt{x\_array}\)  & initialised data*    & \verb|.data.x_array|         & \hex{0x20000004}        \\
 	\hline
-	\(\texttt{y\_array}\)  & uninitialised data   & \verb|.bss.y_array|          & \hex{0x200000A0}        \\
+	\(\texttt{y\_array}\)  & uninitialised data   & \verb|.bss.y_array|          & \hex{0x20000094}        \\
 	\hline
 	\(\texttt{m}\)         & read-only data       & \verb|.rodata.m|             & \hex{0x000000AC}        \\
 	\hline
@@ -18,8 +18,8 @@
 	\hline
 	(vector table)         & read-only data       & \verb|.rodata.__Vectors|     & \hex{Ox00000000}        \\
 	\hline
-	(reset handler)        & function             & \verb|.text.Reset_Handler|   & \hex{0x00000044}        \\
+	(reset handler)        & function             & \verb|.text.Reset_Handler|   & \hex{0x00000045}        \\
 	\hline
-	(default handler)      & function             & \verb|.text.Default_Handler| & \hex{0x00000040}        \\
+	(default handler)      & function             & \verb|.text.Default_Handler| & \hex{0x00000041}        \\
 	\hline
 \end{tabular}
