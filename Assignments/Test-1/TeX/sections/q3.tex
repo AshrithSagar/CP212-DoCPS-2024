@@ -35,7 +35,7 @@ They are a part of the ARM EABI (Embedded Application Binary Interface).
   \includegraphics[page=1, width=0.9\textwidth]{figures/q3/_}
   \setlength{\abovecaptionskip}{-12pt}
   \caption{
-    The number \( 5 \) in the IEEE 754 format is \( \hex{0x40A00000} \).
+    The number \( 5.0 \) in the IEEE 754 format is \( \hex{0x40A00000} \).
   }\label{fig:q3-5}
 \end{figure*}
 
@@ -44,7 +44,7 @@ They are a part of the ARM EABI (Embedded Application Binary Interface).
   \includegraphics[page=2, width=0.9\textwidth]{figures/q3/_}
   \setlength{\abovecaptionskip}{-12pt}
   \caption{
-    The number \( 2 \) in the IEEE 754 format is \( \hex{0x40000000} \).
+    The number \( 2.0 \) in the IEEE 754 format is \( \hex{0x40000000} \).
   }\label{fig:q3-2}
 \end{figure*}
 
@@ -67,7 +67,7 @@ The \texttt{S} suffix indicates to sets the flags based on the result.
 Moves the immediate value \( \hex{0x40A0} \) into the upper half of register \( \texttt{R1} \).
 \( \texttt{MOVT} \) indicates ``Move Top'', and writes an immediate value to the top halfword of the register while the bottom halfword remains unchanged.
 Thereby, the register \( \texttt{R1} \) now contains the value \( \hex{0x40A00000} \).
-This can be seen to be the floating point representation of the number \( 5 \) in IEEE 754 format (Figure~\ref{fig:q3-5}).
+This can be seen to be the floating point representation of the number \( 5.0 \) in IEEE 754 format (Figure~\ref{fig:q3-5}).
 
 \vspace*{1em}
 
@@ -83,7 +83,7 @@ Branch with Link (Immediate) calls the subroutine \verb|__aeabi_fmul| relative t
   \hex{0x00000500} & \hex{F04F4180} & \texttt{MOV} & \texttt{r1, \#0x40000000} \\
 \end{tabular}
 
-Moves the immediate value \( \hex{0x40000000} \) into register \( \texttt{R1} \), which is the floating point representation of the number \( 2 \) in IEEE 754 format (Figure~\ref{fig:q3-2}).
+Moves the immediate value \( \hex{0x40000000} \) into register \( \texttt{R1} \), which is the floating point representation of the number \( 2.0 \) in IEEE 754 format (Figure~\ref{fig:q3-2}).
 
 \vspace*{1em}
 
@@ -95,4 +95,4 @@ Branch with Link (Immediate) calls the subroutine \verb|__aeabi_fadd| relative t
 
 \vspace*{2em}
 
-Thereby, the routine calculates the result \( 5x + 2 \) using floating-point operations as before, but with software floating-point libraries used.
+Thereby, the routine calculates the result \( (5.0 \times x + 2.0) \) using floating-point operations as before, but with software floating-point libraries used.
