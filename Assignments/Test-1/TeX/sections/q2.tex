@@ -33,15 +33,15 @@ Briefly explain what these instructions do.
 Changing the code to floating point operations converts the instructions to vector operations when the Floating Point Unit (FPU) is enabled.
 This can be seen by the \( \texttt{V} \) prefix for each of the instructions in the disassembly.
 The FPU does the floating-point arithmetic using hardware.
-The routine calculates the result \( 5x + 2 \) using floating-point operations.
-\vspace*{1em}
+The routine calculates the result \( (5.0 \times x + 2.0) \) using floating-point operations.
+\vspace*{0.5em}
 
 \begin{tabular}{llll}
   \hex{0x00000500} & \hex{EEB11A04} & \texttt{VMOV.F32} & \texttt{s2, \#5} \\
 \end{tabular}
 
-This places an immediate value of \( 5 \) into the single-precision floating-point register \( \texttt{S2} \).
-\vspace*{1em}
+This places an immediate value of \( 5.0 \) into the single-precision floating-point register \( \texttt{S2} \).
+\vspace*{0.01em}
 
 \begin{tabular}{llll}
   \hex{0x00000504} & \hex{EE200A01} & \texttt{VMUL.F32} & \texttt{s0, s0, s2} \\
@@ -54,8 +54,8 @@ This operation multiplies the values in the single-precision floating-point regi
   \hex{0x00000508} & \hex{EEB01A00} & \texttt{VMOV.F32} & \texttt{s2, \#2} \\
 \end{tabular}
 
-This places an immediate value of \( 2 \) into the single-precision floating-point register \( \texttt{S2} \).
-\vspace*{1em}
+This places an immediate value of \( 2.0 \) into the single-precision floating-point register \( \texttt{S2} \).
+\vspace*{0.01em}
 
 \begin{tabular}{llll}
   \hex{0x0000050C} & \hex{EE300A01} & \texttt{VADD.F32} & \texttt{s0, s0, s2} \\
