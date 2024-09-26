@@ -48,12 +48,12 @@ The value here is given by
     }
 \end{equation*}
 
-Thereby, the integer 10 is treated as a very small floating-point number and the function \texttt{linear} computes the value of \( 5x + 2 \) based on this value.
+Thereby, the integer 10 is treated as a very small floating-point number and the function \texttt{linear} computes the value of \( (5.0 \times x + 2.0) \) based on this value.
 This turns out to be very small, i.e., \( 5 \times 1.4012984643 \times 10^{-44} \), which is effectively zero, due to limitations of the floating point representation.
 (See the Computations section below for the exact details).
 
-Now, when the function computes \( 5x + 2\), the result is dominated by the constant 2.
-Therefore, the result of \( 5x + 2\) yields 2.0, i.e., \( \hex{0x40000000} \) in the IEEE 754 format, which is the value that is stored at the end of the function call.
+Now, when the function computes \( (5.0 \times x + 2.0) \), the result is dominated by the constant 2.0.
+Therefore, the result of \( (5.0 \times x + 2.0) \) yields 2.0, i.e., \( \hex{0x40000000} \) in the IEEE 754 format, which is the value that is stored at the end of the function call.
 But since the prototype defines the return type as \( \texttt{int} \), the value is interpreted as an integer.
 The decimal representation of \( \hex{0x40000000} \) is \( 2^{30} = \boxed{1073741824} \), which is the value that is shown in the global variable \( y \).
 
@@ -61,7 +61,7 @@ The \underline{compiler is not buggy}, but rather it is the fault of the program
 
 \subsubsection*{Computations}
 
-We can verify the computation of \( 5x \) manually.
+We can verify the computation of \( (5.0 \times x) \) manually.
 Multiplying the mantissa's, we get
 \begin{align*}
     \implies
@@ -89,4 +89,4 @@ Normalising the mantissa, we get
     + 2^{-17 - 127} \times (1 + 2^{-1}+ 2^{-4})
 \end{align*}
 But this value can't be represented in the conventional floating point representation, since the exponent (-17) is too small.
-Hence, this value becomes zero, which is the value of \( 5x \) in floating point representation.
+Hence, this value becomes zero, which is the value of \( (5.0 \times x) \) in floating point representation.
