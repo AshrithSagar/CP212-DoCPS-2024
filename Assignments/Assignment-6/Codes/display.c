@@ -9,10 +9,10 @@ int delay(int ms) {
   // 64000 clock cycles in 1ms.
 
   while (clocks >= 0) {
-    clocks -= 10
+    clocks -= 10;
   }
 
-  return;
+  return 0;
 }
 
 void displayInit(void) {
