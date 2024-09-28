@@ -3,7 +3,17 @@
 Familiarize with the GPIO registers in section 6.8 of the product specifications.
 \begin{enumerate}[label= (\alph*)]
     \item What is the diﬀerence between OUT, OUTSET and OUTCLR registers?
-    \item What are the addresses of pin configuration register for the two push bucons?
+    \item What are the addresses of pin configuration register for the two push buttons?
 \end{enumerate}
 
 \subsection*{Solution}
+
+\subsubsection*{(a) Registers \texttt{OUT}, \texttt{OUTSET}, and \texttt{OUTCLR}}
+
+\begin{itemize}
+    \item \texttt{OUT} register is used to write GPIO port.
+    \item \texttt{OUTSET} register is used to set individual bits in GPIO port.
+    \item \texttt{OUTCLR} register is used to clear individual bits in GPIO port.
+\end{itemize}
+
+\subsubsection*{(b) Push buttons}
