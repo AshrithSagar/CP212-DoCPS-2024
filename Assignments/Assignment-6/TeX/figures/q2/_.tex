@@ -1,0 +1,73 @@
+\documentclass[tikz, border=5pt]{standalone}
+\usepackage{xstring}
+\usetikzlibrary{decorations.pathreplacing,
+positioning}
+
+\newcommand{\GetBit}[2]{%
+    \edef\BitPos{#2}%
+    \StrLen{#1}[\StringLen]%
+    \StrChar{#1}{#2}[\Bit]%
+}
+\newcommand{\SetBits}[2]{%
+    \foreach \i in {1,...,#2} {%
+            \GetBit{#1}{\i}%
+            \node at (\i - 0.5, 0.5) {\LARGE \textbf{\Bit}};
+        }%
+}
+\newcommand{\drawBraceLabel}[4]{%
+    \draw [decorate, decoration={brace, amplitude=5pt}] (#1, -0.1) -- (#2, -0.1);
+    \node [below] at (#3, -0.3) {\parbox{3cm}{\centering\texttt{#4}}};
+}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+    % Colors
+    \fill [red!10] (0, 0) rectangle (5, 1);
+    \fill [blue!10] (5, 0) rectangle (8, 1);
+    \fill [gray!10] (8, 0) rectangle (9, 1);
+    \fill [cyan!10] (9, 0) rectangle (11, 1);
+    \fill [green!10] (11, 0) rectangle (13, 1);
+    \fill [gray!10] (13, 0) rectangle (14, 1);
+    \fill [yellow!10] (14, 0) rectangle (16, 1);
+
+    % Boxes
+    \foreach \i in {0,...,15} {
+            \draw (\i, 0) rectangle (\i + 1, 1);
+        }
+    \SetBits{nRF52833-PPVV-CC}{16}
+
+    % Labels
+    \drawBraceLabel{5-0.025}{0}{2.5}{Product series}
+    \drawBraceLabel{8-0.025}{5+0.025}{5+3/2}{Part code}
+    \drawBraceLabel{11-0.025}{9}{10}{Package\\ variant}
+    \drawBraceLabel{13-0.025}{11}{12}{Function\\ variant}
+    \drawBraceLabel{16-0.025}{14}{15}{Container\\ code}
+
+\end{tikzpicture}
+
+\begin{tikzpicture}
+
+    % Colors
+    \fill [red!10] (0, 0) rectangle (5, 1);
+    \fill [blue!10] (5, 0) rectangle (8, 1);
+    \fill [gray!10] (8, 0) rectangle (9, 1);
+    \fill [cyan!10] (9, 0) rectangle (11, 1);
+    \fill [green!10] (11, 0) rectangle (13, 1);
+
+    % Boxes
+    \foreach \i in {0,...,12} {
+            \draw (\i, 0) rectangle (\i + 1, 1);
+        }
+    \SetBits{nRF52833-QIAA}{13}
+
+    % Labels
+    \drawBraceLabel{5-0.025}{0}{2.5}{Product series}
+    \drawBraceLabel{8-0.025}{5+0.025}{5+3/2}{Part code}
+    \drawBraceLabel{11-0.025}{9}{10}{Package\\ variant}
+    \drawBraceLabel{13-0.025}{11}{12}{Function\\ variant}
+
+\end{tikzpicture}
+
+\end{document}
