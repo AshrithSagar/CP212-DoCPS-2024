@@ -10,3 +10,16 @@ Displays work on the principle of persistence of vision, by noticing the fact th
 Typically, this persistence duration is around 1/16th of a second or about 60 milliseconds.
 This phenomenon is exploited to show a complete image by refreshing the display at a rate faster than the persistence duration, so that the image appears continuous to the human eye.
 For flicker-free display, the refresh rate should be at least 60 Hz.
+
+Further, we have the following
+\[
+    t_{ON} \text{ for each row}
+    =
+    \frac{1}{\text{Refresh rate} \times \text{Number of rows}}
+\]
+
+For a refresh rate of, say 60 Hz, and a display with 5 rows, we have
+\[
+    t_{ON} = \frac{1}{60 \times 5} = 3.33 \text{ ms}
+\]
+i.e., each row should be illuminated atmost for 3.33 ms to not observe any flickers.
