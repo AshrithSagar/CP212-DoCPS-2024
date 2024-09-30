@@ -17,3 +17,12 @@ Familiarize with the GPIO registers in section 6.8 of the product specifications
 \end{itemize}
 
 \subsubsection*{(b) Push buttons}
+
+From the schematic, we can see that the two push buttons are connected to pins \texttt{P0.14} and \texttt{P0.23}.
+The address offset for the pin configuration register \texttt{PIN\_CNF[n]} is given by \( \hex{0x700} + n \times \hex{0x4} \), where \( n \) is the pin number.
+The base address for Port \texttt{P0} is given by \( \hex{0x5000 0000} \).
+Thereby, we have the addresses of the pin configuration registers for the two push buttons as
+\begin{align*}
+    \text{Push button A} & : \hex{0x5000 0700} + 14 \times \hex{0x4} = \boxed{\hex{0x5000 0738}} \\
+    \text{Push button B} & : \hex{0x5000 0700} + 23 \times \hex{0x4} = \boxed{\hex{0x5000 075C}}
+\end{align*}
