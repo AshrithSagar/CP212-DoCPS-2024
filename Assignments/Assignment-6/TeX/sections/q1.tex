@@ -9,10 +9,43 @@ How many GPIO pins does NRF52833 have?
 
 \subsection*{Solution}
 
-The general purpose input/output pins (GPIOs) in NRF52833 are grouped into two ports, P0 and P1, with each port having up to 32 GPIOs.
-Thereby, there are 32+10=\underline{42 GPIO pins}.
+The general purpose input/output pins (GPIOs) in \texttt{nRF52833} are grouped into two ports, P0 and P1, with each port having up to 32 GPIOs.\\
+There are 32+10=\underline{42 GPIO pins} in \texttt{nRF52833}.
 
-The part number mentioned in the schematic is \texttt{nRF52833-QIAA}.
-It is a part of the \texttt{nRF52} series products, with part code \texttt{833}.
-\texttt{QI} denotes the package variant, indicating that the size of the package is \( 7\times 7 \) mm, with a pin/ball count of 73 and a pitch of 0.5 mm.
-\texttt{AA} denotes the function variant, having flash memory of 512 kB and RAM of 128 kB.\@
+Port P0 has 32 GPIO pins, numbered from 0 to 31.
+
+Port P1 has 10 GPIO pins, numbered from 0 to 9.
+
+The GPIO port peripheral implements up to 32 pins, \texttt{PIN0} through \texttt{PIN31}.
+Each of these pins can be individually configured in the \texttt{PIN\_CNF[n]} registers (n=0..31).
+
+The corresponding associated registers are:
+\begin{itemize}
+    \item \texttt{OUT} --- Write GPIO port
+    \item \texttt{OUTSET} --- Set individual bits
+    \item \texttt{OUTCLR} --- Clear individual bits
+    \item \texttt{IN} --- Read GPIO port
+    \item \texttt{DIR} --- Direction of GPIO pins
+    \item \texttt{DIRSET} --- Set bits in DIR register
+    \item \texttt{DIRCLR} --- Clear bits in DIR register
+    \item \texttt{LATCH} --- Latch register
+    \item \texttt{DETECTMODE} --- Select between DETECT or LDETECT signal mode
+    \item \texttt{PIN\_CNF[n]} --- Configuration of GPIO pins
+          \subitem~n = 0 to 31
+\end{itemize}
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[page=1, width=\textwidth]{figures/q2/_}
+    \vspace*{-3.5em}
+    \caption{Order code abbreviations and their meaning for \texttt{nRF52833} series}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=0.65\textwidth]{figures/images/q1-ball.png}
+    \caption{
+        Pin configuration for \texttt{QFN73} package.
+        Consists of 73 pins/balls.
+    }
+\end{figure}
