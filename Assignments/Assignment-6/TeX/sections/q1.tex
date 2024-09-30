@@ -9,21 +9,22 @@ How many GPIO pins does NRF52833 have?
 
 \subsection*{Solution}
 
-The general purpose input/output pins (GPIOs) in \texttt{nRF52833} are grouped into two ports, P0 and P1, with each port having up to 32 GPIOs.\\
-There are 32+10=\underline{42 GPIO pins} in \texttt{nRF52833}.
+The general purpose input/output pins (GPIOs) are grouped into two ports, P0 and P1, with each port having up to 32 GPIOs.\\
+For \texttt{nRF52833}, there are 32+10=\underline{42 GPIO pins}.
 
 Port P0 has 32 GPIO pins, numbered from 0 to 31.
 
 Port P1 has 10 GPIO pins, numbered from 0 to 9.
 
+\subsubsection*{Registers}
+
 The GPIO port peripheral implements up to 32 pins, \texttt{PIN0} through \texttt{PIN31}.
 Each of these pins can be individually configured in the \texttt{PIN\_CNF[n]} registers (n=0..31).
 
-The corresponding associated registers are:
 \begin{itemize}
     \item \texttt{OUT} --- Write GPIO port
-    \item \texttt{OUTSET} --- Set individual bits
-    \item \texttt{OUTCLR} --- Clear individual bits
+    \item \texttt{OUTSET} --- Set individual bits in GPIO port
+    \item \texttt{OUTCLR} --- Clear individual bits in GPIO port
     \item \texttt{IN} --- Read GPIO port
     \item \texttt{DIR} --- Direction of GPIO pins
     \item \texttt{DIRSET} --- Set bits in DIR register
@@ -34,18 +35,27 @@ The corresponding associated registers are:
           \subitem~n = 0 to 31
 \end{itemize}
 
-\begin{figure}[p]
+\clearpage
+\begin{figure}[htbp]
     \centering
     \includegraphics[page=1, width=\textwidth]{figures/q2/_}
     \vspace*{-3.5em}
-    \caption{Order code abbreviations and their meaning for \texttt{nRF52833} series}
+    \caption{
+        Order code abbreviations and their meaning for \texttt{nRF52833} series
+    }\label{fig:q1-order}
 \end{figure}
 
-\begin{figure}[p]
+The manual gives the order codes and definitions for the \texttt{nRF52833} series, as shown in Figure~\ref{fig:q1-order} above.
+
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.65\textwidth]{figures/images/q1-ball.png}
     \caption{
         Pin configuration for \texttt{QFN73} package.
         Consists of 73 pins/balls.
-    }
+    }\label{fig:q1-ball}
 \end{figure}
+
+Pin configuration for \texttt{QFN73} package is shown in Figure~\ref{fig:q1-ball} above.
+We can verify that there are 73 pins here.
+In the table given in the manual for this package, we can see that there are 42 GPIO pins out of the 73 available ones.
