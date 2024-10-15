@@ -1,5 +1,6 @@
 /* Application layer for the display module.
- * This will display a checkerboard pattern on the LED matrix.
+ * Display left arrow as long as the left button is pressed
+ * and right arrow as long as the right button is pressed.
  */
 #include "button.h"
 #include "display.h"
