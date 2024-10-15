@@ -33,8 +33,10 @@ void pinMode(int pin, int dir) {
 
   if (dir == INPUT) {
     CLEAR(port, GPIO_DIR, bit);
+    IOREG(port + GPIO_CONFIG(bit)) = INPUT;
   } else if (dir == OUTPUT) {
     SET(port, GPIO_DIR, bit);
+    IOREG(port + GPIO_CONFIG(bit)) = OUTPUT;
   }
 
   return;
