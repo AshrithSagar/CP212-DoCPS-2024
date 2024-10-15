@@ -2,7 +2,6 @@
  * display driver for the LED matrix
  */
 #include "display.h"
-#include "gpio.h"
 
 #define CLOCK_CYCLES_PER_MS 64000
 
