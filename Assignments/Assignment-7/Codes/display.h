@@ -1,4 +1,6 @@
 #define N 5
 
 void displayInit(void);
-void display(char image[N][N]);
+void displayImage(char image[N][N]);
+
+void naiveDelay(int ms);

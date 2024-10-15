@@ -1,7 +1,5 @@
+/* Hardware abstraction layer for GPIO port */
 #include "gpio.h"
-
-// Define accessing registers as a Macro
-#define IOREG(addr) (*(volatile long *)(addr))
 
 // GPIO base addresses
 #define GPIO_P0 0x50000000
@@ -12,37 +10,65 @@
 #define GPIO_IN 0x510
 #define GPIO_DIR 0x514
 
-long port;
-int bit;
+#define GPIO_CONFIG(pin) (0x700 + (pin) * 4)
+
+// Macros
+#define IOREG(addr) (*((volatile long *)(addr)))
+#define GPIO_PORT(pin) ((pin) < 32 ? GPIO_P0 : GPIO_P1)
+#define GPIO_BIT(pin) ((pin) < 32 ? (pin) : (pin)-32)
+#define CLEAR(port, offset, bit) (IOREG(port + offset) &= ~(1UL << (bit)))
+#define SET(port, offset, bit) (IOREG(port + offset) |= (1UL << (bit)))
 
 void pinMode(int pin, int dir) {
-  if (pin < 32) {
-    port = GPIO_P0;
-    bit = pin;
-  } else {
-    port = GPIO_P1;
-    bit = pin - 32;
+  /*
+   * Set the direction of a GPIO pin
+   * pin: pin number
+   * dir: INPUT or OUTPUT
+   */
+
+  long port;
+  int bit;
+  port = GPIO_PORT(pin);
+  bit = GPIO_BIT(pin);
+
+  if (dir == INPUT) {
+    CLEAR(port, GPIO_DIR, bit);
+    IOREG(port + GPIO_CONFIG(bit)) = 1; // Output, Standard drive
+  } else if (dir == OUTPUT) {
+    SET(port, GPIO_DIR, bit);
+    IOREG(port + GPIO_CONFIG(bit)) = 0;
+    // Input, Connect, No Pull, Sense disabled
   }
-  if (dir == INPUT)
-    IOREG(port + GPIO_DIR) &= -(1UL << bit); // Clear
-  else
-    IOREG(port + GPIO_DIR) |= (1UL << bit); // Set
 
   return;
 }
 
 void digitalWrite(int pin, int value) {
-  if (pin < 32) {
-    port = GPIO_P0;
-    bit = pin;
-  } else {
-    port = GPIO_P1;
-    bit = pin - 32;
-  }
-  if (value == 0)
-    IOREG(port + GPIO_OUT) &= -(1UL << bit); // Clear
-  else
-    IOREG(port + GPIO_OUT) |= (1UL << bit); // Set
+  /*
+   * Write a value to a GPIO pin
+   * pin: pin number
+   * value: LOW or HIGH
+   */
+
+  long port;
+  int bit;
+  port = GPIO_PORT(pin);
+  bit = GPIO_BIT(pin);
+
+  if (value == LOW)
+    CLEAR(port, GPIO_OUT, bit);
+  else if (value == HIGH)
+    SET(port, GPIO_OUT, bit);
 
   return;
+}
+
+int digitalRead(int pin) {
+  long port;
+  int bit, read;
+  port = GPIO_PORT(pin);
+  bit = GPIO_BIT(pin);
+
+  read = ((IOREG(port + GPIO_IN) >> bit) & 0x01);
+  return read;
 }
