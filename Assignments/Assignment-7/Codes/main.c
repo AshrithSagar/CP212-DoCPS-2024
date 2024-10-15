@@ -17,17 +17,17 @@ char pics[NUM_PICS][N][N] = {
     // Left arrow
     {
         {0, 0, 1, 0, 0},
-        {0, 1, 1, 1, 0},
+        {0, 1, 0, 0, 0},
         {1, 1, 1, 1, 1},
-        {0, 1, 1, 1, 0},
+        {0, 1, 0, 0, 0},
         {0, 0, 1, 0, 0},
     },
     // Right arrow
     {
         {0, 0, 1, 0, 0},
-        {0, 0, 1, 1, 1},
+        {0, 0, 0, 1, 0},
         {1, 1, 1, 1, 1},
-        {0, 0, 1, 1, 1},
+        {0, 0, 0, 1, 0},
         {0, 0, 1, 0, 0},
     },
 };
@@ -41,10 +41,8 @@ int main(void) {
   while (1) {
     if (BUTTON_PRESSED(BTN_A)) {
       currentPic = 1;
-      naiveDelay(100); // Debounce
     } else if (BUTTON_PRESSED(BTN_B)) {
       currentPic = 2;
-      naiveDelay(100); // Debounce
     } else {
       currentPic = 0;
     }
