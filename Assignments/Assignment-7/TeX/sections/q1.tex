@@ -4,3 +4,14 @@ What is input level when the switch is open?
 And when it is closed?
 
 \subsection*{Solution}
+
+\subsubsection*{When the switch is open}
+
+The input level at the buttons \texttt{BTN\_A} and \texttt{BTN\_B} is connected to the supply voltage (\texttt{VREG}) through the pull-up resistors (\texttt{R4} or \texttt{R5}).
+Since no current flows through the open switch, the input will be \underline{pulled high} to \texttt{VREG}.
+This sets the input level to \underline{logic high}.
+
+\subsubsection*{When the switch is closed}
+
+Closing the switches \texttt{SW2} or \texttt{SW3} creates a direct path to ground, causing the input to be \underline{pulled low} close to \texttt{0V}.
+This will set the input level to \underline{logic low}.

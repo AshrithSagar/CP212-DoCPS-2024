@@ -3,3 +3,8 @@
 What is the role of R4 and R5 resistors?
 
 \subsection*{Solution}
+
+The resistors \texttt{R4} and \texttt{R5} are \underline{pull-up resistors}.
+Their role is to ensure the input lines \texttt{BTN\_A} and \texttt{BTN\_B} are pulled to a high level (\texttt{VREG}) when the switches \texttt{SW2} and \texttt{SW3} are open.
+
+Without these resistors, the input would be floating, potentially causing erratic behavior in the microcontroller.
