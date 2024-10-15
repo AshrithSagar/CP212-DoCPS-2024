@@ -33,11 +33,8 @@ void pinMode(int pin, int dir) {
 
   if (dir == INPUT) {
     CLEAR(port, GPIO_DIR, bit);
-    IOREG(port + GPIO_CONFIG(bit)) = 1; // Output, Standard drive
   } else if (dir == OUTPUT) {
     SET(port, GPIO_DIR, bit);
-    IOREG(port + GPIO_CONFIG(bit)) = 0;
-    // Input, Connect, No Pull, Sense disabled
   }
 
   return;

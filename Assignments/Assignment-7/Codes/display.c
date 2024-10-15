@@ -16,7 +16,7 @@ void naiveDelay(int ms) {
    * Note: Inefficient method. May block CPU cycles.
    */
 
-  volatile int clocks = ms * CLOCK_CYCLES_PER_MS;
+  int clocks = ms * CLOCK_CYCLES_PER_MS;
   // 64000 clock cycles in 1ms. 1 clock cycle is 1/64000 ms.
 
   while (clocks > 0) {

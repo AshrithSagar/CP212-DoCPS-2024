@@ -3,7 +3,6 @@
  */
 #include "display.h"
 
-#define NUM_PICS 5
 char pic[N][N] = {{0, 1, 0, 1, 0},
                   {1, 0, 1, 0, 1},
                   {0, 1, 0, 1, 0},
