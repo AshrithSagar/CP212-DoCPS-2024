@@ -1,1 +1,13 @@
 \section{Memory map}
+
+Only constants (\texttt{.rodata}) and uninitialised variables (\texttt{.data}) are used in the program, since C runtime initialisation is not included.
+
+\begin{table}[htbp]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \input{tables/map.tex}
+    }
+    \caption{
+        Memory map of the program
+    }\label{tab:map}
+\end{table}
