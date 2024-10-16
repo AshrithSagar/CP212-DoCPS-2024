@@ -6,8 +6,8 @@
 #define CLOCK_CYCLES_PER_MS 64000
 
 // LED matrix pins
-int LED_ROW_PINS[] = {21, 22, 15, 24, 19};
-int LED_COL_PINS[] = {28, 11, 31, 37, 30};
+int LED_ROW_PINS[N] = {21, 22, 15, 24, 19};
+int LED_COL_PINS[N] = {28, 11, 31, 37, 30};
 
 void naiveDelay(int ms) {
   /*
@@ -16,7 +16,8 @@ void naiveDelay(int ms) {
    * Note: Inefficient method. May block CPU cycles.
    */
 
-  int clocks = ms * CLOCK_CYCLES_PER_MS;
+  int clocks;
+  clocks = ms * CLOCK_CYCLES_PER_MS;
   // 64000 clock cycles in 1ms. 1 clock cycle is 1/64000 ms.
 
   while (clocks > 0) {
@@ -33,7 +34,8 @@ void displayInit(void) {
    * Set the column pins as OUTPUT and HIGH
    */
 
-  for (int i = 0; i < N; i++) {
+  int i;
+  for (i = 0; i < N; i++) {
     digitalWrite(LED_ROW_PINS[i], LOW);
     pinMode(LED_ROW_PINS[i], OUTPUT);
 
@@ -51,12 +53,13 @@ void displayImage(char image[N][N]) {
    * The image is displayed row by row.
    */
 
-  for (int r = 0; r < N; r++) {
+  int r, c;
+  for (r = 0; r < N; r++) {
     // Turn ON the row
     digitalWrite(LED_ROW_PINS[r], HIGH);
 
     // Selectively turn ON the columns
-    for (int c = 0; c < N; c++) {
+    for (c = 0; c < N; c++) {
       if (image[r][c] == 1)
         digitalWrite(LED_COL_PINS[c], LOW);
     }
@@ -65,7 +68,7 @@ void displayImage(char image[N][N]) {
     // 3 ms * 5 rows => 15 ms/frame => ~66.66 fps
 
     // Turn OFF all the columns
-    for (int c = 0; c < N; c++) {
+    for (c = 0; c < N; c++) {
       digitalWrite(LED_COL_PINS[c], HIGH);
     }
 
