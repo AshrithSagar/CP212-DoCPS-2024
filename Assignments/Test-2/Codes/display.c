@@ -6,8 +6,8 @@
 #define CLOCK_CYCLES_PER_MS 64000
 
 // LED matrix pins
-int LED_ROW_PINS[N] = {21, 22, 15, 24, 19};
-int LED_COL_PINS[N] = {28, 11, 31, 37, 30};
+const int LED_ROW_PINS[N] = {21, 22, 15, 24, 19};
+const int LED_COL_PINS[N] = {28, 11, 31, 37, 30};
 
 void naiveDelay(int ms) {
   /*
@@ -46,7 +46,7 @@ void displayInit(void) {
   return;
 }
 
-void displayImage(char image[N][N]) {
+void displayImage(const char image[N][N]) {
   /*
    * Display an image on the LED matrix
    * image: 2D array of 1s (LED ON) and 0s (LED OFF)
