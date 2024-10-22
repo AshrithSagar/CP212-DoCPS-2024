@@ -6,7 +6,7 @@
 #include "display.h"
 
 #define NUM_PICS 3
-char pics[NUM_PICS][N][N] = {
+const char pics[NUM_PICS][N][N] = {
     // Blank
     {
         {0, 0, 0, 0, 0},
