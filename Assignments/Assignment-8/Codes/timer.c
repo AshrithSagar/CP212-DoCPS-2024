@@ -18,21 +18,27 @@ void timerDelay(int ms) {
    * ms: delay in milliseconds
    */
 
-  SYST_RVR = (CLOCK / 1000) * ms;
-  SYST_CVR = 0; // Any write operation to CVR clears it
+  while (ms > 0) {
+    ms--;
 
-  SYST_CSR = 5;
-  /* SYST_CSR:
-  - Bit-0: ENABLE; Enable/Disable clock;
-    - (1) => Enable clock
-  - Bit-1: TICKINT; Enabling interrupts;
-    - (0) => No interrupts
-  - Bit-2: CLKSOURCE; Internal/External clock;
-    - (1) => Use internal clock (the only option in nRF52833)
-  */
+    SYST_RVR = (CLOCK / 1000);
+    SYST_CVR = 0; // Any write operation to CVR clears it
 
-  while ((SYST_CSR & 0x00010000) == 0)
-    ; // Wait till COUNTFLAG (Bit-16) is set
+    SYST_CSR = 5;
+    /* SYST_CSR:
+    - Bit-0: ENABLE; Enable/Disable clock;
+      - (1) => Enable clock
+    - Bit-1: TICKINT; Enabling interrupts;
+      - (0) => No interrupts
+    - Bit-2: CLKSOURCE; Internal/External clock;
+      - (1) => Use internal clock (the only option in nRF52833)
+    */
+
+    while ((SYST_CSR & 0x00010000) == 0)
+      ; // Wait till COUNTFLAG (Bit-16) is set
+
+    SYST_CSR = 0; // Turn OFF
+  }
 };
 
 int count;
