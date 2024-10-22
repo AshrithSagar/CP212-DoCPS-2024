@@ -12,3 +12,4 @@
 
 void displayInit(void);
 void displayImage(char image[N][N]);
+void displayRefresh(void);

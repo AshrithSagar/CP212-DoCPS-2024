@@ -58,3 +58,12 @@ void displayImage(char image[N][N]) {
 
   return;
 }
+
+int row;
+void displayRefresh(void) {
+  digitalWrite(LED_ROW_PINS[row], 0); // Turn off the previous row
+  row = (row + 1) % N;
+  for (int c = 0; c < N; c++) {
+    digitalWrite(LED_COL_PINS[c], 1);
+  }
+}

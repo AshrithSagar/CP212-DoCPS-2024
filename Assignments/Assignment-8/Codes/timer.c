@@ -35,6 +35,28 @@ void timerDelay(int ms) {
     ; // Wait till COUNTFLAG (Bit-16) is set
 };
 
-void timerInterruptEnable(int ms){
-    // TBD
+int count;
+void timerInterruptEnable(int ms) {
+  /* Enable timer interrupts
+   * Limitation of 250ms because of the timer overflow in hardware
+   */
+
+  count = 0;
+  SYST_RVR = ms * (CLOCK / 1000);
+  SYST_CVR = 0; // Any write operation to CVR clears it
+
+  SYST_CSR = 7;
+  /* SYST_CSR:
+  - Bit-0: ENABLE; Enable/Disable clock;
+    - (1) => Enable clock
+  - Bit-1: TICKINT; Enabling interrupts;
+    - (1) => Enable interrupts
+  - Bit-2: CLKSOURCE; Internal/External clock;
+    - (1) => Use internal clock (the only option in nRF52833)
+  */
 };
+
+void SysTick_Handler(void) {
+  count++;
+  displayRefresh(); // Called periodically
+}
