@@ -3,9 +3,12 @@
 #include "gpio.h"
 #endif // GPIO_H
 
+#ifndef TIMER_H
+#define TIMER_H
+#include "timer.h"
+#endif // TIMER_H
+
 #define N 5
 
 void displayInit(void);
 void displayImage(char image[N][N]);
-
-void naiveDelay(int ms);

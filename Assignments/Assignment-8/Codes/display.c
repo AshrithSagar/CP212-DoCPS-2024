@@ -9,23 +9,6 @@
 int LED_ROW_PINS[] = {21, 22, 15, 24, 19};
 int LED_COL_PINS[] = {28, 11, 31, 37, 30};
 
-void naiveDelay(int ms) {
-  /*
-   * Delay function using a busy loop
-   * ms: delay in milliseconds
-   * Note: Inefficient method. May block CPU cycles.
-   */
-
-  int clocks = ms * CLOCK_CYCLES_PER_MS;
-  // 64000 clock cycles in 1ms. 1 clock cycle is 1/64000 ms.
-
-  while (clocks > 0) {
-    clocks -= 10;
-  }
-
-  return;
-}
-
 void displayInit(void) {
   /*
    * Initialize the LED matrix with a blank display
@@ -61,7 +44,7 @@ void displayImage(char image[N][N]) {
         digitalWrite(LED_COL_PINS[c], LOW);
     }
 
-    naiveDelay(3);
+    timerDelay(3);
     // 3 ms * 5 rows => 15 ms/frame => ~66.66 fps
 
     // Turn OFF all the columns

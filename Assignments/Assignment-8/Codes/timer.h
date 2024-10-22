@@ -1,2 +1,2 @@
-void delayMS(int ms);
+void timerDelay(int ms);
 void timerInterruptEnable(int ms);

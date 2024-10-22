@@ -12,7 +12,7 @@
 
 #define CLOCK 64000000UL // 64 MHz clock
 
-void delayMS(int ms) {
+void timerDelay(int ms) {
   /*
    * Delay function using the SysTick timer
    * ms: delay in milliseconds
