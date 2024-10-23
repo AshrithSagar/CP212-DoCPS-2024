@@ -3,3 +3,12 @@
 Explain how systick handler routine gets called.
 
 \subsection*{Solution}
+
+While initialising the display when running the \texttt{main()} function, we enable the timer interrupts using the \texttt{timerInterruptEnable()} function with a delay of \texttt{3 ms}.
+This is responsible for calling the \texttt{SysTick\_Handler()} function every \texttt{3 ms}.
+In the \texttt{displayImage()} function, we pass an image, which gets copied to a frame buffer.
+Every \texttt{3 ms}, the timer register \texttt{SYST\_CVR} goes to \texttt{0}, which triggers a timer interrupt, and after pushing few of the registers and other values as mentioned in the interrupt model, the program counter then goes to the \texttt{SysTick\_Handler()} function which is subsequently called.
+This runs the \texttt{displayRefresh()} routine, which updates each row of the LED matrix everytime it's called with the next row of the frame buffer.
+Thereby, we are able to update each row of the display everytime the \texttt{SysTick\_Handler()} function is called.
+After this interrupt is called, the processor can resume it's task that was being run before the interrupt was called, which it does by restoring the registers, program counter and other values that were pushed to the stack before the interrupt service routine was called.
+This way, the processor can run the main program and the interrupt service routine concurrently.
