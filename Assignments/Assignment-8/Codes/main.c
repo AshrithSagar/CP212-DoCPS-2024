@@ -34,10 +34,10 @@ const char pics[NUM_PICS][N][N] = {
 
 int main(void) {
   displayInit();
+  displayImage(pics[1]);
 
-  while (1) {
-    displayImage(pics[0]);
-  }
+  while (1)
+    ;
 
   return 0;
 }

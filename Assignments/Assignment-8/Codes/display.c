@@ -25,47 +25,55 @@ void displayInit(void) {
     pinMode(LED_COL_PINS[i], OUTPUT);
   }
 
+  timerInterruptEnable(3);
+  // 3 ms * 5 rows => 15 ms/frame => ~66.66 fps
+
   return;
 }
 
+int frameBuffer[N][N];
 void displayImage(const char image[N][N]) {
   /*
-   * Display an image on the LED matrix
+   * Wrapper to display an image on the LED matrix
    * image: 2D array of 1s (LED ON) and 0s (LED OFF)
-   * The image is displayed row by row.
+   * Copy to a frame buffer and periodically
+   * call display refresh by timer interrupts
    */
 
   int r, c;
   for (r = 0; r < N; r++) {
-    // Turn ON the row
-    digitalWrite(LED_ROW_PINS[r], HIGH);
-
-    // Selectively turn ON the columns
     for (c = 0; c < N; c++) {
-      if (image[r][c] == 1)
-        digitalWrite(LED_COL_PINS[c], LOW);
+      frameBuffer[r][c] = image[r][c];
     }
-
-    timerDelay(3);
-    // 3 ms * 5 rows => 15 ms/frame => ~66.66 fps
-
-    // Turn OFF all the columns
-    for (c = 0; c < N; c++) {
-      digitalWrite(LED_COL_PINS[c], HIGH);
-    }
-
-    // Turn OFF the row
-    digitalWrite(LED_ROW_PINS[r], LOW);
   }
-
-  return;
 }
 
 int row;
 void displayRefresh(void) {
-  digitalWrite(LED_ROW_PINS[row], 0); // Turn off the previous row
-  row = (row + 1) % N;
-  for (int c = 0; c < N; c++) {
-    digitalWrite(LED_COL_PINS[c], 1);
-  }
+  /*
+   * Display the image from the frame buffer
+   * The image is displayed row by row
+   */
+
+  // Turn off the previous row
+  digitalWrite(LED_ROW_PINS[row], LOW);
+
+  row = (row + 1) % N; // Update the row
+
+  // Turn ON the updated row
+  digitalWrite(LED_ROW_PINS[row], HIGH);
+
+  int c;
+  // Turn ON/OFF the columns accordingly
+  for (c = 0; c < N; c++)
+    if (frameBuffer[row][c] == 1)
+      digitalWrite(LED_COL_PINS[c], LOW);
+    else if (frameBuffer[row][c] == 0)
+      digitalWrite(LED_COL_PINS[c], HIGH);
+
+  return;
+}
+
+void SysTick_Handler(void) {
+  displayRefresh(); // Called periodically
 }
