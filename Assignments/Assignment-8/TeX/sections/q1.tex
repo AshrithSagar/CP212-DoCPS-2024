@@ -3,3 +3,7 @@
 What advantage does this (ex08) method offer over the previous (ex06) one?
 
 \subsection*{Solution}
+
+Using the SysTick timer to implement delay using interrupts \underline{doesn't block the CPU cycles}, unlike in the previous method, which implements a naive delay that uses up the CPU cycles.
+This has the advantage that we can perform other operations in parallel while the display is turned ON.\@
+This is a crucial application, since we also want to run other computations on the processor and don't just want to use up all the available CPU cycles just for the display.\@
