@@ -6,17 +6,23 @@ What are its advantages and disadvantages?
 
 \subsection*{Solution}
 
-UART stands for ``Universal Asynchronous Receiver/Transmitter''.
-The ``A'' in UART stands for ``Asynchronous'', which means that the transmitter and receiver are not synchronized by a common clock signal.
+UART stands for ``Universal Asynchronous Receiver/Transmitter'', thereby the ``A'' stands for ``Asynchronous''.
+Asynchronous communication means that data is sent without a shared clock signal between the sender and receiver.
+Instead, the devices agree on a specific baud rate (data transmission speed) and use start and stop bits to indicate the beginning and end of each data byte.
+This allows for flexible communication without needing a constant clock signal.
 
 \subsubsection*{Advantages of UART}
 \begin{itemize}[noitemsep]
     \item Simple to implement.
     \item Can be used to communicate between devices with different clock speeds.
+    \item Can be used to communicate over long distances, since synchronizing clocks over long distances can be challenging.
 \end{itemize}
 
 \subsubsection*{Disadvantages of UART}
 \begin{itemize}[noitemsep]
     \item Slower compared to synchronous communication.
-    \item Requires additional bits for synchronization.
+    \item Requires additional bits for synchronization which has an overhead. \\
+          This reduces the data throughput.
+    \item If the baud rates are not perfectly matched, data corruption can occur. \\
+          Timing discrepancies can lead to misinterpretation of the data.
 \end{itemize}
