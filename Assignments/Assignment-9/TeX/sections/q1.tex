@@ -14,13 +14,13 @@ This allows for flexible communication without needing a constant clock signal.
 \subsubsection*{Advantages of UART}
 \begin{itemize}[noitemsep]
     \item Simple to implement.
+          Requires only two wires for communication, \texttt{TX} and \texttt{RX}.
     \item Can be used to communicate between devices with different clock speeds.
     \item Can be used to communicate over long distances, since synchronizing clocks over long distances can be challenging.
 \end{itemize}
 
 \subsubsection*{Disadvantages of UART}
 \begin{itemize}[noitemsep]
-    \item Slower compared to synchronous communication.
     \item Requires additional bits for synchronization which has an overhead. \\
           This reduces the data throughput.
     \item If the baud rates are not perfectly matched, data corruption can occur. \\
