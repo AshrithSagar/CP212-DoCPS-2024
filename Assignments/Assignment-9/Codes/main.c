@@ -3,7 +3,8 @@
 
 // Test all the myput* functions
 int main(void) {
-  // Initialize UART
+  // Initialize UART and rest of the code for testing remains
+  // the same, just that now, we can view the output on PuTTY.
   uart_init();
 
   // Test printing a single character

@@ -17,7 +17,7 @@ void uart_init() {
   UART_PSEL_TXD = UART_TX_PIN;
 
   // Set BAUD rate; 115200;
-  // 11520 bytes per second, including 1 start bit + 8 data bits + 1 stop bit
+  // => 11520 bytes per second, including 1 start bit + 8 data bits + 1 stop bit
   UART_BAUDRATE = 0x01D7E000;
 
   // Start TX; Trigger task;
