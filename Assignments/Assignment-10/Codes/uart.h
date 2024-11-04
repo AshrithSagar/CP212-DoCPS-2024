@@ -8,5 +8,6 @@
 
 void uart_init(void);
 void uart_putc(char ch);
+char uart_getc(void);
 
 #endif // UART_H
