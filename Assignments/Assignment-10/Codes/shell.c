@@ -46,32 +46,32 @@ void execute_command(int argc, char *argv[]) {
       }
     }
     if (!found) {
-      myprintf("Unknown command: %s\n", argv[0]);
+      myprintf("Unknown command: %s\r\n", argv[0]);
     }
   }
 }
 void cmd_help(int argc, char *argv[]) {
-  myprintf("Available commands:\n");
+  myprintf("Available commands:\r\n");
   for (int i = 0; i < MAX_COMMANDS; i++) {
-    myprintf(" - %s\n", commands[i].name);
+    myprintf(" - %s\r\n", commands[i].name);
   }
 }
 
 void cmd_display(int argc, char *argv[]) {
   if (argc != N + 1) {
-    myprintf("Usage: display <row1> <row2> <row3> <row4> <row5>\n");
+    myprintf("Usage: display <row1> <row2> <row3> <row4> <row5>\r\n");
     return;
   }
 
   for (int i = 0; i < N; i++) {
     if (strlen(argv[i + 1]) != N) {
-      myprintf("Each row must contain exactly %d bits (0 or 1).\n", N);
+      myprintf("Each row must contain exactly %d bits (0 or 1).\r\n", N);
       return;
     }
 
     for (int j = 0; j < N; j++) {
       if (argv[i + 1][j] != '0' && argv[i + 1][j] != '1') {
-        myprintf("Invalid bit found: %c. Only 0 or 1 is allowed.\n",
+        myprintf("Invalid bit found: %c. Only 0 or 1 is allowed.\r\n",
                  argv[i + 1][j]);
         return;
       }
@@ -85,7 +85,7 @@ void cmd_display(int argc, char *argv[]) {
     for (int j = 0; j < N; j++) {
       myprintf("%d ", picture[i][j]);
     }
-    myprintf("\n");
+    myprintf("\r\n");
   }
 }
 
@@ -113,7 +113,7 @@ void cmd_up(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
     rotate_left();
   }
-  myprintf("Rotated up:\n");
+  myprintf("Rotated up:\r\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
@@ -121,7 +121,7 @@ void cmd_down(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
     rotate_right();
   }
-  myprintf("Rotated down:\n");
+  myprintf("Rotated down:\r\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
@@ -129,7 +129,7 @@ void cmd_left(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
     rotate_left();
   }
-  myprintf("Rotated left:\n");
+  myprintf("Rotated left:\r\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
@@ -137,12 +137,12 @@ void cmd_right(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
     rotate_right();
   }
-  myprintf("Rotated right:\n");
+  myprintf("Rotated right:\r\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
 void cmd_exit(int argc, char *argv[]) {
-  myprintf("Exiting...\n");
+  myprintf("Exiting...\r\n");
   exit(0);
 }
 
