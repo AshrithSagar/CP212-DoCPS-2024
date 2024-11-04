@@ -57,16 +57,27 @@ void cmd_help(int argc, char *argv[]) {
 }
 
 void cmd_display(int argc, char *argv[]) {
-  if (argc != 6) {
+  if (argc != N + 1) {
     myprintf("Usage: display <row1> <row2> <row3> <row4> <row5>\n");
     return;
   }
 
   for (int i = 0; i < N; i++) {
+    if (strlen(argv[i + 1]) != N) {
+      myprintf("Each row must contain exactly %d bits (0 or 1).\n", N);
+      return;
+    }
+
     for (int j = 0; j < N; j++) {
+      if (argv[i + 1][j] != '0' && argv[i + 1][j] != '1') {
+        myprintf("Invalid bit found: %c. Only 0 or 1 is allowed.\n",
+                 argv[i + 1][j]);
+        return;
+      }
       picture[i][j] = argv[i + 1][j] - '0'; // Convert char to int
     }
   }
+
   displayImage(picture);
 
   for (int i = 0; i < N; i++) {
