@@ -1,17 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "shell.h"
 
-#define MAX_ARGS 10
-#define MAX_COMMANDS 7
-
-void cmd_help(int argc, char *argv[]);
-void cmd_display(int argc, char *argv[]);
-void cmd_up(int argc, char *argv[]);
-void cmd_down(int argc, char *argv[]);
-void cmd_left(int argc, char *argv[]);
-void cmd_right(int argc, char *argv[]);
-void cmd_exit(int argc, char *argv[]);
+int picture[N][N] = {0};
 
 typedef struct {
   const char *name;
@@ -57,9 +46,6 @@ void cmd_help(int argc, char *argv[]) {
     printf(" - %s\n", commands[i].name);
   }
 }
-
-#define N 5
-int picture[N][N] = {0};
 
 void cmd_display(int argc, char *argv[]) {
   if (argc != 6) {
