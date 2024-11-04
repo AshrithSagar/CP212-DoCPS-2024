@@ -32,7 +32,7 @@ void displayInit(void) {
 }
 
 int frameBuffer[N][N];
-void displayImage(const char image[N][N]) {
+void displayImage(int image[N][N]) {
   /*
    * Wrapper to display an image on the LED matrix
    * image: 2D array of 1s (LED ON) and 0s (LED OFF)

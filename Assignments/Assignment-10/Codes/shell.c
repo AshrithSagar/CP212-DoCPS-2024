@@ -1,6 +1,15 @@
 #include "shell.h"
+#include "display.h"
 
 int picture[N][N] = {0};
+
+void cmd_help(int argc, char *argv[]);
+void cmd_display(int argc, char *argv[]);
+void cmd_up(int argc, char *argv[]);
+void cmd_down(int argc, char *argv[]);
+void cmd_left(int argc, char *argv[]);
+void cmd_right(int argc, char *argv[]);
+void cmd_exit(int argc, char *argv[]);
 
 typedef struct {
   const char *name;
@@ -36,20 +45,20 @@ void execute_command(int argc, char *argv[]) {
       }
     }
     if (!found) {
-      printf("Unknown command: %s\n", argv[0]);
+      myprintf("Unknown command: %s\n", argv[0]);
     }
   }
 }
 void cmd_help(int argc, char *argv[]) {
-  printf("Available commands:\n");
+  myprintf("Available commands:\n");
   for (int i = 0; i < MAX_COMMANDS; i++) {
-    printf(" - %s\n", commands[i].name);
+    myprintf(" - %s\n", commands[i].name);
   }
 }
 
 void cmd_display(int argc, char *argv[]) {
   if (argc != 6) {
-    printf("Usage: display <row1> <row2> <row3> <row4> <row5>\n");
+    myprintf("Usage: display <row1> <row2> <row3> <row4> <row5>\n");
     return;
   }
 
@@ -58,12 +67,13 @@ void cmd_display(int argc, char *argv[]) {
       picture[i][j] = argv[i + 1][j] - '0'; // Convert char to int
     }
   }
+  displayImage(picture);
 
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
-      printf("%d ", picture[i][j]);
+      myprintf("%d ", picture[i][j]);
     }
-    printf("\n");
+    myprintf("\n");
   }
 }
 
@@ -91,7 +101,7 @@ void cmd_up(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
     rotate_left();
   }
-  printf("Rotated up:\n");
+  myprintf("Rotated up:\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
@@ -99,7 +109,7 @@ void cmd_down(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
     rotate_right();
   }
-  printf("Rotated down:\n");
+  myprintf("Rotated down:\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
@@ -107,7 +117,7 @@ void cmd_left(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
     rotate_left();
   }
-  printf("Rotated left:\n");
+  myprintf("Rotated left:\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
@@ -115,22 +125,22 @@ void cmd_right(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
     rotate_right();
   }
-  printf("Rotated right:\n");
+  myprintf("Rotated right:\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
 void cmd_exit(int argc, char *argv[]) {
-  printf("Exiting...\n");
+  myprintf("Exiting...\n");
   exit(0);
 }
 
-int main() {
+void shellInit(void) {
   char line[100];
   char *argv[MAX_ARGS];
   int argc;
 
   while (1) {
-    printf("> ");
+    myprintf("> ");
     if (fgets(line, sizeof(line), stdin) == NULL) {
       break;
     }
@@ -138,6 +148,4 @@ int main() {
     parse_command(line, &argc, argv);
     execute_command(argc, argv);
   }
-
-  return 0;
 }

@@ -7,7 +7,7 @@
 #define N 5
 
 void displayInit(void);
-void displayImage(const char image[N][N]);
+void displayImage(int image[N][N]);
 void displayRefresh(void);
 
 #endif // DISPLAY_H
