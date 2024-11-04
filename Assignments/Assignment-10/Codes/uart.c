@@ -63,3 +63,16 @@ char uart_getc(void) {
   // Return received character
   return UART_RXD;
 }
+
+char *uart_fgets(char *buf, int bufsize) {
+  int i = 0;
+  while (i < bufsize - 1) {
+    int c = uart_getc();
+    if (c == '\n' || c == '\r') {
+      break;
+    }
+    buf[i++] = c;
+  }
+  buf[i] = '\0';
+  return buf;
+}

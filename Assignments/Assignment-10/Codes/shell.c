@@ -1,5 +1,6 @@
 #include "shell.h"
 #include "display.h"
+#include "uart.h"
 
 int picture[N][N] = {0};
 
@@ -152,7 +153,7 @@ void shellInit(void) {
 
   while (1) {
     myprintf("> ");
-    if (fgets(line, sizeof(line), stdin) == NULL) {
+    if (uart_fgets(line, sizeof(line)) == NULL) {
       break;
     }
 
