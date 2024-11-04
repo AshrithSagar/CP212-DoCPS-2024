@@ -3,10 +3,14 @@
 #include <string.h>
 
 #define MAX_ARGS 10
-#define MAX_COMMANDS 3
+#define MAX_COMMANDS 7
 
-void cmd_hello(int argc, char *argv[]);
-void cmd_add(int argc, char *argv[]);
+void cmd_help(int argc, char *argv[]);
+void cmd_display(int argc, char *argv[]);
+void cmd_up(int argc, char *argv[]);
+void cmd_down(int argc, char *argv[]);
+void cmd_left(int argc, char *argv[]);
+void cmd_right(int argc, char *argv[]);
 void cmd_exit(int argc, char *argv[]);
 
 typedef struct {
@@ -15,8 +19,8 @@ typedef struct {
 } Command;
 
 Command commands[] = {
-    {"hello", cmd_hello},
-    {"add", cmd_add},
+    {"help", cmd_help}, {"display", cmd_display}, {"up", cmd_up},
+    {"down", cmd_down}, {"left", cmd_left},       {"right", cmd_right},
     {"exit", cmd_exit},
 };
 
@@ -47,17 +51,86 @@ void execute_command(int argc, char *argv[]) {
     }
   }
 }
+void cmd_help(int argc, char *argv[]) {
+  printf("Available commands:\n");
+  for (int i = 0; i < MAX_COMMANDS; i++) {
+    printf(" - %s\n", commands[i].name);
+  }
+}
 
-void cmd_hello(int argc, char *argv[]) { printf("Hello, World!\n"); }
+#define N 5
+int picture[N][N] = {0};
 
-void cmd_add(int argc, char *argv[]) {
-  if (argc < 3) {
-    printf("Usage: add <num1> <num2>\n");
+void cmd_display(int argc, char *argv[]) {
+  if (argc != 6) {
+    printf("Usage: display <row1> <row2> <row3> <row4> <row5>\n");
     return;
   }
-  int num1 = atoi(argv[1]);
-  int num2 = atoi(argv[2]);
-  printf("Result: %d\n", num1 + num2);
+
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < N; j++) {
+      picture[i][j] = argv[i + 1][j] - '0'; // Convert char to int
+    }
+  }
+
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < N; j++) {
+      printf("%d ", picture[i][j]);
+    }
+    printf("\n");
+  }
+}
+
+void rotate_left() {
+  int temp[N][N];
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < N; j++) {
+      temp[i][j] = picture[j][N - 1 - i];
+    }
+  }
+  memcpy(picture, temp, sizeof(picture));
+}
+
+void rotate_right() {
+  int temp[N][N];
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < N; j++) {
+      temp[i][j] = picture[N - 1 - j][i];
+    }
+  }
+  memcpy(picture, temp, sizeof(picture));
+}
+
+void cmd_up(int argc, char *argv[]) {
+  for (int i = 0; i < 5; i++) {
+    rotate_left();
+  }
+  printf("Rotated up:\n");
+  cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
+}
+
+void cmd_down(int argc, char *argv[]) {
+  for (int i = 0; i < 5; i++) {
+    rotate_right();
+  }
+  printf("Rotated down:\n");
+  cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
+}
+
+void cmd_left(int argc, char *argv[]) {
+  for (int i = 0; i < 5; i++) {
+    rotate_left();
+  }
+  printf("Rotated left:\n");
+  cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
+}
+
+void cmd_right(int argc, char *argv[]) {
+  for (int i = 0; i < 5; i++) {
+    rotate_right();
+  }
+  printf("Rotated right:\n");
+  cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
 void cmd_exit(int argc, char *argv[]) {
