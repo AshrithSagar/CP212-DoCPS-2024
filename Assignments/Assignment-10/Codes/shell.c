@@ -37,6 +37,7 @@ int parse_command(char *line, int *argc, char *argv[]) {
 void execute_command(int argc, char *argv[]) {
   int found = 0;
 
+  myprintf("\r\n");
   if (argc > 0) {
     for (int i = 0; i < MAX_COMMANDS; i++) {
       if (strcmp(argv[0], commands[i].name) == 0) {
@@ -216,11 +217,6 @@ void shellInit(void) {
     if (uart_fgets(line, sizeof(line)) == NULL) {
       myprintf("Error reading input.\r\n");
       break;
-    }
-
-    // Skip empty inputs
-    if (line[0] == '\0') {
-      continue;
     }
 
     parse_command(line, &argc, argv);
