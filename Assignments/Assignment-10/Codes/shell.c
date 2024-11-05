@@ -90,80 +90,112 @@ void cmd_display(int argc, char *argv[]) {
   }
 }
 
+// Scroll the picture up by one row
 void scroll_up() {
-  /* Scroll the picture up by one row
-   */
+  int temp[N];
+  // Save the first row for wrapping around
+  memcpy(temp, picture[0], N * sizeof(int));
 
+  // Shift all rows up
   for (int i = 1; i < N; i++) {
     memcpy(picture[i - 1], picture[i], N * sizeof(int));
   }
-  memset(picture[N - 1], 0, N * sizeof(int));
+
+  // Wrap the first row to the last row
+  memcpy(picture[N - 1], temp, N * sizeof(int));
+
+  displayImage(picture);
 }
 
+// Scroll the picture down by one row
 void scroll_down() {
-  /* Scroll the picture down by one row
-   */
+  int temp[N];
+  // Save the last row for wrapping around
+  memcpy(temp, picture[N - 1], N * sizeof(int));
 
+  // Shift all rows down
   for (int i = N - 2; i >= 0; i--) {
     memcpy(picture[i + 1], picture[i], N * sizeof(int));
   }
-  memset(picture[0], 0, N * sizeof(int));
+
+  // Wrap the last row to the first row
+  memcpy(picture[0], temp, N * sizeof(int));
+
+  displayImage(picture);
 }
 
+// Scroll the picture left by one column
 void scroll_left() {
-  /* Scroll the picture left by one column
-   */
+  int temp[N];
+  // Save the first column for wrapping around
+  for (int i = 0; i < N; i++) {
+    temp[i] = picture[i][0];
+  }
 
+  // Shift all columns left
   for (int i = 0; i < N; i++) {
     for (int j = 1; j < N; j++) {
       picture[i][j - 1] = picture[i][j];
     }
-    picture[i][N - 1] = 0;
   }
+
+  // Wrap the first column to the last column
+  for (int i = 0; i < N; i++) {
+    picture[i][N - 1] = temp[i];
+  }
+
+  displayImage(picture);
 }
 
+// Scroll the picture right by one column
 void scroll_right() {
-  /* Scroll the picture right by one column
-   */
+  int temp[N];
+  // Save the last column for wrapping around
+  for (int i = 0; i < N; i++) {
+    temp[i] = picture[i][N - 1];
+  }
 
+  // Shift all columns right
   for (int i = 0; i < N; i++) {
     for (int j = N - 2; j >= 0; j--) {
       picture[i][j + 1] = picture[i][j];
     }
-    picture[i][0] = 0;
   }
+
+  // Wrap the last column to the first column
+  for (int i = 0; i < N; i++) {
+    picture[i][0] = temp[i];
+  }
+
+  displayImage(picture);
 }
 
 void cmd_up(int argc, char *argv[]) {
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < N; i++) {
     scroll_up();
   }
   myprintf("Scrolled up:\r\n");
-  cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
 void cmd_down(int argc, char *argv[]) {
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < N; i++) {
     scroll_down();
   }
   myprintf("Scrolled down:\r\n");
-  cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
 void cmd_left(int argc, char *argv[]) {
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < N; i++) {
     scroll_left();
   }
   myprintf("Scrolled left:\r\n");
-  cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
 void cmd_right(int argc, char *argv[]) {
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < N; i++) {
     scroll_right();
   }
   myprintf("Scrolled right:\r\n");
-  cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
 void cmd_exit(int argc, char *argv[]) {
