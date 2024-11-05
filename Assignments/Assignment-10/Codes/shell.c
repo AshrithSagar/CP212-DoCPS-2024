@@ -50,6 +50,7 @@ void execute_command(int argc, char *argv[]) {
     }
   }
 }
+
 void cmd_help(int argc, char *argv[]) {
   myprintf("Available commands:\r\n");
   for (int i = 0; i < MAX_COMMANDS; i++) {
@@ -89,55 +90,79 @@ void cmd_display(int argc, char *argv[]) {
   }
 }
 
-void rotate_left() {
-  int temp[N][N];
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-      temp[i][j] = picture[j][N - 1 - i];
-    }
+void scroll_up() {
+  /* Scroll the picture up by one row
+   */
+
+  for (int i = 1; i < N; i++) {
+    memcpy(picture[i - 1], picture[i], N * sizeof(int));
   }
-  memcpy(picture, temp, sizeof(picture));
+  memset(picture[N - 1], 0, N * sizeof(int));
 }
 
-void rotate_right() {
-  int temp[N][N];
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-      temp[i][j] = picture[N - 1 - j][i];
-    }
+void scroll_down() {
+  /* Scroll the picture down by one row
+   */
+
+  for (int i = N - 2; i >= 0; i--) {
+    memcpy(picture[i + 1], picture[i], N * sizeof(int));
   }
-  memcpy(picture, temp, sizeof(picture));
+  memset(picture[0], 0, N * sizeof(int));
+}
+
+void scroll_left() {
+  /* Scroll the picture left by one column
+   */
+
+  for (int i = 0; i < N; i++) {
+    for (int j = 1; j < N; j++) {
+      picture[i][j - 1] = picture[i][j];
+    }
+    picture[i][N - 1] = 0;
+  }
+}
+
+void scroll_right() {
+  /* Scroll the picture right by one column
+   */
+
+  for (int i = 0; i < N; i++) {
+    for (int j = N - 2; j >= 0; j--) {
+      picture[i][j + 1] = picture[i][j];
+    }
+    picture[i][0] = 0;
+  }
 }
 
 void cmd_up(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
-    rotate_left();
+    scroll_up();
   }
-  myprintf("Rotated up:\r\n");
+  myprintf("Scrolled up:\r\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
 void cmd_down(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
-    rotate_right();
+    scroll_down();
   }
-  myprintf("Rotated down:\r\n");
+  myprintf("Scrolled down:\r\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
 void cmd_left(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
-    rotate_left();
+    scroll_left();
   }
-  myprintf("Rotated left:\r\n");
+  myprintf("Scrolled left:\r\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
 void cmd_right(int argc, char *argv[]) {
   for (int i = 0; i < 5; i++) {
-    rotate_right();
+    scroll_right();
   }
-  myprintf("Rotated right:\r\n");
+  myprintf("Scrolled right:\r\n");
   cmd_display(6, (char *[]){NULL, "0", "0", "0", "0", "0"});
 }
 
