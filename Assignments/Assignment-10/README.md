@@ -22,3 +22,14 @@ You may find the following link useful:
 The program was compiled using Segger Embedded Studio.
 The video shows a plus sign displayed at the centre, that is scrolled up, down, left, and right, accordingly based on the input from the serial port.
 The motion was interpreted as scrolling (in the sense of a circular shift) based on the description.
+
+The commands that run in the serial terminal were:
+
+```shell
+help
+display 00000 00100 01110 00100 00000
+up
+left
+down
+right
+```
