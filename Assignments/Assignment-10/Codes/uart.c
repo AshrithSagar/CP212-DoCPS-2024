@@ -74,5 +74,11 @@ char *uart_fgets(char *buf, int bufsize) {
     buf[i++] = c;
   }
   buf[i] = '\0';
+
+  // Clear any leftover characters in the UART buffer
+  while (UART_RXDRDY == 1) {
+    uart_getc();
+  }
+
   return buf;
 }

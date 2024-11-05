@@ -151,10 +151,19 @@ void shellInit(void) {
   char *argv[MAX_ARGS];
   int argc;
 
+  myprintf("Welcome to the shell! Enter a command to start ...\r\n");
+
   while (1) {
     myprintf("> ");
+
     if (uart_fgets(line, sizeof(line)) == NULL) {
+      myprintf("Error reading input.\r\n");
       break;
+    }
+
+    // Skip empty inputs
+    if (line[0] == '\0') {
+      continue;
     }
 
     parse_command(line, &argc, argv);

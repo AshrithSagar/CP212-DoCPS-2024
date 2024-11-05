@@ -44,6 +44,9 @@ int myprintf(const char *format, ...) {
         f_val = (float)va_arg(args, double);
         rc = myputf(f_val);
         break;
+      case 's':
+        rc = myputs(va_arg(args, char *));
+        break;
       default:
         rc = EOF;
         break;
