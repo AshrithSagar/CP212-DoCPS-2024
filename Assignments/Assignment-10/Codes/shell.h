@@ -3,6 +3,8 @@
 
 #include "display.h"
 #include "printlib.h"
+#include "timer.h"
+#include "uart.h"
 
 #ifndef STDIO_H
 #define STDIO_H

@@ -1,6 +1,5 @@
 #include "shell.h"
-#include "display.h"
-#include "uart.h"
+#include "timer.h"
 
 int picture[N][N] = {0};
 
@@ -174,6 +173,7 @@ void scroll_right() {
 void cmd_up(int argc, char *argv[]) {
   for (int i = 0; i < N; i++) {
     scroll_up();
+    naiveDelay(500);
   }
   myprintf("Scrolled up:\r\n");
 }
@@ -181,6 +181,7 @@ void cmd_up(int argc, char *argv[]) {
 void cmd_down(int argc, char *argv[]) {
   for (int i = 0; i < N; i++) {
     scroll_down();
+    naiveDelay(500);
   }
   myprintf("Scrolled down:\r\n");
 }
@@ -188,6 +189,7 @@ void cmd_down(int argc, char *argv[]) {
 void cmd_left(int argc, char *argv[]) {
   for (int i = 0; i < N; i++) {
     scroll_left();
+    naiveDelay(500);
   }
   myprintf("Scrolled left:\r\n");
 }
@@ -195,6 +197,7 @@ void cmd_left(int argc, char *argv[]) {
 void cmd_right(int argc, char *argv[]) {
   for (int i = 0; i < N; i++) {
     scroll_right();
+    naiveDelay(500);
   }
   myprintf("Scrolled right:\r\n");
 }
