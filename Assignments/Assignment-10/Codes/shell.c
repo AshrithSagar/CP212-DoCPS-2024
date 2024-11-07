@@ -1,5 +1,4 @@
 #include "shell.h"
-#include "timer.h"
 
 int picture[N][N] = {0};
 
