@@ -15,7 +15,7 @@
 // Macros
 #define IOREG(addr) (*((volatile long *)(addr)))
 #define GPIO_PORT(pin) ((pin) < 32 ? GPIO_P0 : GPIO_P1)
-#define GPIO_BIT(pin) ((pin) < 32 ? (pin) : (pin) - 32)
+#define GPIO_BIT(pin) ((pin) < 32 ? (pin) : (pin)-32)
 #define CLEAR(port, offset, bit) (IOREG(port + offset) &= ~(1UL << (bit)))
 #define SET(port, offset, bit) (IOREG(port + offset) |= (1UL << (bit)))
 

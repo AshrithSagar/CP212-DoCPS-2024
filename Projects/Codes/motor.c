@@ -63,7 +63,7 @@ void motor_on(int dirA, int dutyA, int dirB, int dutyB) {
     break;
   }
 
-  PWM->SEQ[0].PTR = (uint32_t)s_sequence;
+  PWM->SEQ[0].PTR = (uint32_t)(uintptr_t)s_sequence;
   PWM->SEQ[0].CNT = 4;     // one value per channel
   PWM->SEQ[0].REFRESH = 0; // continuous
 

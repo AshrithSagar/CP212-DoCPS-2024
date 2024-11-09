@@ -61,6 +61,8 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
 /** @addtogroup Configuration_of_CMSIS
  * @{
  */
