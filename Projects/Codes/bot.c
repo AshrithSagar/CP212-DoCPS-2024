@@ -1,15 +1,11 @@
 #include "bot.h"
 
 void bot_init(void) {
-  int m1A = 2;
-  int m1B = 3;
-  int m2A = 12;
-  int m2B = 37;
-  pinMode(m1A, OUTPUT);
-  pinMode(m1B, OUTPUT);
-  pinMode(m2A, OUTPUT);
-  pinMode(m2B, OUTPUT);
-  motor_init(m1A, m1B, m2A, m2B);
+  int pins[] = {2, 3, 12, 37}; // M1A, M1B, M2A, M2B
+  for (int i = 0; i < 4; i++) {
+    pinMode(pins[i], OUTPUT);
+  }
+  motor_init(pins[0], pins[1], pins[2], pins[3]);
   return;
 }
 
