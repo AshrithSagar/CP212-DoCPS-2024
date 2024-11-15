@@ -1,6 +1,6 @@
 #include "printlib.h"
 
-#define BUFSIZ 65536
+#define BUFSIZ 1024
 #define EOF (-1)
 
 // Buffer index
@@ -62,16 +62,9 @@ int myprintf(const char *format, ...) {
 // Print a character
 int myputchar(int c) {
   int rc;
-  if (myindex < BUFSIZ) // Check if the buffer is full
-  {
-    // Use UART to transmit the character, and increment the buffer index
-    uart_putc(c);
-    myindex++;
-
-    rc = c; // Return the character printed
-  } else {
-    rc = EOF; // Return EOF if the buffer is full
-  }
+  // Use UART to transmit the character, and increment the buffer index
+  uart_putc(c);
+  rc = c; // Return the character printed
   return rc;
 }
 

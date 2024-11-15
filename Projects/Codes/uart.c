@@ -38,7 +38,7 @@ void uart_init() {
   return;
 }
 
-void uart_putc(char ch) {
+char uart_putc(char ch) {
   // Set character to be transmitted
   UART_TXD = ch;
 
@@ -49,7 +49,7 @@ void uart_putc(char ch) {
   // Clear TXDRDY
   UART_TXDRDY = 0;
 
-  return;
+  return ch;
 }
 
 char uart_getc(void) {
