@@ -5,11 +5,22 @@
 #include "gpio.h"
 #include "motor.h"
 
-void bot_init(void);
-void bot_forward(int speed);
-void bot_reverse(int speed);
-void bot_left(int speed);
-void bot_right(int speed);
-void bot_stop(void);
+typedef struct Bot {
+  int pinsM[4];
+  int encoderPins[4];
+  void (*init)(struct Bot *);
+  void (*forward)(struct Bot *, int);
+  void (*reverse)(struct Bot *, int);
+  void (*left)(struct Bot *, int);
+  void (*right)(struct Bot *, int);
+  void (*stop)(struct Bot *);
+} Bot;
+void bot_create(Bot *bot);
+void bot_init(Bot *bot);
+void bot_forward(Bot *bot, int speed);
+void bot_reverse(Bot *bot, int speed);
+void bot_left(Bot *bot, int speed);
+void bot_right(Bot *bot, int speed);
+void bot_stop(Bot *bot);
 
 #endif // BOT_H

@@ -2,7 +2,9 @@
 #include "encoder.h"
 
 int main() {
-  bot_init();
+  Bot bot;
+  bot_create(&bot);
+  bot.init(&bot);
   while (1) {
     encoder_counter();
   }
