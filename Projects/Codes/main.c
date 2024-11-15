@@ -3,7 +3,8 @@
 
 int main() {
   bot_init();
-  encoder_init();
-  encoder_counter();
+  while (1) {
+    encoder_counter();
+  }
   return 0;
 }

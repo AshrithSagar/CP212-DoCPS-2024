@@ -1,6 +1,7 @@
 #ifndef BOT_H
 #define BOT_H
 
+#include "encoder.h"
 #include "gpio.h"
 #include "motor.h"
 

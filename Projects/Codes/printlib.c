@@ -1,6 +1,6 @@
 #include "printlib.h"
 
-#define BUFSIZ 1024
+#define BUFSIZ 65536
 #define EOF (-1)
 
 // Buffer index
