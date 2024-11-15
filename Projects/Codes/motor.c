@@ -1,6 +1,4 @@
 #include "motor.h"
-#include "nrf52833.h"
-#include <stdint.h>
 
 static int period;
 
