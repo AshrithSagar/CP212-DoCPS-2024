@@ -1,40 +1,47 @@
 #include "encoder.h"
 
-int pinM1E1, pinM1E2, pinM2E1, pinM2E2;
+typedef struct {
+  int pinE1, pinE2;
+  int counter;
+  int lastStateE1;
+  int lastStateE2;
+} Motor;
+
+void Motor_init(Motor *motor, int pinE1, int pinE2) {
+  motor->pinE1 = pinE1;
+  motor->pinE2 = pinE2;
+  motor->counter = 0;
+  motor->lastStateE1 = HIGH;
+  motor->lastStateE2 = HIGH;
+
+  pinMode(pinE1, INPUT);
+  pinMode(pinE2, INPUT);
+}
+
+void Motor_updateEncoder(Motor *motor) {
+  int currentE1 = digitalRead(motor->pinE1);
+
+  if (motor->lastStateE1 == LOW && currentE1 == HIGH) {
+    motor->counter++; // Rising edge detected
+    myprintf("Counter E1: %d\n", motor->counter);
+  } else if (motor->lastStateE1 == HIGH && currentE1 == LOW) {
+    motor->counter++; // Falling edge detected
+    myprintf("Counter E1: %d\n", motor->counter);
+  }
+
+  motor->lastStateE1 = currentE1;
+}
+
+Motor motor1;
+Motor motor2;
 
 void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2) {
-  pinM1E1 = M1E1;
-  pinM1E2 = M1E2;
-  pinM2E1 = M2E1;
-  pinM2E2 = M2E2;
-
-  pinMode(M1E1, INPUT);
-  pinMode(M1E2, INPUT);
-  pinMode(M2E1, INPUT);
-  pinMode(M2E2, INPUT);
-
+  Motor_init(&motor1, M1E1, M1E2);
+  Motor_init(&motor2, M2E1, M2E2);
   uart_init();
 }
 
-void handle_edge(int *counter, int *lastState, int currentState) {
-  if (*lastState == LOW && currentState == HIGH) {
-    (*counter)++; // Rising edge
-    myprintf("Counter: %d\n", *counter);
-  } else if (*lastState == HIGH && currentState == LOW) {
-    (*counter)++; // Falling edge
-    myprintf("Counter: %d\n", *counter);
-  }
-  *lastState = currentState;
-}
-
-void encoder_counter(void) {
-  static int counter = 0;
-  static int prevStateM1 = HIGH;
-  static int prevStateM2 = HIGH;
-
-  int val_M1E1 = digitalRead(pinM1E1);
-  int val_M2E1 = digitalRead(pinM2E1);
-
-  handle_edge(&counter, &prevStateM1, val_M1E1);
-  handle_edge(&counter, &prevStateM2, val_M2E1);
+void encoder_counter() {
+  Motor_updateEncoder(&motor1);
+  Motor_updateEncoder(&motor2);
 }
