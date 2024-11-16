@@ -1,6 +1,6 @@
 #include "bot.h"
 
-void bot_init(Bot *bot) {
+void bot_init(StackBot *bot) {
   for (int i = 0; i < 4; i++) {
     pinMode(bot->motorPins[i], OUTPUT);
   }
@@ -10,25 +10,25 @@ void bot_init(Bot *bot) {
                bot->encoderPins[3]);
 }
 
-void bot_forward(Bot *bot, int speed) {
+void bot_forward(StackBot *bot, int speed) {
   motor_on(MOTOR_FORWARD, speed, MOTOR_FORWARD, speed);
 }
 
-void bot_reverse(Bot *bot, int speed) {
+void bot_reverse(StackBot *bot, int speed) {
   motor_on(MOTOR_REVERSE, speed, MOTOR_REVERSE, speed);
 }
 
-void bot_left(Bot *bot, int speed) {
+void bot_left(StackBot *bot, int speed) {
   motor_on(MOTOR_REVERSE, speed, MOTOR_FORWARD, speed);
 }
 
-void bot_right(Bot *bot, int speed) {
+void bot_right(StackBot *bot, int speed) {
   motor_on(MOTOR_FORWARD, speed, MOTOR_REVERSE, speed);
 }
 
-void bot_stop(Bot *bot) { motor_off(); }
+void bot_stop(StackBot *bot) { motor_off(); }
 
-void bot_create(Bot *bot) {
+void bot_create(StackBot *bot) {
   bot->motorPins[0] = 3;
   bot->motorPins[1] = 2;
   bot->motorPins[2] = 4;

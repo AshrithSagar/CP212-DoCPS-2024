@@ -1,12 +1,9 @@
 #include "bot.h"
-#include "encoder.h"
 
 int main() {
-  Bot bot;
+  StackBot bot;
   bot_create(&bot);
   bot.init(&bot);
-  while (1) {
-    encoder_counter();
-  }
+  bot.forward(&bot, 50);
   return 0;
 }
