@@ -91,7 +91,7 @@ void digitalInterruptEnable(uint32_t pin, uint32_t edge, int event) {
   GPIOTE_CONFIG(event) = (GPIOTE_MODEEVENT | (pin << 8) | (edge << 16));
 
   // Generate an interrupt when the specified event occurs.
-  GPIOTE_INTENSET |= (1 << 0);
+  GPIOTE_INTENSET |= (1 << event);
 
   // Enable GPIOTE interrupts in the interrupt controller
   NVIC_ISER |= (1 << GPIOTE_ID);
@@ -99,15 +99,11 @@ void digitalInterruptEnable(uint32_t pin, uint32_t edge, int event) {
 
 void GPIOTE_IRQHandler(void) {
   if (GPIOTE_EVENTSIN(0)) {
-    // count1++;
-    // myprintf("count1 = %d\n",count1);
     encoder_update(0);
     GPIOTE_EVENTSIN(0) = 0;
   }
 
   if (GPIOTE_EVENTSIN(1)) {
-    // count2++;
-    // myprintf("count2 = %d\n",count2);
     encoder_update(1);
     GPIOTE_EVENTSIN(1) = 0;
   }
