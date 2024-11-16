@@ -4,6 +4,6 @@ int main() {
   StackBot bot;
   bot_create(&bot);
   bot.init(&bot);
-  bot.forward(&bot, 50);
+  bot.forward(&bot, 10);
   return 0;
 }

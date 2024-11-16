@@ -11,32 +11,32 @@ void bot_init(StackBot *bot) {
 }
 
 void bot_forward(StackBot *bot, int speed) {
-  motor_on(MOTOR_FORWARD, speed, MOTOR_FORWARD, speed);
-}
-
-void bot_reverse(StackBot *bot, int speed) {
-  motor_on(MOTOR_REVERSE, speed, MOTOR_REVERSE, speed);
-}
-
-void bot_left(StackBot *bot, int speed) {
   motor_on(MOTOR_REVERSE, speed, MOTOR_FORWARD, speed);
 }
 
-void bot_right(StackBot *bot, int speed) {
+void bot_reverse(StackBot *bot, int speed) {
   motor_on(MOTOR_FORWARD, speed, MOTOR_REVERSE, speed);
+}
+
+void bot_left(StackBot *bot, int speed) {
+  motor_on(MOTOR_FORWARD, speed, MOTOR_FORWARD, speed);
+}
+
+void bot_right(StackBot *bot, int speed) {
+  motor_on(MOTOR_REVERSE, speed, MOTOR_REVERSE, speed);
 }
 
 void bot_stop(StackBot *bot) { motor_off(); }
 
 void bot_create(StackBot *bot) {
-  bot->motorPins[0] = 3;
-  bot->motorPins[1] = 2;
-  bot->motorPins[2] = 4;
-  bot->motorPins[3] = 31;
-  bot->encoderPins[0] = 28;
-  bot->encoderPins[1] = 14;
-  bot->encoderPins[2] = 37;
-  bot->encoderPins[3] = 11;
+  bot->motorPins[0] = 3;    // M1A
+  bot->motorPins[1] = 2;    // M1B
+  bot->motorPins[2] = 4;    // M2A
+  bot->motorPins[3] = 31;   // M2B
+  bot->encoderPins[0] = 28; // M1E1
+  bot->encoderPins[1] = 14; // M1E2
+  bot->encoderPins[2] = 37; // M2E1
+  bot->encoderPins[3] = 11; // M2E2
   bot->init = bot_init;
   bot->forward = bot_forward;
   bot->reverse = bot_reverse;
