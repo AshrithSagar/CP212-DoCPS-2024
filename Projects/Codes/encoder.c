@@ -1,5 +1,4 @@
 #include "encoder.h"
-#include "printlib.h"
 
 #define NUM_MS_IN_MIN (60000000L) // Microseconds in a minute
 #define PPR 325                   // Pulses per revolution
@@ -24,8 +23,6 @@ void Motor_init(Motor *motor, int pinE1, int pinE2) {
 
   pinMode(pinE2, INPUT, PULLDOWN);
   digitalInterruptEnable(pinE2, GPIO_RISINGEDGE, 1);
-
-  timer32_init();
 
   timer_m1 = 0;
   timer_m1_prev = 0;
@@ -79,6 +76,7 @@ Motor motor2;
 void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2) {
   Motor_init(&motor1, M1E1, M1E2);
   Motor_init(&motor2, M2E1, M2E2);
+  timer32_init();
   uart_init();
 }
 
