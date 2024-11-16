@@ -18,8 +18,6 @@ void Motor_init(Motor *motor, int pinE1, int pinE2) {
   motor->pinE1 = pinE1;
   motor->pinE2 = pinE2;
   motor->counter = 0;
-  motor->lastStateE1 = HIGH;
-  motor->lastStateE2 = HIGH;
 
   pinMode(pinE1, INPUT, PULLDOWN);
   digitalInterruptEnable(pinE1, GPIO_RISINGEDGE, 0);
@@ -53,13 +51,14 @@ float Motor_getRPM(Motor *motor) {
   return (float)(motor->counter * 60) / PPR;
 }
 
-void Motor_updateCounter(Motor *motor, int event) {
+void Motor_updateCounter(Motor *motor1, Motor *motor2, int event) {
   if (event == 0) {
-    motor->counter++;
+    motor1->counter++;
+    myprintf("Motor 1: %d\n", motor1->counter);
   } else if (event == 1) {
-    motor->counter--;
+    motor2->counter++;
+    myprintf("Motor 2: %d\n", motor2->counter);
   }
-  myprintf("Counter: %d\n", motor->counter);
 }
 
 void Motor_updateEncoder(Motor *motor, int event) {
@@ -85,7 +84,6 @@ void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2) {
 
 void encoder_update(int event) {
   Motor_updateEncoder(&motor1, event);
-  Motor_updateCounter(&motor1, event);
   Motor_updateEncoder(&motor2, event);
-  Motor_updateCounter(&motor2, event);
+  Motor_updateCounter(&motor1, &motor2, event);
 }
