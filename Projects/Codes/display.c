@@ -19,10 +19,10 @@ void displayInit(void) {
   int i;
   for (i = 0; i < N; i++) {
     digitalWrite(LED_ROW_PINS[i], LOW);
-    pinMode(LED_ROW_PINS[i], OUTPUT);
+    pinMode(LED_ROW_PINS[i], OUTPUT, INPUT);
 
     digitalWrite(LED_COL_PINS[i], HIGH);
-    pinMode(LED_COL_PINS[i], OUTPUT);
+    pinMode(LED_COL_PINS[i], OUTPUT, INPUT);
   }
 
   timerInterruptEnable(3);

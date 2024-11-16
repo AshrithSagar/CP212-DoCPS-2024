@@ -14,8 +14,8 @@ void Motor_init(Motor *motor, int pinE1, int pinE2) {
   motor->lastStateE1 = HIGH;
   motor->lastStateE2 = HIGH;
 
-  pinMode(pinE1, INPUT);
-  pinMode(pinE2, INPUT);
+  pinMode(pinE1, INPUT, INPUT);
+  pinMode(pinE2, INPUT, INPUT);
 }
 
 void Motor_updateEncoder(Motor *motor) {

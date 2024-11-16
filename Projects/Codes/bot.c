@@ -2,7 +2,7 @@
 
 void bot_init(StackBot *bot) {
   for (int i = 0; i < 4; i++) {
-    pinMode(bot->motorPins[i], OUTPUT);
+    pinMode(bot->motorPins[i], OUTPUT, INPUT);
   }
   motor_init(bot->motorPins[0], bot->motorPins[1], bot->motorPins[2],
              bot->motorPins[3]);
