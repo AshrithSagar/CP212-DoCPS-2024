@@ -2,9 +2,10 @@
 
 void bot_init(Bot *bot) {
   for (int i = 0; i < 4; i++) {
-    pinMode(bot->pinsM[i], OUTPUT);
+    pinMode(bot->motorPins[i], OUTPUT);
   }
-  motor_init(bot->pinsM[0], bot->pinsM[1], bot->pinsM[2], bot->pinsM[3]);
+  motor_init(bot->motorPins[0], bot->motorPins[1], bot->motorPins[2],
+             bot->motorPins[3]);
   encoder_init(bot->encoderPins[0], bot->encoderPins[1], bot->encoderPins[2],
                bot->encoderPins[3]);
 }
@@ -28,10 +29,10 @@ void bot_right(Bot *bot, int speed) {
 void bot_stop(Bot *bot) { motor_off(); }
 
 void bot_create(Bot *bot) {
-  bot->pinsM[0] = 3;
-  bot->pinsM[1] = 2;
-  bot->pinsM[2] = 4;
-  bot->pinsM[3] = 31;
+  bot->motorPins[0] = 3;
+  bot->motorPins[1] = 2;
+  bot->motorPins[2] = 4;
+  bot->motorPins[3] = 31;
   bot->encoderPins[0] = 28;
   bot->encoderPins[1] = 14;
   bot->encoderPins[2] = 37;

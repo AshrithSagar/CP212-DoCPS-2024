@@ -6,7 +6,7 @@
 #include "motor.h"
 
 typedef struct Bot {
-  int pinsM[4];
+  int motorPins[4];
   int encoderPins[4];
   void (*init)(struct Bot *);
   void (*forward)(struct Bot *, int);
