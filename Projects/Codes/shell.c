@@ -1,4 +1,11 @@
 #include "shell.h"
+#include "display.h"
+#include "printlib.h"
+#include "timer.h"
+#include "uart.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int picture[N][N] = {0};
 

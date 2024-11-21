@@ -1,4 +1,5 @@
 #include "timer32.h"
+#include "nrf52833.h"
 
 void timer32_init() {
   // Set Timer0 to 32-bit mode

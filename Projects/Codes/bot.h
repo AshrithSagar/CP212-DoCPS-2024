@@ -1,10 +1,6 @@
 #ifndef BOT_H
 #define BOT_H
 
-#include "encoder.h"
-#include "gpio.h"
-#include "motor.h"
-
 typedef struct StackBot {
   int motorPins[4];
   int encoderPins[4];

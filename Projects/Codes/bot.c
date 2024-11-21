@@ -1,8 +1,11 @@
 #include "bot.h"
+#include "encoder.h"
+#include "gpio.h"
+#include "motor.h"
 
 void bot_init(StackBot *bot) {
   for (int i = 0; i < 4; i++) {
-    pinMode(bot->motorPins[i], OUTPUT, INPUT);
+    pinMode(bot->motorPins[i], OUTPUT, PULL_NONE);
   }
   motor_init(bot->motorPins[0], bot->motorPins[1], bot->motorPins[2],
              bot->motorPins[3]);

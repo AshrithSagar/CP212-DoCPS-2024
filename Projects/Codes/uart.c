@@ -1,4 +1,5 @@
 #include "uart.h"
+#include <stdarg.h>
 
 #define IOREG(addr) (*((volatile long *)(addr)))
 

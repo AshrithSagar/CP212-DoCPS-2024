@@ -2,6 +2,8 @@
  * display driver for the LED matrix
  */
 #include "display.h"
+#include "gpio.h"
+#include "timer.h"
 
 #define CLOCK_CYCLES_PER_MS 64000
 
@@ -19,10 +21,10 @@ void displayInit(void) {
   int i;
   for (i = 0; i < N; i++) {
     digitalWrite(LED_ROW_PINS[i], LOW);
-    pinMode(LED_ROW_PINS[i], OUTPUT, INPUT);
+    pinMode(LED_ROW_PINS[i], OUTPUT, PULL_NONE);
 
     digitalWrite(LED_COL_PINS[i], HIGH);
-    pinMode(LED_COL_PINS[i], OUTPUT, INPUT);
+    pinMode(LED_COL_PINS[i], OUTPUT, PULL_NONE);
   }
 
   timerInterruptEnable(3);

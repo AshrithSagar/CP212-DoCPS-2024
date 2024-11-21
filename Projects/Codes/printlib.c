@@ -1,4 +1,5 @@
 #include "printlib.h"
+#include "uart.h"
 
 #define BUFSIZ 1024
 #define EOF (-1)

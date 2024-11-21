@@ -1,4 +1,9 @@
 #include "encoder.h"
+#include "gpio.h"
+#include "printlib.h"
+#include "timer32.h"
+#include "uart.h"
+#include <stdint.h>
 
 #define NUM_MS_IN_MIN (60000000L) // Microseconds in a minute
 #define PPR 325                   // Pulses per revolution
