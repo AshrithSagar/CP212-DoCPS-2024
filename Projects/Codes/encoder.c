@@ -28,27 +28,16 @@ typedef struct {
 Motor motor1;
 Motor motor2;
 
-void Motor_init(Motor *motor1, Motor *motor2, int M1E1, int M1E2, int M2E1,
-                int M2E2) {
-  motor1->encoder.pinE1 = M1E1;
-  motor1->encoder.pinE2 = M1E2;
-  motor1->encoder.counter = 0;
-  motor1->encoder.timer.current = 0;
-  motor1->encoder.timer.previous = 0;
-  motor1->encoder.timer.diff = 0;
+void Motor_init(Motor *motor, int pinE1, int pinE2, int event) {
+  motor->encoder.pinE1 = pinE1;
+  motor->encoder.pinE2 = pinE2;
+  motor->encoder.counter = 0;
+  motor->encoder.timer.current = 0;
+  motor->encoder.timer.previous = 0;
+  motor->encoder.timer.diff = 0;
 
-  motor2->encoder.pinE1 = M2E1;
-  motor2->encoder.pinE2 = M2E2;
-  motor2->encoder.counter = 0;
-  motor2->encoder.timer.current = 0;
-  motor2->encoder.timer.previous = 0;
-  motor2->encoder.timer.diff = 0;
-
-  pinMode(M1E1, INPUT, PULLDOWN);
-  digitalInterruptEnable(M1E1, GPIO_RISINGEDGE, 0);
-
-  pinMode(M2E1, INPUT, PULLDOWN);
-  digitalInterruptEnable(M2E1, GPIO_RISINGEDGE, 1);
+  pinMode(pinE1, INPUT, PULLDOWN);
+  digitalInterruptEnable(pinE1, GPIO_RISINGEDGE, event);
 }
 
 float Motor_getSpeed(Motor *motor, int pin) {
@@ -80,7 +69,8 @@ void encoder_updateCounter(Motor *motor) {
 }
 
 void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2) {
-  Motor_init(&motor1, &motor2, M1E1, M1E2, M2E1, M2E2);
+  Motor_init(&motor1, M1E1, M1E2, 0);
+  Motor_init(&motor2, M2E1, M2E2, 1);
   timer32_init();
 }
 
