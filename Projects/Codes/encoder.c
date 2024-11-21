@@ -1,4 +1,5 @@
 #include "encoder.h"
+#include "bot.h"
 #include "gpio.h"
 #include "printlib.h"
 #include "timer32.h"
@@ -6,24 +7,6 @@
 
 #define NUM_MS_IN_MIN (60000000L) // Microseconds in a minute
 #define PPR 325                   // Pulses per revolution
-
-typedef struct {
-  unsigned long current;
-  unsigned long previous;
-  unsigned long diff;
-} Timer;
-
-typedef struct {
-  int pinE1, pinE2;
-  int counter;
-  int lastStateE1;
-  int lastStateE2;
-  Timer timer;
-} Encoder;
-
-typedef struct {
-  Encoder encoder;
-} Motor;
 
 Motor motor1;
 Motor motor2;

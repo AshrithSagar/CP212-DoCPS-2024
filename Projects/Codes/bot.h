@@ -17,6 +17,24 @@ typedef struct {
 
 typedef enum { FORWARD, REVERSE, LEFT, RIGHT, STILL } Direction;
 
+typedef struct {
+  unsigned long current;
+  unsigned long previous;
+  unsigned long diff;
+} Timer;
+
+typedef struct {
+  int pinE1, pinE2;
+  int counter;
+  int lastStateE1;
+  int lastStateE2;
+  Timer timer;
+} Encoder;
+
+typedef struct {
+  Encoder encoder;
+} Motor;
+
 struct StackBot {
   MotorPins motorPins;
   EncoderPins encoderPins;
