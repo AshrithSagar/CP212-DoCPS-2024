@@ -72,11 +72,7 @@ void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2) {
 }
 
 void encoder_update(int event) {
-  if (event == 0) {
-    encoder_updateTimer(&motor1);
-    encoder_updateCounter(&motor1);
-  } else if (event == 1) {
-    encoder_updateTimer(&motor2);
-    encoder_updateCounter(&motor2);
-  }
+  Motor *motor = (event == 0) ? &motor1 : &motor2;
+  encoder_updateTimer(motor);
+  encoder_updateCounter(motor);
 }
