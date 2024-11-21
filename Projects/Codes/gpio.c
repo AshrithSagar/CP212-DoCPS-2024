@@ -85,7 +85,7 @@ int digitalRead(int pin) {
   return read;
 }
 
-void digitalInterruptEnable(uint32_t pin, uint32_t edge, InterruptEdge event) {
+void digitalInterruptEnable(uint32_t pin, uint32_t edge, int event) {
   /* GPIOTE has 8 registers, each can be configured for event i (i = 0 to 7)
    * along with the pin number and event type associated with the event.
    */
@@ -99,6 +99,8 @@ void digitalInterruptEnable(uint32_t pin, uint32_t edge, InterruptEdge event) {
 }
 
 void GPIOTE_IRQHandler(void) {
+  /* Handle GPIO tasks and events */
+
   if (GPIOTE_EVENTSIN(0)) {
     encoder_update(0);
     GPIOTE_EVENTSIN(0) = 0;

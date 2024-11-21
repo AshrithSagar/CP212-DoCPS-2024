@@ -15,6 +15,6 @@ typedef enum {
 void pinMode(int pin, PinMode direction, PullType pull);
 void digitalWrite(int pin, PinState value);
 int digitalRead(int pin);
-void digitalInterruptEnable(uint32_t pin, uint32_t edge, InterruptEdge event);
+void digitalInterruptEnable(uint32_t pin, uint32_t edge, int event);
 
 #endif // GPIO_H
