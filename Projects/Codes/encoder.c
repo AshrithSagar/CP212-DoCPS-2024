@@ -25,6 +25,9 @@ typedef struct {
   Encoder encoder;
 } Motor;
 
+Motor motor1;
+Motor motor2;
+
 void Motor_init(Motor *motor1, Motor *motor2, int M1E1, int M1E2, int M2E1,
                 int M2E2) {
   motor1->encoder.pinE1 = M1E1;
@@ -64,32 +67,17 @@ float Motor_getRPM(Motor *motor) {
   return (float)(motor->encoder.counter * 60) / PPR;
 }
 
-void Motor_updateCounter(Motor *motor1, Motor *motor2, int event) {
-  if (event == 0) {
-    motor1->encoder.counter++;
-    myprintf("Motor 1: %d\n", motor1->encoder.counter);
-  } else if (event == 1) {
-    motor2->encoder.counter++;
-    myprintf("Motor 2: %d\n", motor2->encoder.counter);
-  }
+void encoder_updateTimer(Motor *motor) {
+  motor->encoder.timer.current = timer32_read();
+  motor->encoder.timer.diff =
+      motor->encoder.timer.current - motor->encoder.timer.previous;
+  motor->encoder.timer.previous = motor->encoder.timer.current;
 }
 
-void Motor_updateEncoder(Motor *motor, int event) {
-  if (event == 0) {
-    motor->encoder.timer.current = timer32_read();
-    motor->encoder.timer.diff =
-        motor->encoder.timer.current - motor->encoder.timer.previous;
-    motor->encoder.timer.previous = motor->encoder.timer.current;
-  } else if (event == 1) {
-    motor->encoder.timer.current = timer32_read();
-    motor->encoder.timer.diff =
-        motor->encoder.timer.current - motor->encoder.timer.previous;
-    motor->encoder.timer.previous = motor->encoder.timer.current;
-  }
+void encoder_updateCounter(Motor *motor) {
+  motor->encoder.counter++;
+  myprintf("Counter: %d\n", motor->encoder.counter);
 }
-
-Motor motor1;
-Motor motor2;
 
 void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2) {
   Motor_init(&motor1, &motor2, M1E1, M1E2, M2E1, M2E2);
@@ -97,7 +85,11 @@ void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2) {
 }
 
 void encoder_update(int event) {
-  Motor_updateEncoder(&motor1, event);
-  Motor_updateEncoder(&motor2, event);
-  Motor_updateCounter(&motor1, &motor2, event);
+  if (event == 0) {
+    encoder_updateTimer(&motor1);
+    encoder_updateCounter(&motor1);
+  } else if (event == 1) {
+    encoder_updateTimer(&motor2);
+    encoder_updateCounter(&motor2);
+  }
 }
