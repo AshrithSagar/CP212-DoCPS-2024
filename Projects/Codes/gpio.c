@@ -4,9 +4,8 @@
 
 // Macros
 #define IOREG(addr) (*((volatile long *)(addr)))
-#define IOREG32(addr) (*((volatile uint32_t *)(uintptr_t)(addr)))
 #define GPIO_PORT(pin) ((pin) < 32 ? GPIO_P0 : GPIO_P1)
-#define GPIO_BIT(pin) ((pin) < 32 ? (pin) : (pin) - 32)
+#define GPIO_BIT(pin) ((pin) < 32 ? (pin) : ((pin) - 32))
 #define CLEAR(port, offset, bit) (IOREG(port + offset) &= ~(1UL << (bit)))
 #define SET(port, offset, bit) (IOREG(port + offset) |= (1UL << (bit)))
 
@@ -22,17 +21,7 @@
 // GPIO configuration registers
 #define GPIO_CONFIG(pin) (0x700 + (pin) * 4)
 
-// GPIOTE registers
-#define GPIOTE_EVENTSIN(i) IOREG32(0x40006100 + 4 * (i))
-#define GPIOTE_INTENSET IOREG32(0x40006304)
-#define GPIOTE_CONFIG(i) IOREG32(0x40006510 + 4 * (i))
-#define GPIOTE_MODEEVENT (1)
-
-// NVIC registers
-#define NVIC_ISER IOREG32(0xE000E100)
-#define GPIOTE_ID 6 // Peripheral ID
-
-void pinMode(int pin, PinMode direction, PullType pull) {
+void pinMode(int pin, int direction, int pull) {
   /*
    * Set the direction of a GPIO pin
    * pin: pin number
@@ -55,7 +44,7 @@ void pinMode(int pin, PinMode direction, PullType pull) {
   return;
 }
 
-void digitalWrite(int pin, PinState value) {
+void digitalWrite(int pin, int value) {
   /*
    * Write a value to a GPIO pin
    * pin: pin number
@@ -85,7 +74,18 @@ int digitalRead(int pin) {
   return read;
 }
 
-void digitalInterruptEnable(uint32_t pin, InterruptEdge edge, int event) {
+// GPIOTE registers
+#define IOREG32(addr) (*((volatile uint32_t *)(uintptr_t)(addr)))
+#define GPIOTE_EVENTSIN(i) IOREG32(0x40006100 + 4 * (i))
+#define GPIOTE_INTENSET IOREG32(0x40006304)
+#define GPIOTE_CONFIG(i) IOREG32(0x40006510 + 4 * (i))
+#define GPIOTE_MODEEVENT (1)
+
+// NVIC registers
+#define NVIC_ISER IOREG32(0xE000E100)
+#define GPIOTE_ID 6 // Peripheral ID
+
+void digitalInterruptEnable(uint32_t pin, uint32_t edge, int event) {
   /* GPIOTE has 8 registers, each can be configured for event i (i = 0 to 7)
    * along with the pin number and event type associated with the event.
    */
@@ -113,6 +113,8 @@ void encoder_update_test(int event) {
 
 void GPIOTE_IRQHandler(void) {
   /* Handle GPIO tasks and events */
+
+  myprintf("GPIOTE interrupt triggered\n");
 
   if (GPIOTE_EVENTSIN(0)) {
     encoder_update_test(0);
