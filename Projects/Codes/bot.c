@@ -19,19 +19,19 @@ void bot_init(StackBot *bot) {
 }
 
 void bot_forward(StackBot *bot, int speed) {
-  motor_on(MOTOR_REVERSE, speed, MOTOR_FORWARD, speed);
-}
-
-void bot_reverse(StackBot *bot, int speed) {
-  motor_on(MOTOR_FORWARD, speed, MOTOR_REVERSE, speed);
-}
-
-void bot_left(StackBot *bot, int speed) {
   motor_on(MOTOR_FORWARD, speed, MOTOR_FORWARD, speed);
 }
 
-void bot_right(StackBot *bot, int speed) {
+void bot_reverse(StackBot *bot, int speed) {
   motor_on(MOTOR_REVERSE, speed, MOTOR_REVERSE, speed);
+}
+
+void bot_left(StackBot *bot, int speed) {
+  motor_on(MOTOR_REVERSE, speed, MOTOR_FORWARD, speed);
+}
+
+void bot_right(StackBot *bot, int speed) {
+  motor_on(MOTOR_FORWARD, speed, MOTOR_REVERSE, speed);
 }
 
 void bot_stop(StackBot *bot) { motor_off(); }
