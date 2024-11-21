@@ -32,7 +32,7 @@
 #define NVIC_ISER IOREG32(0xE000E100)
 #define GPIOTE_ID 6 // Peripheral ID
 
-void pinMode(int pin, int direction, int pull) {
+void pinMode(int pin, PinMode direction, PullType pull) {
   /*
    * Set the direction of a GPIO pin
    * pin: pin number
@@ -55,7 +55,7 @@ void pinMode(int pin, int direction, int pull) {
   return;
 }
 
-void digitalWrite(int pin, int value) {
+void digitalWrite(int pin, PinState value) {
   /*
    * Write a value to a GPIO pin
    * pin: pin number
@@ -85,7 +85,7 @@ int digitalRead(int pin) {
   return read;
 }
 
-void digitalInterruptEnable(uint32_t pin, uint32_t edge, int event) {
+void digitalInterruptEnable(uint32_t pin, uint32_t edge, InterruptEdge event) {
   /* GPIOTE has 8 registers, each can be configured for event i (i = 0 to 7)
    * along with the pin number and event type associated with the event.
    */
