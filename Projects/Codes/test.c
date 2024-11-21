@@ -4,16 +4,16 @@
 #include "timer32.h"
 #include "uart.h"
 
-void test() {
-  int M1A = 3;
-  int M1B = 2;
-  int M2A = 4;
-  int M2B = 31;
-  int M1E1 = 28;
-  int M1E2 = 14;
-  int M2E1 = 37;
-  int M2E2 = 11;
+int M1A = 3;
+int M1B = 2;
+int M2A = 4;
+int M2B = 31;
+int M1E1 = 28;
+int M1E2 = 14;
+int M2E1 = 37;
+int M2E2 = 11;
 
+void setup() {
   uart_init();
 
   pinMode(M1A, OUTPUT, PULL_NONE);
@@ -30,4 +30,9 @@ void test() {
   timer32_init();
 
   myprintf("Bot initialized\n");
+}
+
+void loop() {
+  while (1)
+    ;
 }

@@ -1,1 +1,2 @@
-void test(void);
+void setup(void);
+void loop(void);

@@ -1,8 +1,6 @@
 #include "test.h"
 
 int main() {
-  test();
-
-  while (1)
-    ;
+  setup();
+  loop();
 }
