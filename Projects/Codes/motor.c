@@ -28,7 +28,7 @@ void motor_init(int m1A, int m1B, int m2A, int m2B) {
   PWM->ENABLE = 1;
 }
 
-void motor_on(int dirA, int dutyA, int dirB, int dutyB) {
+void motor_on(MotorDirection dirA, int dutyA, MotorDirection dirB, int dutyB) {
   static uint16_t s_sequence[4]; // this cannot be on the stack
                                  // because DMA can access it after
                                  // the function returns
