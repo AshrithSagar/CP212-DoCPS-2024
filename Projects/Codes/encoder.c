@@ -40,13 +40,10 @@ void Motor_init(Motor *motor, int pinE1, int pinE2, int event) {
   digitalInterruptEnable(pinE1, GPIO_RISINGEDGE, event);
 }
 
-float Motor_getSpeed(Motor *motor, int pin) {
-  if (pin == motor->encoder.pinE1 && motor->encoder.timer.diff != 0)
+float Motor_getSpeed(Motor *motor) {
+  if (motor->encoder.timer.diff != 0)
     return ((float)NUM_MS_IN_MIN / motor->encoder.timer.diff) / PPR;
-  else if (pin == motor->encoder.pinE2 && motor->encoder.timer.diff != 0)
-    return ((float)NUM_MS_IN_MIN / motor->encoder.timer.diff) / PPR;
-  else
-    return 0;
+  return 0.0;
 }
 
 float Motor_getRPM(Motor *motor) {
