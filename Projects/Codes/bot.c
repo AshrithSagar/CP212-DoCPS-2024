@@ -18,20 +18,23 @@ void bot_init(StackBot *bot) {
                bot->encoderPins.M2E1, bot->encoderPins.M2E2);
 }
 
-void bot_forward(StackBot *bot, int speed) {
-  motor_on(MOTOR_FORWARD, speed, MOTOR_FORWARD, speed);
-}
-
-void bot_reverse(StackBot *bot, int speed) {
-  motor_on(MOTOR_REVERSE, speed, MOTOR_REVERSE, speed);
-}
-
-void bot_left(StackBot *bot, int speed) {
-  motor_on(MOTOR_REVERSE, speed, MOTOR_FORWARD, speed);
-}
-
-void bot_right(StackBot *bot, int speed) {
-  motor_on(MOTOR_FORWARD, speed, MOTOR_REVERSE, speed);
+void bot_move(StackBot *bot, Direction direction, int speed) {
+  switch (direction) {
+  case FORWARD:
+    motor_on(MOTOR_FORWARD, speed, MOTOR_FORWARD, speed);
+    break;
+  case REVERSE:
+    motor_on(MOTOR_REVERSE, speed, MOTOR_REVERSE, speed);
+    break;
+  case LEFT:
+    motor_on(MOTOR_REVERSE, speed, MOTOR_FORWARD, speed);
+    break;
+  case RIGHT:
+    motor_on(MOTOR_FORWARD, speed, MOTOR_REVERSE, speed);
+    break;
+  default:
+    break;
+  }
 }
 
 void bot_stop(StackBot *bot) { motor_off(); }
@@ -41,10 +44,7 @@ StackBot *configStackBot(MotorPins motorPins, EncoderPins encoderPins) {
   bot->motorPins = motorPins;
   bot->encoderPins = encoderPins;
   bot->init = bot_init;
-  bot->forward = bot_forward;
-  bot->reverse = bot_reverse;
-  bot->left = bot_left;
-  bot->right = bot_right;
+  bot->move = bot_move;
   bot->stop = bot_stop;
   return bot;
 }
