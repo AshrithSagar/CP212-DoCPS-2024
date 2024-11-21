@@ -46,26 +46,24 @@ void bot_move(StackBot *bot, Direction direction, int speed) {
 
 void bot_uart_control(StackBot *bot) {
   char input;
+  const struct {
+    char key;
+    Direction direction;
+  } key_map[] = {
+      {'w', FORWARD}, {'s', REVERSE}, {'a', LEFT}, {'d', RIGHT}, {'x', STILL},
+  };
+
   while (1) {
     input = uart_getc();
-    switch (input) {
-    case 'w': // Forward
-      bot->move(bot, FORWARD, 25);
-      break;
-    case 's': // Reverse
-      bot->move(bot, REVERSE, 25);
-      break;
-    case 'a': // Left
-      bot->move(bot, LEFT, 25);
-      break;
-    case 'd': // Right
-      bot->move(bot, RIGHT, 25);
-      break;
-    case 'x': // Stop
-      bot->stop(bot);
-      break;
-    default:
-      break;
+    for (int i = 0; i < sizeof(key_map) / sizeof(key_map[0]); i++) {
+      if (input == key_map[i].key) {
+        if (key_map[i].direction == STILL) {
+          bot->stop(bot);
+        } else {
+          bot->move(bot, key_map[i].direction, 25);
+        }
+        break;
+      }
     }
   }
 }
