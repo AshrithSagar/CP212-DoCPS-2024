@@ -39,8 +39,6 @@ void Motor_init(Motor *motor1, Motor *motor2, int M1E1, int M1E2, int M2E1,
   timer_m2 = 0;
   timer_m2_prev = 0;
   timer_m2_diff = 0;
-
-  myprintf("Motor initialized with pins %d, %d\n", M1E1, M2E1);
 }
 
 float Motor_getSpeed(Motor *motor, int pin) {
@@ -87,7 +85,6 @@ Motor motor2;
 void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2) {
   Motor_init(&motor1, &motor2, M1E1, M1E2, M2E1, M2E2);
   timer32_init();
-  myprintf("Encoder initialized\n");
 }
 
 void encoder_update(int event) {

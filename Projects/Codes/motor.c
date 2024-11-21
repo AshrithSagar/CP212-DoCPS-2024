@@ -1,6 +1,5 @@
 #include "motor.h"
 #include "nrf52833.h"
-#include "printlib.h"
 #include <stdint.h>
 
 static int period;
@@ -27,8 +26,6 @@ void motor_init(int m1A, int m1B, int m2A, int m2B) {
   PWM->DECODER = 2;
 
   PWM->ENABLE = 1;
-
-  myprintf("Motor initialized\n");
 }
 
 void motor_on(MotorDirection dirA, int dutyA, MotorDirection dirB, int dutyB) {
