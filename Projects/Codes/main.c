@@ -1,8 +1,8 @@
-#include "bot.h"
+#include "test.h"
 
 int main() {
-  StackBot bot;
-  bot_create(&bot);
-  bot.init(&bot);
-  return 0;
+  test();
+
+  while (1)
+    ;
 }

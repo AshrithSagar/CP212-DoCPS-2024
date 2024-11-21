@@ -1,6 +1,6 @@
 /* Hardware abstraction layer for GPIO port */
 #include "gpio.h"
-#include "encoder.h"
+#include "printlib.h"
 
 // Macros
 #define IOREG(addr) (*((volatile long *)(addr)))
@@ -90,6 +90,7 @@ void digitalInterruptEnable(uint32_t pin, InterruptEdge edge, int event) {
    * along with the pin number and event type associated with the event.
    */
   GPIOTE_CONFIG(event) = (GPIOTE_MODEEVENT | (pin << 8) | (edge << 16));
+  myprintf("GPIOTE_CONFIG(%d) = %x\n", event, GPIOTE_CONFIG(event));
 
   // Generate an interrupt when the specified event occurs.
   GPIOTE_INTENSET |= (1 << event);
@@ -98,16 +99,28 @@ void digitalInterruptEnable(uint32_t pin, InterruptEdge edge, int event) {
   NVIC_ISER |= (1 << GPIOTE_ID);
 }
 
+int counter1 = 0;
+int counter2 = 0;
+void encoder_update_test(int event) {
+  if (event == 0) {
+    counter1++;
+    myprintf("Motor 1: %d\n", counter1);
+  } else if (event == 1) {
+    counter2++;
+    myprintf("Motor 2: %d\n", counter2);
+  }
+}
+
 void GPIOTE_IRQHandler(void) {
   /* Handle GPIO tasks and events */
 
   if (GPIOTE_EVENTSIN(0)) {
-    encoder_update(0);
+    encoder_update_test(0);
     GPIOTE_EVENTSIN(0) = 0;
   }
 
   if (GPIOTE_EVENTSIN(1)) {
-    encoder_update(1);
+    encoder_update_test(1);
     GPIOTE_EVENTSIN(1) = 0;
   }
 }
