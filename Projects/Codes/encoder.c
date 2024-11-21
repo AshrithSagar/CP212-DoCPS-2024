@@ -2,7 +2,6 @@
 #include "gpio.h"
 #include "printlib.h"
 #include "timer32.h"
-#include "uart.h"
 #include <stdint.h>
 
 #define NUM_MS_IN_MIN (60000000L) // Microseconds in a minute
@@ -35,6 +34,8 @@ void Motor_init(Motor *motor, int pinE1, int pinE2) {
   timer_m2 = 0;
   timer_m2_prev = 0;
   timer_m2_diff = 0;
+
+  myprintf("Motor initialized with pins %d, %d\n", pinE1, pinE2);
 }
 
 float Motor_getSpeed(Motor *motor, int pin) {
@@ -81,8 +82,9 @@ Motor motor2;
 void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2) {
   Motor_init(&motor1, M1E1, M1E2);
   Motor_init(&motor2, M2E1, M2E2);
+  myprintf("Motors in Encoder configured\n");
   timer32_init();
-  uart_init();
+  myprintf("Encoder initialized\n");
 }
 
 void encoder_update(int event) {

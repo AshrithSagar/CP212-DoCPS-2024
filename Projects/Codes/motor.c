@@ -1,5 +1,6 @@
 #include "motor.h"
 #include "nrf52833.h"
+#include "printlib.h"
 #include <stdint.h>
 
 static int period;
@@ -10,10 +11,10 @@ static int period;
 
 void motor_init(int m1A, int m1B, int m2A, int m2B) {
   /* Set prescaler divisor = 16 for 1 MHz clock */
-  PWM->PRESCALER = 4; // 16 = 1 << 4
+  PWM->PRESCALER = 4;    // 16 = 1 << 4
 
   /* Set period */
-  period = PWM_CLK / PWM_FREQ;
+  period          = PWM_CLK / PWM_FREQ;
   PWM->COUNTERTOP = period;
 
   /* Connect output pins */
@@ -26,12 +27,14 @@ void motor_init(int m1A, int m1B, int m2A, int m2B) {
   PWM->DECODER = 2;
 
   PWM->ENABLE = 1;
+
+  myprintf("Motor initialized\n");
 }
 
 void motor_on(MotorDirection dirA, int dutyA, MotorDirection dirB, int dutyB) {
-  static uint16_t s_sequence[4]; // this cannot be on the stack
-                                 // because DMA can access it after
-                                 // the function returns
+  static uint16_t s_sequence[4];    // this cannot be on the stack
+                                    // because DMA can access it after
+                                    // the function returns
 
   switch (dirA) {
   case MOTOR_FORWARD:
@@ -63,9 +66,9 @@ void motor_on(MotorDirection dirA, int dutyA, MotorDirection dirB, int dutyB) {
     break;
   }
 
-  PWM->SEQ[0].PTR = (uint32_t)(uintptr_t)s_sequence;
-  PWM->SEQ[0].CNT = 4;     // one value per channel
-  PWM->SEQ[0].REFRESH = 0; // continuous
+  PWM->SEQ[0].PTR     = (uint32_t)(uintptr_t)s_sequence;
+  PWM->SEQ[0].CNT     = 4;    // one value per channel
+  PWM->SEQ[0].REFRESH = 0;    // continuous
 
   PWM->TASKS_SEQSTART[0] = 1;
   while (PWM->EVENTS_SEQSTARTED[0] == 0)

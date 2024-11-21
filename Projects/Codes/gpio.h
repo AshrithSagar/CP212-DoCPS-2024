@@ -6,15 +6,13 @@
 typedef enum { INPUT = 0, OUTPUT = 1 } PinMode;
 typedef enum { LOW = 0, HIGH = 1 } PinState;
 typedef enum { PULL_NONE = 0, PULLDOWN = (1 << 2), PULLUP = (3 << 2) } PullType;
-typedef enum {
-  GPIO_RISINGEDGE = 1,
-  GPIO_FALLINGEDGE = 2,
-  GPIO_BOTHEDGES = 3
-} InterruptEdge;
+
+typedef uint32_t InterruptEdge;
+enum { GPIO_RISINGEDGE = 1, GPIO_FALLINGEDGE = 2, GPIO_BOTHEDGES = 3 };
 
 void pinMode(int pin, PinMode direction, PullType pull);
 void digitalWrite(int pin, PinState value);
 int digitalRead(int pin);
-void digitalInterruptEnable(uint32_t pin, uint32_t edge, int event);
+void digitalInterruptEnable(uint32_t pin, InterruptEdge edge, int event);
 
 #endif // GPIO_H

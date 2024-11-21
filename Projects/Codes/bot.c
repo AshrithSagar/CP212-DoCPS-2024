@@ -2,8 +2,13 @@
 #include "encoder.h"
 #include "gpio.h"
 #include "motor.h"
+#include "printlib.h"
+#include "uart.h"
 
 void bot_init(StackBot *bot) {
+  uart_init();
+  myprintf("Initializing bot\n");
+
   for (int i = 0; i < 4; i++) {
     pinMode(bot->motorPins[i], OUTPUT, PULL_NONE);
   }
@@ -11,6 +16,8 @@ void bot_init(StackBot *bot) {
              bot->motorPins[3]);
   encoder_init(bot->encoderPins[0], bot->encoderPins[1], bot->encoderPins[2],
                bot->encoderPins[3]);
+
+  myprintf("Bot initialized\n");
 }
 
 void bot_forward(StackBot *bot, int speed) {

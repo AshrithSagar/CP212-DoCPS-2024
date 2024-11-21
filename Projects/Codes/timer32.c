@@ -1,5 +1,6 @@
 #include "timer32.h"
 #include "nrf52833.h"
+#include "printlib.h"
 
 void timer32_init() {
   // Set Timer0 to 32-bit mode
@@ -16,6 +17,8 @@ void timer32_init() {
 
   // Start the timer
   NRF_TIMER0->TASKS_START = 1;
+
+  myprintf("Timer32 initialized\n");
 }
 
 unsigned long timer32_read() {
