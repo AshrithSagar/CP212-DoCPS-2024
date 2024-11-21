@@ -19,23 +19,27 @@ typedef struct {
   int lastStateE1;
   int lastStateE2;
   Timer timer;
+} Encoder;
+
+typedef struct {
+  Encoder encoder;
 } Motor;
 
 void Motor_init(Motor *motor1, Motor *motor2, int M1E1, int M1E2, int M2E1,
                 int M2E2) {
-  motor1->pinE1 = M1E1;
-  motor1->pinE2 = M1E2;
-  motor1->counter = 0;
-  motor1->timer.current = 0;
-  motor1->timer.previous = 0;
-  motor1->timer.diff = 0;
+  motor1->encoder.pinE1 = M1E1;
+  motor1->encoder.pinE2 = M1E2;
+  motor1->encoder.counter = 0;
+  motor1->encoder.timer.current = 0;
+  motor1->encoder.timer.previous = 0;
+  motor1->encoder.timer.diff = 0;
 
-  motor2->pinE1 = M2E1;
-  motor2->pinE2 = M2E2;
-  motor2->counter = 0;
-  motor2->timer.current = 0;
-  motor2->timer.previous = 0;
-  motor2->timer.diff = 0;
+  motor2->encoder.pinE1 = M2E1;
+  motor2->encoder.pinE2 = M2E2;
+  motor2->encoder.counter = 0;
+  motor2->encoder.timer.current = 0;
+  motor2->encoder.timer.previous = 0;
+  motor2->encoder.timer.diff = 0;
 
   pinMode(M1E1, INPUT, PULLDOWN);
   digitalInterruptEnable(M1E1, GPIO_RISINGEDGE, 0);
@@ -45,10 +49,10 @@ void Motor_init(Motor *motor1, Motor *motor2, int M1E1, int M1E2, int M2E1,
 }
 
 float Motor_getSpeed(Motor *motor, int pin) {
-  if (pin == motor->pinE1 && motor->timer.diff != 0)
-    return ((float)NUM_MS_IN_MIN / motor->timer.diff) / PPR;
-  else if (pin == motor->pinE2 && motor->timer.diff != 0)
-    return ((float)NUM_MS_IN_MIN / motor->timer.diff) / PPR;
+  if (pin == motor->encoder.pinE1 && motor->encoder.timer.diff != 0)
+    return ((float)NUM_MS_IN_MIN / motor->encoder.timer.diff) / PPR;
+  else if (pin == motor->encoder.pinE2 && motor->encoder.timer.diff != 0)
+    return ((float)NUM_MS_IN_MIN / motor->encoder.timer.diff) / PPR;
   else
     return 0;
 }
@@ -57,28 +61,30 @@ float Motor_getRPM(Motor *motor) {
   /* Calculate the RPM of the motor
    * RPM = (Counter * 60) / PPR
    */
-  return (float)(motor->counter * 60) / PPR;
+  return (float)(motor->encoder.counter * 60) / PPR;
 }
 
 void Motor_updateCounter(Motor *motor1, Motor *motor2, int event) {
   if (event == 0) {
-    motor1->counter++;
-    myprintf("Motor 1: %d\n", motor1->counter);
+    motor1->encoder.counter++;
+    myprintf("Motor 1: %d\n", motor1->encoder.counter);
   } else if (event == 1) {
-    motor2->counter++;
-    myprintf("Motor 2: %d\n", motor2->counter);
+    motor2->encoder.counter++;
+    myprintf("Motor 2: %d\n", motor2->encoder.counter);
   }
 }
 
 void Motor_updateEncoder(Motor *motor, int event) {
   if (event == 0) {
-    motor->timer.current = timer32_read();
-    motor->timer.diff = motor->timer.current - motor->timer.previous;
-    motor->timer.previous = motor->timer.current;
+    motor->encoder.timer.current = timer32_read();
+    motor->encoder.timer.diff =
+        motor->encoder.timer.current - motor->encoder.timer.previous;
+    motor->encoder.timer.previous = motor->encoder.timer.current;
   } else if (event == 1) {
-    motor->timer.current = timer32_read();
-    motor->timer.diff = motor->timer.current - motor->timer.previous;
-    motor->timer.previous = motor->timer.current;
+    motor->encoder.timer.current = timer32_read();
+    motor->encoder.timer.diff =
+        motor->encoder.timer.current - motor->encoder.timer.previous;
+    motor->encoder.timer.previous = motor->encoder.timer.current;
   }
 }
 
