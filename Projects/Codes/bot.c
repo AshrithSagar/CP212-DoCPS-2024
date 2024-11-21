@@ -44,7 +44,7 @@ void bot_move(StackBot *bot, Direction direction, int speed) {
   }
 }
 
-void bot_uart_control(StackBot *bot) {
+void bot_uart_control(StackBot *bot, int speed) {
   char input;
   const struct {
     char key;
@@ -60,7 +60,7 @@ void bot_uart_control(StackBot *bot) {
         if (key_map[i].direction == STILL) {
           bot->stop(bot);
         } else {
-          bot->move(bot, key_map[i].direction, 25);
+          bot->move(bot, key_map[i].direction, speed);
         }
         break;
       }

@@ -6,5 +6,5 @@ int main() {
   struct StackBot *bot = configStackBot(motorPins, encoderPins);
 
   bot->init(bot);
-  bot->uart_control(bot);
+  bot->uart_control(bot, 25);
 }

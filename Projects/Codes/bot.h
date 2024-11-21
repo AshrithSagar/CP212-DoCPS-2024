@@ -24,7 +24,7 @@ struct StackBot {
   void (*init)(struct StackBot *);
   void (*move)(struct StackBot *, Direction, int);
   void (*stop)(struct StackBot *);
-  void (*uart_control)(struct StackBot *);
+  void (*uart_control)(struct StackBot *, int);
 };
 typedef struct StackBot StackBot;
 
