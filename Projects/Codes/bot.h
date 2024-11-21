@@ -15,11 +15,12 @@ typedef struct {
   int M2E2;
 } EncoderPins;
 
-typedef enum { FORWARD, REVERSE, LEFT, RIGHT } Direction;
+typedef enum { FORWARD, REVERSE, LEFT, RIGHT, STILL } Direction;
 
 struct StackBot {
   MotorPins motorPins;
   EncoderPins encoderPins;
+  Direction state;
   void (*init)(struct StackBot *);
   void (*move)(struct StackBot *, Direction, int);
   void (*stop)(struct StackBot *);

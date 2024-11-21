@@ -18,7 +18,13 @@ void bot_init(StackBot *bot) {
                bot->encoderPins.M2E1, bot->encoderPins.M2E2);
 }
 
+void bot_stop(StackBot *bot) {
+  bot->state = STILL;
+  motor_off();
+}
+
 void bot_move(StackBot *bot, Direction direction, int speed) {
+  bot->state = direction;
   switch (direction) {
   case FORWARD:
     motor_on(MOTOR_FORWARD, speed, MOTOR_FORWARD, speed);
@@ -33,16 +39,16 @@ void bot_move(StackBot *bot, Direction direction, int speed) {
     motor_on(MOTOR_FORWARD, speed, MOTOR_REVERSE, speed);
     break;
   default:
+    bot_stop(bot);
     break;
   }
 }
-
-void bot_stop(StackBot *bot) { motor_off(); }
 
 StackBot *configStackBot(MotorPins motorPins, EncoderPins encoderPins) {
   StackBot *bot = (StackBot *)malloc(sizeof(StackBot));
   bot->motorPins = motorPins;
   bot->encoderPins = encoderPins;
+  bot->state = STILL;
   bot->init = bot_init;
   bot->move = bot_move;
   bot->stop = bot_stop;
