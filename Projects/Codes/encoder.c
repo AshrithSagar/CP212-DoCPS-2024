@@ -1,4 +1,5 @@
 #include "encoder.h"
+#include "bot.h"
 #include "gpio.h"
 #include "printlib.h"
 #include "timer32.h"
@@ -6,10 +7,7 @@
 #define NUM_MS_IN_MIN (60000000L) // Microseconds in a minute
 #define PPR 325                   // Pulses per revolution
 
-Motor motor1, motor2;
-
-void Motor_init(Motor *motor, int pinE1, int pinE2, int event) {
-  motor->id = event + 1;
+void configureEncoder(Motor *motor, int pinE1, int pinE2) {
   motor->encoder.pinE1 = pinE1;
   motor->encoder.pinE2 = pinE2;
   motor->encoder.counter = 0;
@@ -18,7 +16,7 @@ void Motor_init(Motor *motor, int pinE1, int pinE2, int event) {
   motor->encoder.timer.diff = 0;
 
   pinMode(pinE1, INPUT, PULL_DOWN);
-  digitalInterruptEnable(pinE1, GPIO_RISINGEDGE, event);
+  digitalInterruptEnable(pinE1, GPIO_RISINGEDGE, motor->id);
 }
 
 float Motor_getSpeed(Motor *motor) {
@@ -46,14 +44,17 @@ void encoder_updateCounter(Motor *motor) {
   myprintf("Motor %d: %d\n", motor->id, motor->encoder.counter);
 }
 
-void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2) {
-  Motor_init(&motor1, M1E1, M1E2, 0);
-  Motor_init(&motor2, M2E1, M2E2, 1);
+Motor motorLeft, motorRight;
+void encoder_init(StackBot *bot) {
+  motorLeft = bot->motorLeft;
+  motorRight = bot->motorRight;
+  configureEncoder(&motorLeft, bot->encoderPins.M1E1, bot->encoderPins.M1E2);
+  configureEncoder(&motorRight, bot->encoderPins.M2E1, bot->encoderPins.M2E2);
   timer32_init();
 }
 
 void encoder_update(int event) {
-  Motor *motor = (event == 0) ? &motor1 : &motor2;
+  Motor *motor = (event == 0) ? &motorLeft : &motorRight;
   encoder_updateTimer(motor);
   encoder_updateCounter(motor);
 }

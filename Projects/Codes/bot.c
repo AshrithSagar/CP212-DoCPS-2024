@@ -8,8 +8,7 @@
 void bot_init(StackBot *bot) {
   uart_init();
   motor_init(bot);
-  encoder_init(bot->encoderPins.M1E1, bot->encoderPins.M1E2,
-               bot->encoderPins.M2E1, bot->encoderPins.M2E2);
+  encoder_init(bot);
 
   myprintf("\nBot initialized\n");
 }

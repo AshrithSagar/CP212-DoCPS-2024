@@ -1,4 +1,5 @@
 #include "motor.h"
+#include "bot.h"
 #include "gpio.h"
 #include "nrf52833.h"
 #include <stdint.h>
@@ -10,8 +11,8 @@ static int period;
 #define PWM_FREQ 500
 
 void motor_init(StackBot *bot) {
-  bot->motorLeft.id = 1;
-  bot->motorRight.id = 2;
+  bot->motorLeft.id = 0;
+  bot->motorRight.id = 1;
 
   // Set motor pins as output
   pinMode(bot->motorPins.M1A, OUTPUT, PULL_NONE);

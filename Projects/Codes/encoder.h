@@ -3,7 +3,7 @@
 
 #include "bot.h"
 
-void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2);
+void encoder_init(StackBot *bot);
 float encoder_speed(int pin);
 void encoder_update(int event);
 
