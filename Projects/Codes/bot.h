@@ -15,6 +15,7 @@ typedef struct {
   int M2E2;
 } EncoderPins;
 
+#define numStates 5
 typedef enum { FORWARD, REVERSE, LEFT, RIGHT, STILL } Direction;
 
 typedef enum { MOTOR_FORWARD, MOTOR_REVERSE } MotorDirection;
