@@ -1,8 +1,6 @@
 #ifndef BOT_H
 #define BOT_H
 
-#include "motor.h"
-
 typedef struct {
   int M1A;
   int M1B;
@@ -18,6 +16,8 @@ typedef struct {
 } EncoderPins;
 
 typedef enum { FORWARD, REVERSE, LEFT, RIGHT, STILL } Direction;
+
+typedef enum { MOTOR_FORWARD, MOTOR_REVERSE } MotorDirection;
 
 typedef struct {
   unsigned long current;
