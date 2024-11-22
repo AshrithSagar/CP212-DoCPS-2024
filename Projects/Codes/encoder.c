@@ -3,7 +3,6 @@
 #include "gpio.h"
 #include "printlib.h"
 #include "timer32.h"
-#include <stdint.h>
 
 #define NUM_MS_IN_MIN (60000000L) // Microseconds in a minute
 #define PPR 325                   // Pulses per revolution
@@ -19,7 +18,7 @@ void Motor_init(Motor *motor, int pinE1, int pinE2, int event) {
   motor->encoder.timer.previous = 0;
   motor->encoder.timer.diff = 0;
 
-  pinMode(pinE1, INPUT, PULLDOWN);
+  pinMode(pinE1, INPUT, PULL_DOWN);
   digitalInterruptEnable(pinE1, GPIO_RISINGEDGE, event);
 }
 

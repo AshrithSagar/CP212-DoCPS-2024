@@ -3,20 +3,22 @@
 
 #include <stdint.h>
 
-#define LOW 0
-#define HIGH 1
-#define INPUT 0
-#define OUTPUT 1
-#define PULL_NONE 0
-#define PULLDOWN (1 << 2)
-#define PULLUP (3 << 2)
-#define GPIO_RISINGEDGE 1
-#define GPIO_FALLINGEDGE 2
-#define GPIO_BOTHEDGES 3
+typedef enum { INPUT = 0, OUTPUT = 1 } PinMode;
+typedef enum { LOW = 0, HIGH = 1 } PinState;
+typedef enum {
+  PULL_NONE = 0,
+  PULL_DOWN = (1 << 2),
+  PULL_UP = (3 << 2)
+} PullType;
+typedef enum {
+  GPIO_RISINGEDGE = 1,
+  GPIO_FALLINGEDGE = 2,
+  GPIO_BOTHEDGES = 3
+} InterruptEdge;
 
-void pinMode(int pin, int direction, int pull);
-void digitalWrite(int pin, int value);
+void pinMode(int pin, PinMode direction, PullType pull);
+void digitalWrite(int pin, PinState value);
 int digitalRead(int pin);
-void digitalInterruptEnable(uint32_t pin, uint32_t edge, int event);
+void digitalInterruptEnable(uint32_t pin, InterruptEdge edge, int event);
 
 #endif // GPIO_H

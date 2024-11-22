@@ -4,14 +4,13 @@
 #include "printlib.h"
 
 // Macros
-#define IOREG(addr) (*((volatile long *)(addr)))
 #define IOREG32(addr) (*((volatile uint32_t *)(uintptr_t)(addr)))
 #define GPIO_PORT(pin) ((pin) < 32 ? NRF_P0 : NRF_P1)
-#define GPIO_BIT(pin) ((pin) < 32 ? (pin) : ((pin) - 32))
+#define GPIO_BIT(pin) ((pin) < 32 ? (pin) : ((pin)-32))
 #define GPIOTE_MODEEVENT (1)
 #define NVIC_ISER IOREG32(0xE000E100)
 
-void pinMode(int pin, int direction, int pull) {
+void pinMode(int pin, PinMode direction, PullType pull) {
   /*
    * Set the direction of a GPIO pin
    * pin: pin number
@@ -31,7 +30,7 @@ void pinMode(int pin, int direction, int pull) {
   }
 }
 
-void digitalWrite(int pin, int value) {
+void digitalWrite(int pin, PinState value) {
   /*
    * Write a value to a GPIO pin
    * pin: pin number
@@ -54,7 +53,7 @@ int digitalRead(int pin) {
   return (port->IN >> bit) & 0x01;
 }
 
-void digitalInterruptEnable(uint32_t pin, uint32_t edge, int event) {
+void digitalInterruptEnable(uint32_t pin, InterruptEdge edge, int event) {
   /* GPIOTE has 8 registers, each can be configured for event i (i = 0 to 7)
    * along with the pin number and event type associated with the event.
    */
