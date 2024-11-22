@@ -1,7 +1,7 @@
 /* Hardware abstraction layer for GPIO port */
 #include "gpio.h"
+#include "encoder.h"
 #include "nrf52833.h"
-#include "printlib.h"
 
 // Macros
 #define IOREG32(addr) (*((volatile uint32_t *)(uintptr_t)(addr)))
@@ -66,28 +66,16 @@ void digitalInterruptEnable(uint32_t pin, InterruptEdge edge, int event) {
   NVIC_ISER |= (1 << GPIOTE_IRQn);
 }
 
-int counter1 = 0;
-int counter2 = 0;
-void encoder_update_test(int event) {
-  if (event == 0) {
-    counter1++;
-    myprintf("Motor 1: %d\n", counter1);
-  } else if (event == 1) {
-    counter2++;
-    myprintf("Motor 2: %d\n", counter2);
-  }
-}
-
 void GPIOTE_IRQHandler(void) {
   /* Handle GPIO tasks and events */
 
   if (NRF_GPIOTE->EVENTS_IN[0]) {
-    encoder_update_test(0);
+    encoder_update(0);
     NRF_GPIOTE->EVENTS_IN[0] = 0;
   }
 
   if (NRF_GPIOTE->EVENTS_IN[1]) {
-    encoder_update_test(1);
+    encoder_update(1);
     NRF_GPIOTE->EVENTS_IN[1] = 0;
   }
 }

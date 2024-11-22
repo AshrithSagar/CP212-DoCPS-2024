@@ -32,6 +32,7 @@ typedef struct {
 } Encoder;
 
 typedef struct {
+  int id;
   Encoder encoder;
   MotorDirection direction;
   int speed;

@@ -10,6 +10,7 @@
 Motor motor1, motor2;
 
 void Motor_init(Motor *motor, int pinE1, int pinE2, int event) {
+  motor->id = event + 1;
   motor->encoder.pinE1 = pinE1;
   motor->encoder.pinE2 = pinE2;
   motor->encoder.counter = 0;
@@ -43,7 +44,7 @@ void encoder_updateTimer(Motor *motor) {
 
 void encoder_updateCounter(Motor *motor) {
   motor->encoder.counter++;
-  myprintf("Counter: %d\n", motor->encoder.counter);
+  myprintf("Motor %d: %d\n", motor->id, motor->encoder.counter);
 }
 
 void encoder_init(int M1E1, int M1E2, int M2E1, int M2E2) {
