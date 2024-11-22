@@ -46,30 +46,44 @@ void bot_move(StackBot *bot, Direction direction, int speed) {
 
 void bot_uart_control(StackBot *bot, int speed) {
   bot->speed = speed;
-  char input;
+  char input[3];
 
   const struct {
-    char key;
+    char key[3];
     Direction direction;
   } KEY_MAP[] = {
-      {'w', FORWARD}, {'s', REVERSE}, {'a', LEFT}, {'d', RIGHT}, {'x', STILL},
+      {"\x1B[A", FORWARD}, // Up arrow
+      {"\x1B[B", REVERSE}, // Down arrow
+      {"\x1B[C", RIGHT},   // Right arrow
+      {"\x1B[D", LEFT},    // Left arrow
+      {" ", STILL},        // Spacebar
   };
 
   while (1) {
-    input = uart_getc();
+    input[0] = uart_getc();
+    if (input[0] == '\x1B') {
+      input[1] = uart_getc();
+      if (input[1] == '[') {
+        input[2] = uart_getc();
+      }
+    }
 
-    if (input >= '0' && input <= '9') {
-      bot->speed = (input == '0') ? 100 : (input - '0') * 10;
+    if (input[0] >= '0' && input[0] <= '9') {
+      bot->speed = (input[0] == '0') ? 100 : (input[0] - '0') * 10;
       bot_move(bot, bot->state, bot->speed);
       myprintf("\nSpeed set to %d%%\n", bot->speed);
     }
 
-    for (int i = 0; i < numStates; i++) {
-      if (input == KEY_MAP[i].key) {
+    for (int i = 0; i < sizeof(KEY_MAP) / sizeof(KEY_MAP[0]); i++) {
+      if ((input[0] == KEY_MAP[i].key[0] && input[1] == KEY_MAP[i].key[1] &&
+           input[2] == KEY_MAP[i].key[2]) ||
+          (input[0] == KEY_MAP[i].key[0] && KEY_MAP[i].key[0] == ' ')) {
         bot_move(bot, KEY_MAP[i].direction, bot->speed);
         break;
       }
     }
+
+    input[0] = input[1] = input[2] = 0;
   }
 }
 
