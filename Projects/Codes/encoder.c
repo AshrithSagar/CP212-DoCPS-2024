@@ -1,5 +1,4 @@
 #include "encoder.h"
-#include "bot.h"
 #include "gpio.h"
 #include "printlib.h"
 #include "timer32.h"

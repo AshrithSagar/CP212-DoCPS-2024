@@ -3,7 +3,7 @@
 
 #include "bot.h"
 
-void motor_init(int M1A, int M1B, int M2A, int M2B);
+void motor_init(StackBot *bot);
 void motor_on(MotorDirection dirA, int dutyA, MotorDirection dirB, int dutyB);
 void motor_off(void);
 

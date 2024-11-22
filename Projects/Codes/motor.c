@@ -1,4 +1,5 @@
 #include "motor.h"
+#include "gpio.h"
 #include "nrf52833.h"
 #include <stdint.h>
 
@@ -8,30 +9,39 @@ static int period;
 #define PWM_CLK 1000000
 #define PWM_FREQ 500
 
-void motor_init(int m1A, int m1B, int m2A, int m2B) {
-  /* Set prescaler divisor = 16 for 1 MHz clock */
+void motor_init(StackBot *bot) {
+  bot->motorLeft.id = 1;
+  bot->motorRight.id = 2;
+
+  // Set motor pins as output
+  pinMode(bot->motorPins.M1A, OUTPUT, PULL_NONE);
+  pinMode(bot->motorPins.M1B, OUTPUT, PULL_NONE);
+  pinMode(bot->motorPins.M2A, OUTPUT, PULL_NONE);
+  pinMode(bot->motorPins.M2B, OUTPUT, PULL_NONE);
+
+  // Set prescaler divisor = 16 for 1 MHz clock
   PWM->PRESCALER = 4; // 16 = 1 << 4
 
-  /* Set period */
+  // Set period
   period = PWM_CLK / PWM_FREQ;
   PWM->COUNTERTOP = period;
 
-  /* Connect output pins */
-  PWM->PSEL.OUT[0] = m1A;
-  PWM->PSEL.OUT[1] = m1B;
-  PWM->PSEL.OUT[2] = m2A;
-  PWM->PSEL.OUT[3] = m2B;
+  // Connect output pins
+  PWM->PSEL.OUT[0] = bot->motorPins.M1A;
+  PWM->PSEL.OUT[1] = bot->motorPins.M1B;
+  PWM->PSEL.OUT[2] = bot->motorPins.M2A;
+  PWM->PSEL.OUT[3] = bot->motorPins.M2B;
 
-  /* Individual duty cycles for each channel */
+  // Individual duty cycles for each channel
   PWM->DECODER = 2;
 
   PWM->ENABLE = 1;
 }
 
 void motor_on(MotorDirection dirA, int dutyA, MotorDirection dirB, int dutyB) {
-  static uint16_t s_sequence[4]; // this cannot be on the stack
-                                 // because DMA can access it after
-                                 // the function returns
+  static uint16_t s_sequence[4];
+  // This cannot be on the stack because DMA
+  // can access it after the function returns
 
   switch (dirA) {
   case MOTOR_FORWARD:
@@ -64,14 +74,12 @@ void motor_on(MotorDirection dirA, int dutyA, MotorDirection dirB, int dutyB) {
   }
 
   PWM->SEQ[0].PTR = (uint32_t)(uintptr_t)s_sequence;
-  PWM->SEQ[0].CNT = 4;     // one value per channel
-  PWM->SEQ[0].REFRESH = 0; // continuous
+  PWM->SEQ[0].CNT = 4;     // One value per channel
+  PWM->SEQ[0].REFRESH = 0; // Continuous
 
   PWM->TASKS_SEQSTART[0] = 1;
   while (PWM->EVENTS_SEQSTARTED[0] == 0)
     ;
-
-  return;
 }
 
 void motor_off(void) {
@@ -81,6 +89,4 @@ void motor_off(void) {
     ;
 
   PWM->EVENTS_STOPPED = 0;
-
-  return;
 }
