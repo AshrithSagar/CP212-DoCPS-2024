@@ -40,6 +40,8 @@ void bot_move(StackBot *bot, Direction direction, int speed) {
 }
 
 void bot_uart_control(StackBot *bot, int speed) {
+  bot->speed = speed;
+
   char input;
   const struct {
     char key;
@@ -50,12 +52,18 @@ void bot_uart_control(StackBot *bot, int speed) {
 
   while (1) {
     input = uart_getc();
+    if (input >= '0' && input <= '9') {
+      bot->speed = (input - '0') * 10;
+      bot_move(bot, bot->state, bot->speed);
+      myprintf("\nSpeed set to %d\n", bot->speed);
+    }
+
     for (int i = 0; i < sizeof(key_map) / sizeof(key_map[0]); i++) {
       if (input == key_map[i].key) {
         if (key_map[i].direction == STILL) {
-          bot->stop(bot);
+          bot_stop(bot);
         } else {
-          bot->move(bot, key_map[i].direction, speed);
+          bot_move(bot, key_map[i].direction, bot->speed);
         }
         break;
       }

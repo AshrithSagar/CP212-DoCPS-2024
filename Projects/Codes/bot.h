@@ -43,6 +43,7 @@ struct StackBot {
   EncoderPins encoderPins;
   Direction state;
   Motor motorLeft, motorRight;
+  int speed;
   void (*init)(struct StackBot *);
   void (*move)(struct StackBot *, Direction, int);
   void (*stop)(struct StackBot *);
