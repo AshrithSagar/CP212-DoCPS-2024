@@ -1,9 +1,11 @@
 /* Hardware abstraction layer for GPIO port */
 #include "gpio.h"
+#include "nrf52833.h"
 #include "printlib.h"
 
 // Macros
 #define IOREG(addr) (*((volatile long *)(addr)))
+#define IOREG32(addr) (*((volatile uint32_t *)(uintptr_t)(addr)))
 #define GPIO_PORT(pin) ((pin) < 32 ? GPIO_P0 : GPIO_P1)
 #define GPIO_BIT(pin) ((pin) < 32 ? (pin) : ((pin) - 32))
 #define CLEAR(port, offset, bit) (IOREG(port + offset) &= ~(1UL << (bit)))
@@ -74,29 +76,21 @@ int digitalRead(int pin) {
   return read;
 }
 
-// GPIOTE registers
-#define IOREG32(addr) (*((volatile uint32_t *)(uintptr_t)(addr)))
-#define GPIOTE_EVENTSIN(i) IOREG32(0x40006100 + 4 * (i))
-#define GPIOTE_INTENSET IOREG32(0x40006304)
-#define GPIOTE_CONFIG(i) IOREG32(0x40006510 + 4 * (i))
+// GPIOTE & NVIC
 #define GPIOTE_MODEEVENT (1)
-
-// NVIC registers
 #define NVIC_ISER IOREG32(0xE000E100)
-#define GPIOTE_ID 6 // Peripheral ID
 
 void digitalInterruptEnable(uint32_t pin, uint32_t edge, int event) {
   /* GPIOTE has 8 registers, each can be configured for event i (i = 0 to 7)
    * along with the pin number and event type associated with the event.
    */
-  GPIOTE_CONFIG(event) = (GPIOTE_MODEEVENT | (pin << 8) | (edge << 16));
-  myprintf("GPIOTE_CONFIG(%d) = %x\n", event, GPIOTE_CONFIG(event));
+  NRF_GPIOTE->CONFIG[event] = (GPIOTE_MODEEVENT | (pin << 8) | (edge << 16));
 
   // Generate an interrupt when the specified event occurs.
-  GPIOTE_INTENSET |= (1 << event);
+  NRF_GPIOTE->INTENSET |= (1 << event);
 
   // Enable GPIOTE interrupts in the interrupt controller
-  NVIC_ISER |= (1 << GPIOTE_ID);
+  NVIC_ISER |= (1 << GPIOTE_IRQn);
 }
 
 int counter1 = 0;
@@ -114,15 +108,13 @@ void encoder_update_test(int event) {
 void GPIOTE_IRQHandler(void) {
   /* Handle GPIO tasks and events */
 
-  myprintf("GPIOTE interrupt triggered\n");
-
-  if (GPIOTE_EVENTSIN(0)) {
+  if (NRF_GPIOTE->EVENTS_IN[0]) {
     encoder_update_test(0);
-    GPIOTE_EVENTSIN(0) = 0;
+    NRF_GPIOTE->EVENTS_IN[0] = 0;
   }
 
-  if (GPIOTE_EVENTSIN(1)) {
+  if (NRF_GPIOTE->EVENTS_IN[1]) {
     encoder_update_test(1);
-    GPIOTE_EVENTSIN(1) = 0;
+    NRF_GPIOTE->EVENTS_IN[1] = 0;
   }
 }
