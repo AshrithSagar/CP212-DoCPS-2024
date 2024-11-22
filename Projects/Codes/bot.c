@@ -1,4 +1,5 @@
 #include "bot.h"
+#include "encoder.h"
 #include "gpio.h"
 #include "motor.h"
 #include "printlib.h"
@@ -14,6 +15,8 @@ void bot_init(StackBot *bot) {
   uart_init();
   motor_init(bot->motorPins.M1A, bot->motorPins.M1B, bot->motorPins.M2A,
              bot->motorPins.M2B);
+  encoder_init(bot->encoderPins.M1E1, bot->encoderPins.M1E2,
+               bot->encoderPins.M2E1, bot->encoderPins.M2E2);
 
   myprintf("\nBot initialized\n");
 }
