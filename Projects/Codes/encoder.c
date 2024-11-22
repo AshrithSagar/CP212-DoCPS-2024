@@ -7,8 +7,7 @@
 #define NUM_MS_IN_MIN (60000000L) // Microseconds in a minute
 #define PPR 325                   // Pulses per revolution
 
-Motor motor1;
-Motor motor2;
+Motor motor1, motor2;
 
 void Motor_init(Motor *motor, int pinE1, int pinE2, int event) {
   motor->encoder.pinE1 = pinE1;
