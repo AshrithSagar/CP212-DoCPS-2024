@@ -1,6 +1,8 @@
 #ifndef BOT_H
 #define BOT_H
 
+#include "motor.h"
+
 typedef struct {
   int M1A;
   int M1B;
@@ -26,13 +28,13 @@ typedef struct {
 typedef struct {
   int pinE1, pinE2;
   int counter;
-  int lastStateE1;
-  int lastStateE2;
   Timer timer;
 } Encoder;
 
 typedef struct {
   Encoder encoder;
+  MotorDirection direction;
+  int speed;
 } Motor;
 
 struct StackBot {
