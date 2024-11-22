@@ -20,6 +20,7 @@ void bot_stop(StackBot *bot) {
 
 void bot_move(StackBot *bot, Direction direction, int speed) {
   bot->state = direction;
+  bot->speed = speed;
   switch (direction) {
   case FORWARD:
     motor_on(MOTOR_FORWARD, speed, MOTOR_FORWARD, speed);
@@ -32,6 +33,9 @@ void bot_move(StackBot *bot, Direction direction, int speed) {
     break;
   case RIGHT:
     motor_on(MOTOR_FORWARD, speed, MOTOR_REVERSE, speed);
+    break;
+  case STILL:
+    bot_stop(bot);
     break;
   default:
     bot_stop(bot);
@@ -61,11 +65,7 @@ void bot_uart_control(StackBot *bot, int speed) {
 
     for (int i = 0; i < numStates; i++) {
       if (input == KEY_MAP[i].key) {
-        if (KEY_MAP[i].direction == STILL) {
-          bot_stop(bot);
-        } else {
-          bot_move(bot, KEY_MAP[i].direction, bot->speed);
-        }
+        bot_move(bot, KEY_MAP[i].direction, bot->speed);
         break;
       }
     }
