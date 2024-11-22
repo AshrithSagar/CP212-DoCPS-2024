@@ -39,10 +39,7 @@ void encoder_updateTimer(Motor *motor) {
   motor->encoder.timer.previous = motor->encoder.timer.current;
 }
 
-void encoder_updateCounter(Motor *motor) {
-  motor->encoder.counter++;
-  myprintf("Motor %d: %d\n", motor->id, motor->encoder.counter);
-}
+void encoder_updateCounter(Motor *motor) { motor->encoder.counter++; }
 
 Motor motorLeft, motorRight;
 void encoder_init(StackBot *bot) {
@@ -57,4 +54,6 @@ void encoder_update(int event) {
   Motor *motor = (event == 0) ? &motorLeft : &motorRight;
   encoder_updateTimer(motor);
   encoder_updateCounter(motor);
+  myprintf("Motor 1: %d\tMotor 2: %d\n", motorLeft.encoder.counter,
+           motorRight.encoder.counter);
 }
