@@ -19,8 +19,6 @@ void bot_stop(StackBot *bot) {
 }
 
 void bot_move(StackBot *bot, Direction direction, int speed) {
-  bot->state = direction;
-  bot->speed = speed;
   switch (direction) {
   case FORWARD:
     motor_on(MOTOR_FORWARD, speed, MOTOR_FORWARD, speed);
@@ -35,12 +33,15 @@ void bot_move(StackBot *bot, Direction direction, int speed) {
     motor_on(MOTOR_FORWARD, speed, MOTOR_REVERSE, speed);
     break;
   case STILL:
-    bot_stop(bot);
+    if (bot->state != STILL)
+      bot_stop(bot);
     break;
   default:
     bot_stop(bot);
     break;
   }
+  bot->state = direction;
+  bot->speed = speed;
 }
 
 void bot_uart_control(StackBot *bot, int speed) {
