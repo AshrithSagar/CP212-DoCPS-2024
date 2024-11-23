@@ -4,4 +4,20 @@ What you implemented (team) and your personal learnings (individual).
 
 \subsection*{Solution}
 
-Our team implemented a motor control system using the \texttt{nRF52833} microcontroller on the \texttt{micro:bit} board.
+\subsubsection*{Implementation}
+
+We implemented a motor control and encoder interface for the \texttt{StackBot} to make the bot move in different directions with different speeds, and to build a control for the bot speed using the values from the encoder.
+The motor control interface was implemented using the \texttt{PWM} circuit present in \texttt{nRF52833}, and the encoder interface was implemented using the \texttt{GPIO} pins along with \texttt{GPIOTE} to track the encoder values based on interrupts.
+As a team, we had segregated the functions in different files, separately having \texttt{bot.c}, \texttt{motor.c}, \texttt{encoder.c}, and \texttt{main.c} to make the code modular and easy to debug.
+We also tried to implelement a PID controller to control the speed of the bot based on the encoder values, but we were not able to get the desired results as properly expected.
+Most of times when testing, the bot moved in almost straight lines which was sufficient to work with.
+As an aside, we were able to nicely organise the code in a structured manner, in a self-documented fashion, making it easier to understand and debug.
+
+\subsubsection*{Personal learnings}
+
+The major learning was in understanding the interfacing of the motor and encoder with the microcontroller, especially getting the encoder interfaced using interrupts.
+This part was a bit tricky in understanding the \texttt{GPIOTE} registers, and there were a few design decisions in whether or not to use global variables very freely or not.
+Care was taken to ensure that the code was modular and easy to debug, and this was a good learning experience in understanding the importance of code organisation.
+Further, it was very fun to play with the bot and get to work with it hands-on.
+We had faced few issues in \texttt{GPIOTE\_IRQHandler}, and figuring out the issue was a good learning experience in understanding the importance of debugging and the use of breakpoints in the code.
+Overall, it was a very good learning experience in understanding the practical aspects of embedded systems and interfacing with hardware.
