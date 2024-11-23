@@ -39,7 +39,7 @@ typedef struct {
   int speed;
 } Motor;
 
-struct StackBot {
+typedef struct StackBot {
   MotorPins motorPins;
   EncoderPins encoderPins;
   Direction state;
@@ -49,8 +49,7 @@ struct StackBot {
   void (*move)(struct StackBot *, Direction, int);
   void (*stop)(struct StackBot *);
   void (*uart_control)(struct StackBot *, int);
-};
-typedef struct StackBot StackBot;
+} StackBot;
 
 StackBot *configStackBot(MotorPins motorPins, EncoderPins encoderPins);
 
