@@ -29,12 +29,20 @@ void pinMode(int pin, PinMode direction, PullType pull) {
    */
 
   PortBit pb = getPortBit(pin);
-  if (direction == INPUT) {
+
+  switch (direction) {
+  case INPUT:
     pb.port->DIRCLR &= ~(1UL << pb.bit);
     pb.port->PIN_CNF[pb.bit] = pull;
-  } else if (direction == OUTPUT) {
+    break;
+
+  case OUTPUT:
     pb.port->DIRSET |= (1UL << pb.bit);
     pb.port->PIN_CNF[pb.bit] = OUTPUT;
+    break;
+
+  default:
+    break;
   }
 }
 
@@ -46,20 +54,37 @@ void digitalWrite(int pin, PinState value) {
    */
 
   PortBit pb = getPortBit(pin);
-  if (value == LOW)
+
+  switch (value) {
+  case LOW:
     pb.port->OUTCLR &= ~(1UL << pb.bit);
-  else if (value == HIGH)
+    break;
+
+  case HIGH:
     pb.port->OUTSET |= (1UL << pb.bit);
+    break;
+
+  default:
+    break;
+  }
 }
 
-int digitalRead(int pin) {
+PinState digitalRead(int pin) {
+  /*
+   * Read the value of a GPIO pin
+   * pin: pin number
+   * returns: LOW or HIGH
+   */
+
   PortBit pb = getPortBit(pin);
+
   return (pb.port->IN >> pb.bit) & 0x01;
 }
 
 void digitalInterruptEnable(uint32_t pin, InterruptEdge edge, int event) {
-  /* GPIOTE has 8 registers, each can be configured for event i (i = 0 to 7)
-   * along with the pin number and event type associated with the event.
+  /* Configure GPIOTE event
+   * GPIOTE has 8 registers (0 to 7), each can be configured
+   * with a pin number and event type.
    */
   NRF_GPIOTE->CONFIG[event] = (GPIOTE_MODEEVENT | (pin << 8) | (edge << 16));
 
