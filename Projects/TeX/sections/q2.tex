@@ -12,16 +12,16 @@ As a team, we had segregated the functions in different files, separately having
 Additionally, we implemented a \texttt{uart\_control} to control the bot over a wired setup using keyboard, which had the provision to use arrow keys for direction, spacebar to stop, and the digits 0--9 to set the speed of the bot over 10 levels ranging from 10\% to 100\%.
 Wherever possible, the definitions from the header file \texttt{nrf52833.h} were used to code the functions, and we rewrote parts of the code where this wasn't done previously.
 
-We also tried to implelement a PD controller to control the speed of the bot based on the encoder values, which we were able to get to some degree of working.
-Most of times when testing, the bot moved in almost straight lines which was sufficient to work with.
-As an aside, we were able to nicely organise the code in a structured manner, in a self-documented fashion.
-The code was built in a modular and explicit way was using \texttt{struct}s and \texttt{typedef}s to make it easier to understand and debug.
+We also tried to implement a PD controller to control the speed of the bot based on the encoder values, which we were able to get to some degree of working.
+Most of the times when testing, the bot moved in almost straight lines which was sufficient to work with.
+As an aside, we were able to nicely organize the code in a structured manner, in a self-documented fashion.
+The code was built in a modular and explicit way using \texttt{struct}s and \texttt{typedef}s to make it easier to understand and debug.
 
 \subsubsection*{Personal learnings}
 
 The major learning was in understanding the interfacing of the motor and encoder with the microcontroller, especially getting the encoder interfaced using interrupts.
 This part was a bit tricky in understanding the \texttt{GPIOTE} registers, and there were a few design decisions in whether or not to use global variables very freely or not.
-Care was taken to ensure that the code was modular and easy to debug, and this was a good learning experience in understanding the importance of code organisation.
+Care was taken to ensure that the code was modular and easy to debug, and this was a good learning experience in understanding the importance of code organization.
 Further, it was very fun to play with the bot and get to work with it hands-on.
 We had faced few issues in \texttt{GPIOTE\_IRQHandler}, and figuring out the issue was a good learning experience in understanding the importance of debugging and the use of breakpoints in the code.
 Overall, it was a very good learning experience in understanding the practical aspects of embedded systems and interfacing with hardware.
