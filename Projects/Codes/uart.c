@@ -1,6 +1,5 @@
 #include "uart.h"
 #include "nrf52833.h"
-#include <stdarg.h>
 
 #define UART_TX_PIN 6
 #define UART_RX_PIN 40
@@ -48,13 +47,20 @@ char uart_getc(void) {
 }
 
 char *uart_fgets(char *buf, int bufsize) {
+  /* Read a line from the UART
+   * buf: buffer to store the line
+   * bufsize: size of the buffer
+   * return: pointer to the buffer
+   */
+
   int i = 0;
-  while (i < bufsize - 1) {
-    int c = uart_getc();
+  char c;
+  for (i = 0; i < bufsize - 1; i++) {
+    c = uart_getc();
     if (c == '\n' || c == '\r') {
       break;
     }
-    buf[i++] = c;
+    buf[i] = c;
   }
   buf[i] = '\0';
 
