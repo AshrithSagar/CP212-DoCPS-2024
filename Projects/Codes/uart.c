@@ -57,9 +57,8 @@ char *uart_fgets(char *buf, int bufsize) {
   char c;
   for (i = 0; i < bufsize - 1; i++) {
     c = uart_getc();
-    if (c == '\n' || c == '\r') {
+    if (c == '\n' || c == '\r')
       break;
-    }
     buf[i] = c;
   }
   buf[i] = '\0';

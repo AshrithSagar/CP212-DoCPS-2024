@@ -5,6 +5,6 @@ int main() {
   EncoderPins encoderPins = {.M1E1 = 28, .M1E2 = 14, .M2E1 = 37, .M2E2 = 11};
   StackBot *bot = configStackBot(motorPins, encoderPins);
 
-  bot->init(bot);
-  bot->uart_control(bot, 20);
+  bot_init(bot);
+  bot_uart_control(bot, 20);
 }
