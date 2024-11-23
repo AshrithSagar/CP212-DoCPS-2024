@@ -10,3 +10,21 @@ The encoders, which are connected to the \texttt{GPIO} pins of the microcontroll
 These pulses are counted and timed to calculate motor speed in \texttt{RPM} (revolutions per minute).
 The system uses interrupts to handle pulse events efficiently and timers to calculate the time difference between pulses, ensuring accurate speed measurement in a non-blocking way.
 This is done by configuring the \texttt{GPIOTE} registers to track the rising and falling edges of the encoder pulses.
+
+The motors and encoders are interfaced with the \texttt{micro:bit} board using the GPIO (General Purpose Input/Output) pins of the microcontroller.
+The \texttt{micro:bit} was connected to the edge connector and the power is supplied to the motor controller from a battery.
+UART was used to get data from the \texttt{micro:bit} to print the encoder output.
+The GPIO registers we of type \texttt{volatile long *} so that the compiler does not optimize access to register because this register may get modified due to the hardware or the interrupts.
+The base address for the \texttt{GPIO0} and \texttt{GPIO1} are \hex{0x50000000UL} and \hex{0x50000300UL}, respectively.
+According to whether the pin is \texttt{INPUT} or \texttt{OUTPUT}, the direction bit and the pin configuration is set using \texttt{pinMode\@()} function.
+
+The header file \texttt{nrf52833.h} is used to get the definitions and functions specific to the \texttt{nRF52833} which the \texttt{micro:bit} contains.
+The pulse modulation unit is taken from the \texttt{nrf52833.h} file.
+The PWM clock frequency is set to 1MHz and the PWM frequency is set to 500 Hz, which is the frequency at which the PWM signal will oscillate.
+The period of the PWM is calculated based on the clock frequency and desired PWM frequency, and is set in the \texttt{COUNTERTOP} register, thereby a PWM waveform is created whenever the counter value reaches 0.
+The pins on which the motor is connected is set to \texttt{OUTPUT}.
+A \texttt{motor\_init\@()} function is defined to initialize the motor.
+Inside this the required pins are set to the PWM output and the PWM is enabled so that the pins generate PWM output.
+A function \texttt{motor\_on\@()} is also provided so that PWM sequence is generated when we provide the pin, direction and duty cycle.
+Similar to the motor, there are functions in encoders that are defined.
+In the \texttt{encoder\_init\@()}, the pins to which the encoder is connected are set to \texttt{INPUT} and the digital interrupts are enabled so that we get the input from the encoder when the readings in the encoder changes.
