@@ -6,7 +6,7 @@
 // Macros
 #define IOREG32(addr) (*((volatile uint32_t *)(uintptr_t)(addr)))
 #define GPIO_PORT(pin) ((pin) < 32 ? NRF_P0 : NRF_P1)
-#define GPIO_BIT(pin) ((pin) < 32 ? (pin) : ((pin)-32))
+#define GPIO_BIT(pin) ((pin) % 32)
 #define GPIOTE_MODEEVENT (1)
 #define NVIC_ISER IOREG32(0xE000E100)
 
