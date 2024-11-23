@@ -6,7 +6,7 @@ How motors and encoders interface with the Microbit board.
 
 The \texttt{micro:bit} board is interfaced with motors and encoders to control the movement of the \texttt{StackBot}.
 The microcontroller controlled the motor driver using PWM signals to control the speed and direction of the motors.
-The speed of the motors were adjusted by varying the duty cycle of these PWM signals, and the direction was controlled by the way the pins were set.
+The speed of the motors was adjusted by varying the duty cycle of these PWM signals, and the direction was controlled by the way the pins were set.
 The encoders, which were connected to the \texttt{GPIO} pins of the microcontroller, generate pulses as the motors rotate.
 These pulses are counted and timed to calculate motor speed in \texttt{RPM} (revolutions per minute).
 The system uses interrupts to handle pulse events efficiently and timers to calculate the time difference between pulses, ensuring accurate speed measurement in a non-blocking way.
@@ -21,7 +21,7 @@ A \texttt{motor\_init\@()} function is defined to initialize the motor.
 Inside this the required pins are set to the PWM output and the PWM is enabled so that the pins generate PWM output.
 A function \texttt{motor\_on\@()} is also provided so that PWM sequence is generated when we provide the pin, direction and duty cycle.
 Similar to the motor, there are functions in encoders that are defined.
-In the \texttt{encoder\_init\@()}, the pins to which the encoder is connected are set to \texttt{INPUT} and the digital interrupts are enabled so that we get the input from the encoder when the readings in the encoder changes.
+In the \texttt{encoder\_init\@()}, the pins to which the encoder is connected are set to \texttt{INPUT} and the digital interrupts are enabled so that we get the input from the encoder when the readings in the encoder change.
 
 \begin{table}[h]
     \centering
