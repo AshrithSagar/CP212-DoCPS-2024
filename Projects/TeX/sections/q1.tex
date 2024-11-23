@@ -23,4 +23,9 @@ A function \texttt{motor\_on\@()} is also provided so that PWM sequence is gener
 Similar to the motor, there are functions in encoders that are defined.
 In the \texttt{encoder\_init\@()}, the pins to which the encoder is connected are set to \texttt{INPUT} and the digital interrupts are enabled so that we get the input from the encoder when the readings in the encoder changes.
 
-\input{tables/pinConfig.tex}
+\begin{table}[h]
+    \centering
+    \input{tables/pinConfig.tex}
+    \caption{Motor and Encoder Pin Configuration
+    }\label{tab:motorPinConfig}
+\end{table}

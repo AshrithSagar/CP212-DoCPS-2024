@@ -12,7 +12,7 @@ As a team, we had segregated the functions in different files, separately having
 Additionally, we implemented a \texttt{uart\_control} to control the bot over a wired setup using keyboard, which had the provision to use arrow keys for direction, spacebar to stop, and the digits 0--9 to set the speed of the bot over 10 levels ranging from 10\% to 100\%.
 Wherever possible, the definitions from the header file \texttt{nrf52833.h} were used to code the functions, and we rewrote parts of the code where this wasn't done previously.
 
-We also tried to implelement a PID controller to control the speed of the bot based on the encoder values, but we were not able to get the desired results as properly expected.
+We also tried to implelement a PD controller to control the speed of the bot based on the encoder values, which we were able to get to some degree of working.
 Most of times when testing, the bot moved in almost straight lines which was sufficient to work with.
 As an aside, we were able to nicely organise the code in a structured manner, in a self-documented fashion.
 The code was built in a modular and explicit way was using \texttt{struct}s and \texttt{typedef}s to make it easier to understand and debug.
