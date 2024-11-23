@@ -9,9 +9,13 @@ What you implemented (team) and your personal learnings (individual).
 We implemented a motor control and encoder interface for the \texttt{StackBot} to make the bot move in different directions with different speeds, and to build a control for the bot speed using the values from the encoder.
 The motor control interface was implemented using the \texttt{PWM} circuit present in \texttt{nRF52833}, and the encoder interface was implemented using the \texttt{GPIO} pins along with \texttt{GPIOTE} to track the encoder values based on interrupts.
 As a team, we had segregated the functions in different files, separately having \texttt{bot.c}, \texttt{motor.c}, \texttt{encoder.c}, and \texttt{main.c} to make the code modular and easy to debug.
+Additionally, we implemented a \texttt{uart\_control} to control the bot over a wired setup using keyboard, which had the provision to use arrow keys for direction, spacebar to stop, and the digits 0--9 to set the speed of the bot over 10 levels ranging from 10\% to 100\%.
+Wherever possible, the definitions from the header file \texttt{nrf52833.h} were used to code the functions, and we rewrote parts of the code where this wasn't done previously.
+
 We also tried to implelement a PID controller to control the speed of the bot based on the encoder values, but we were not able to get the desired results as properly expected.
 Most of times when testing, the bot moved in almost straight lines which was sufficient to work with.
-As an aside, we were able to nicely organise the code in a structured manner, in a self-documented fashion, making it easier to understand and debug.
+As an aside, we were able to nicely organise the code in a structured manner, in a self-documented fashion.
+The code was built in a modular and explicit way was using \texttt{struct}s and \texttt{typedef}s to make it easier to understand and debug.
 
 \subsubsection*{Personal learnings}
 
