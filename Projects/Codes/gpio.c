@@ -5,28 +5,36 @@
 
 // Macros
 #define IOREG32(addr) (*((volatile uint32_t *)(uintptr_t)(addr)))
-#define GPIO_PORT(pin) ((pin) < 32 ? NRF_P0 : NRF_P1)
-#define GPIO_BIT(pin) ((pin) % 32)
 #define GPIOTE_MODEEVENT (1)
 #define NVIC_ISER IOREG32(0xE000E100)
+
+typedef struct {
+  NRF_GPIO_Type *port;
+  uint32_t bit;
+} PortBit;
+
+PortBit getPortBit(int pin) {
+  PortBit pb;
+  pb.port = pin < 32 ? NRF_P0 : NRF_P1;
+  pb.bit = pin % 32;
+  return pb;
+}
 
 void pinMode(int pin, PinMode direction, PullType pull) {
   /*
    * Set the direction of a GPIO pin
    * pin: pin number
    * direction: INPUT or OUTPUT
-   * pull: PULL_NONE, PULLDOWN, or PULLUP
+   * pull: PULL_NONE, PULL_DOWN, or PULL_UP
    */
 
-  NRF_GPIO_Type *port = GPIO_PORT(pin);
-  uint32_t bit = GPIO_BIT(pin);
-
+  PortBit pb = getPortBit(pin);
   if (direction == INPUT) {
-    port->DIRCLR &= ~(1UL << bit);
-    port->PIN_CNF[bit] = pull;
+    pb.port->DIRCLR &= ~(1UL << pb.bit);
+    pb.port->PIN_CNF[pb.bit] = pull;
   } else if (direction == OUTPUT) {
-    port->DIRSET |= (1UL << bit);
-    port->PIN_CNF[bit] = OUTPUT;
+    pb.port->DIRSET |= (1UL << pb.bit);
+    pb.port->PIN_CNF[pb.bit] = OUTPUT;
   }
 }
 
@@ -37,20 +45,16 @@ void digitalWrite(int pin, PinState value) {
    * value: LOW or HIGH
    */
 
-  NRF_GPIO_Type *port = GPIO_PORT(pin);
-  uint32_t bit = GPIO_BIT(pin);
-
+  PortBit pb = getPortBit(pin);
   if (value == LOW)
-    port->OUTCLR &= ~(1UL << bit);
+    pb.port->OUTCLR &= ~(1UL << pb.bit);
   else if (value == HIGH)
-    port->OUTSET |= (1UL << bit);
+    pb.port->OUTSET |= (1UL << pb.bit);
 }
 
 int digitalRead(int pin) {
-  NRF_GPIO_Type *port = GPIO_PORT(pin);
-  uint32_t bit = GPIO_BIT(pin);
-
-  return (port->IN >> bit) & 0x01;
+  PortBit pb = getPortBit(pin);
+  return (pb.port->IN >> pb.bit) & 0x01;
 }
 
 void digitalInterruptEnable(uint32_t pin, InterruptEdge edge, int event) {
