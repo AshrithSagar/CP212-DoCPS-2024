@@ -78,6 +78,6 @@ void displayRefresh(void) {
   digitalWrite(display.rowPins[display.currentRow], HIGH);
 }
 
-void SysTick_IRQnHandler(void) {
+void SysTick_Handler(void) {
   displayRefresh(); // Called periodically
 }
