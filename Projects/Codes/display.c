@@ -7,9 +7,18 @@
 
 #define CLOCK_CYCLES_PER_MS 64000
 
-// LED matrix pins
-const int LED_ROW_PINS[N] = {21, 22, 15, 24, 19};
-const int LED_COL_PINS[N] = {28, 11, 31, 37, 30};
+typedef struct {
+  int rowPins[N];
+  int colPins[N];
+  int frameBuffer[N][N];
+  int currentRow;
+} Display;
+
+Display display = {
+    .rowPins = {21, 22, 15, 24, 19},
+    .colPins = {28, 11, 31, 37, 30},
+    .currentRow = 0,
+};
 
 void displayInit(void) {
   /*
@@ -18,22 +27,18 @@ void displayInit(void) {
    * Set the column pins as OUTPUT and HIGH
    */
 
-  int i;
-  for (i = 0; i < N; i++) {
-    digitalWrite(LED_ROW_PINS[i], LOW);
-    pinMode(LED_ROW_PINS[i], OUTPUT, PULL_NONE);
+  for (int i = 0; i < N; i++) {
+    digitalWrite(display.rowPins[i], LOW);
+    pinMode(display.rowPins[i], OUTPUT, PULL_NONE);
 
-    digitalWrite(LED_COL_PINS[i], HIGH);
-    pinMode(LED_COL_PINS[i], OUTPUT, PULL_NONE);
+    digitalWrite(display.colPins[i], HIGH);
+    pinMode(display.colPins[i], OUTPUT, PULL_NONE);
   }
 
   timerInterruptEnable(3);
   // 3 ms * 5 rows => 15 ms/frame => ~66.66 fps
-
-  return;
 }
 
-int frameBuffer[N][N];
 void displayImage(int image[N][N]) {
   /*
    * Wrapper to display an image on the LED matrix
@@ -42,15 +47,13 @@ void displayImage(int image[N][N]) {
    * call display refresh by timer interrupts
    */
 
-  int r, c;
-  for (r = 0; r < N; r++) {
-    for (c = 0; c < N; c++) {
-      frameBuffer[r][c] = image[r][c];
+  for (int r = 0; r < N; r++) {
+    for (int c = 0; c < N; c++) {
+      display.frameBuffer[r][c] = image[r][c];
     }
   }
 }
 
-int row;
 void displayRefresh(void) {
   /*
    * Display the image from the frame buffer
@@ -58,24 +61,23 @@ void displayRefresh(void) {
    */
 
   // Turn off the previous row
-  digitalWrite(LED_ROW_PINS[row], LOW);
+  digitalWrite(display.rowPins[display.currentRow], LOW);
 
-  row = (row + 1) % N; // Update the row
+  // Update the current row
+  display.currentRow = (display.currentRow + 1) % N;
+
+  // Turn ON/OFF the columns accordingly
+  for (int c = 0; c < N; c++) {
+    if (display.frameBuffer[display.currentRow][c] == 1)
+      digitalWrite(display.colPins[c], LOW);
+    else
+      digitalWrite(display.colPins[c], HIGH);
+  }
 
   // Turn ON the updated row
-  digitalWrite(LED_ROW_PINS[row], HIGH);
-
-  int c;
-  // Turn ON/OFF the columns accordingly
-  for (c = 0; c < N; c++)
-    if (frameBuffer[row][c] == 1)
-      digitalWrite(LED_COL_PINS[c], LOW);
-    else if (frameBuffer[row][c] == 0)
-      digitalWrite(LED_COL_PINS[c], HIGH);
-
-  return;
+  digitalWrite(display.rowPins[display.currentRow], HIGH);
 }
 
-void SysTick_Handler(void) {
+void SysTick_IRQnHandler(void) {
   displayRefresh(); // Called periodically
 }
