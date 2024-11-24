@@ -2,16 +2,25 @@
 #include "button.h"
 #include "gpio.h"
 
-#define BTN_A 14
-#define BTN_B 23
+typedef struct {
+  int pin;
+  PinState state;
+} Button;
 
-#define BUTTON_PRESSED(button) (digitalRead(button) == LOW)
+#define BTN_A_PIN 14
+#define BTN_B_PIN 23
+
+Button btnA = {BTN_A_PIN, HIGH};
+Button btnB = {BTN_B_PIN, HIGH};
+
+#define BUTTON_PRESSED(button) (digitalRead(button.pin) == LOW)
 
 void buttonInit(void) {
   /* Initialize the button pins as INPUT */
+  pinMode(btnA.pin, INPUT, PULL_NONE);
+  pinMode(btnB.pin, INPUT, PULL_NONE);
+}
 
-  pinMode(BTN_A, INPUT, PULL_NONE);
-  pinMode(BTN_B, INPUT, PULL_NONE);
-
-  return;
+void updateButtonState(Button *button) {
+  button->state = digitalRead(button->pin);
 }
