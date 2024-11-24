@@ -3,33 +3,13 @@
  */
 #include "display.h"
 #include "gpio.h"
+#include "timer.h"
 
 #define CLOCK_CYCLES_PER_MS 64000
 
-typedef struct {
-  int row_pins[N];
-  int col_pins[N];
-} LEDMatrix;
-
-LEDMatrix matrix = {
-    .row_pins = {21, 22, 15, 24, 19},
-    .col_pins = {28, 11, 31, 37, 30},
-};
-
-void naiveDelay(int ms) {
-  /*
-   * Delay function using a busy loop
-   * ms: delay in milliseconds
-   * Note: Inefficient method. May block CPU cycles.
-   */
-
-  int clocks = ms * CLOCK_CYCLES_PER_MS;
-  // 64000 clock cycles in 1ms. 1 clock cycle is 1/64000 ms.
-
-  while (clocks > 0) {
-    clocks -= 10;
-  }
-}
+// LED matrix pins
+const int LED_ROW_PINS[N] = {21, 22, 15, 24, 19};
+const int LED_COL_PINS[N] = {28, 11, 31, 37, 30};
 
 void displayInit(void) {
   /*
@@ -38,41 +18,64 @@ void displayInit(void) {
    * Set the column pins as OUTPUT and HIGH
    */
 
-  for (int i = 0; i < N; i++) {
-    digitalWrite(matrix.row_pins[i], LOW);
-    pinMode(matrix.row_pins[i], OUTPUT, PULL_NONE);
+  int i;
+  for (i = 0; i < N; i++) {
+    digitalWrite(LED_ROW_PINS[i], LOW);
+    pinMode(LED_ROW_PINS[i], OUTPUT, PULL_NONE);
 
-    digitalWrite(matrix.col_pins[i], HIGH);
-    pinMode(matrix.col_pins[i], OUTPUT, PULL_NONE);
+    digitalWrite(LED_COL_PINS[i], HIGH);
+    pinMode(LED_COL_PINS[i], OUTPUT, PULL_NONE);
+  }
+
+  timerInterruptEnable(3);
+  // 3 ms * 5 rows => 15 ms/frame => ~66.66 fps
+
+  return;
+}
+
+int frameBuffer[N][N];
+void displayImage(int image[N][N]) {
+  /*
+   * Wrapper to display an image on the LED matrix
+   * image: 2D array of 1s (LED ON) and 0s (LED OFF)
+   * Copy to a frame buffer and periodically
+   * call display refresh by timer interrupts
+   */
+
+  int r, c;
+  for (r = 0; r < N; r++) {
+    for (c = 0; c < N; c++) {
+      frameBuffer[r][c] = image[r][c];
+    }
   }
 }
 
-void displayImage(const char image[N][N]) {
+int row;
+void displayRefresh(void) {
   /*
-   * Display an image on the LED matrix
-   * image: 2D array of 1s (LED ON) and 0s (LED OFF)
-   * The image is displayed row by row.
+   * Display the image from the frame buffer
+   * The image is displayed row by row
    */
 
-  for (int r = 0; r < N; r++) {
-    // Turn ON the row
-    digitalWrite(matrix.row_pins[r], HIGH);
+  // Turn off the previous row
+  digitalWrite(LED_ROW_PINS[row], LOW);
 
-    // Selectively turn ON the columns
-    for (int c = 0; c < N; c++) {
-      if (image[r][c] == 1)
-        digitalWrite(matrix.col_pins[c], LOW);
-    }
+  row = (row + 1) % N; // Update the row
 
-    naiveDelay(3);
-    // 3 ms * 5 rows => 15 ms/frame => ~66.66 fps
+  // Turn ON the updated row
+  digitalWrite(LED_ROW_PINS[row], HIGH);
 
-    // Turn OFF all the columns
-    for (int c = 0; c < N; c++) {
-      digitalWrite(matrix.col_pins[c], HIGH);
-    }
+  int c;
+  // Turn ON/OFF the columns accordingly
+  for (c = 0; c < N; c++)
+    if (frameBuffer[row][c] == 1)
+      digitalWrite(LED_COL_PINS[c], LOW);
+    else if (frameBuffer[row][c] == 0)
+      digitalWrite(LED_COL_PINS[c], HIGH);
 
-    // Turn OFF the row
-    digitalWrite(matrix.row_pins[r], LOW);
-  }
+  return;
+}
+
+void SysTick_Handler(void) {
+  displayRefresh(); // Called periodically
 }
