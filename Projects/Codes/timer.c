@@ -10,7 +10,8 @@
 #define SYST_RVR IOREG(0xE000E014)
 #define SYST_CVR IOREG(0xE000E018)
 
-#define CLOCK 64000000UL // 64 MHz clock
+// 64 MHz clock
+#define __SYSTEM_CLOCK_64M (64000000UL)
 
 void naiveDelay(int ms) {
   /*
@@ -19,7 +20,7 @@ void naiveDelay(int ms) {
    * Note: Inefficient method. May block CPU cycles.
    */
 
-  int clocks = ms * (CLOCK / 1000);
+  int clocks = ms * (__SYSTEM_CLOCK_64M / 1000);
   // 64000 clock cycles in 1ms. 1 clock cycle is 1/64000 ms.
 
   while (clocks > 0) {
@@ -39,7 +40,7 @@ void timerDelay(int ms) {
   while (ms > 0) {
     ms--;
 
-    SYST_RVR = (CLOCK / 1000);
+    SYST_RVR = (__SYSTEM_CLOCK_64M / 1000);
     SYST_CVR = 0; // Any write operation to CVR clears it
 
     SYST_CSR = 5;
@@ -64,10 +65,10 @@ void timerInterruptEnable(int ms) {
    * Limitation of 250ms because of the timer overflow in hardware
    */
 
-  SYST_RVR = ms * (CLOCK / 1000);
+  SYST_RVR = ms * (__SYSTEM_CLOCK_64M / 1000);
   /* SYST_RVR:
    * Technically, it should be
-   * SYST_RVR = ms * (CLOCK / 1000) - 1;
+   * SYST_RVR = ms * (__SYSTEM_CLOCK_64M / 1000) - 1;
    */
 
   SYST_CVR = 0;
