@@ -1,19 +1,10 @@
 /* Push buttons driver */
 #include "button.h"
 #include "gpio.h"
+#include <stdbool.h>
 
-typedef struct {
-  int pin;
-  PinState state;
-} Button;
-
-#define BTN_A_PIN 14
-#define BTN_B_PIN 23
-
-Button btnA = {BTN_A_PIN, HIGH};
-Button btnB = {BTN_B_PIN, HIGH};
-
-#define BUTTON_PRESSED(button) (digitalRead(button.pin) == LOW)
+Button btnA = {14, HIGH};
+Button btnB = {23, HIGH};
 
 void buttonInit(void) {
   /* Initialize the button pins as INPUT */
@@ -21,6 +12,7 @@ void buttonInit(void) {
   pinMode(btnB.pin, INPUT, PULL_NONE);
 }
 
-void updateButtonState(Button *button) {
-  button->state = digitalRead(button->pin);
+bool isButtonPressed(const Button *button) {
+  /* Read the button state and return true if pressed */
+  return digitalRead(button->pin) == LOW;
 }
