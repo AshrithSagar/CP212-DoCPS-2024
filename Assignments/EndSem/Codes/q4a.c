@@ -22,6 +22,7 @@ void loop() {
   int brightnessLevel = 5;
 
   // Calculate the ON time and OFF time based on brightness level
+  // Using percentage values
   int onTime = (brightnessLevel * 100) / 10;
   int offTime = 100 - onTime;
 
