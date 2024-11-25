@@ -1,7 +1,10 @@
 CIRCLE_AREA:
-; Compute the area of a circle with radius r, using the formula A = pi * r^2, where pi is approximated as 22/7
+; Compute the area of a circle with radius r
+; Using the formula A = pi * r^2
+; pi is approximated as 22/7
 
-; Since the calling function already saves registers R0 and R1, here we only need to save the other registers
+; Since the calling function already saves registers R0 and R1
+; Here we only need to save the other registers
 
 ; Save the registers into the stack frame
 PUSH R2, R3, R5, R6, R7
