@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 // From BSP
 #define INPUT 0
 #define OUTPUT 1
@@ -16,6 +18,34 @@ void digitalWrite(int pin, int value);
 #define SYST_CSR IOREG(0xE000E010)
 #define SYST_RVR IOREG(0xE000E014)
 #define SYST_CVR IOREG(0xE000E018)
+
+volatile int ledState = LOW;
+// LED state (LOW or HIGH)
+volatile int timeRemaining = 0;
+// Time remaining for the current state (ON/OFF)
+
+// Brightness level
+volatile int brightnessLevel = 5;
+
+// SysTick Interrupt Service Routine (ISR)
+void SysTick_Handler(void) {
+  if (timeRemaining > 0) {
+    timeRemaining--;
+  } else {
+    // Toggle LED state
+    ledState = !ledState;
+    digitalWrite(LED_PIN, ledState);
+
+    // Set timeRemaining based on the new state
+    if (ledState == HIGH) {
+      timeRemaining = (brightnessLevel * 100) / 10;
+      // ON time
+    } else {
+      timeRemaining = 100 - (brightnessLevel * 100) / 10;
+      // OFF time
+    }
+  }
+}
 
 void timerInterruptEnable(int ms) {
   /* Enable timer interrupts
@@ -45,14 +75,20 @@ void timerInterruptEnable(int ms) {
 };
 
 int main() {
-  // Set the brightness level to a value between 0 and 10
-  int brightnessLevel = 5;
-
-  // Calculate the ON time and OFF time based on brightness level
-  // Using percentage values
-  int onTime = (brightnessLevel * 100) / 10;
-  int offTime = 100 - onTime;
-
   // Set the LED pin as output
   pinMode(LED_PIN, OUTPUT);
+
+  // Initialize timer with 1ms resolution
+  timerInterruptEnable(1);
+
+  // Calculate initial ON time and
+  // OFF time based on brightness level
+  timeRemaining = (brightnessLevel * 100) / 10;
+  // Initial ON time
+
+  // The SysTick_Handler does all the work now
+  while (1) {
+  }
+
+  return 0;
 }
