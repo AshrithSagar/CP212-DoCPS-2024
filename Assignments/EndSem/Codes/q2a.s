@@ -26,3 +26,5 @@ MUL R0, R2
 
 ; Restore the registers from the stack frame
 POP R2, R3, R5, R6, R7
+
+// RET
