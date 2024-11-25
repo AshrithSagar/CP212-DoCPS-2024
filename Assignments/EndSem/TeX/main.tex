@@ -1,0 +1,44 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{latexsym, amsfonts, amssymb, amsthm, amsmath}
+\usepackage{enumitem, geometry, graphicx, fancybox, hyperref, footmisc}
+\usepackage{booktabs, multirow}
+\usepackage[inkscapelatex=false]{svg}
+\usepackage{listings, xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=,
+  urlcolor=,
+}
+\geometry{
+  left=1in,
+  right=1in,
+  top=1in,
+  bottom=1in
+}
+
+\begin{document}
+
+\begin{center}
+  \doublebox{
+    \begin{minipage}{0.95\textwidth}
+      \centering
+      \textbf{Course:} CP 212: Design of Cyber-Physical Systems\\
+      \textbf{Test:} End Semester examination\\
+      \textbf{Student Name:} Ashrith Sagar Yedlapalli\\
+      \textbf{Due Date:} \(25^{\text{th}}\) November 2024
+    \end{minipage}
+  }
+\end{center}
+
+\renewcommand{\baselinestretch}{1.5}
+\newcommand{\hex}[1]{\texttt{#1}}
+\renewcommand{\lstlistingname}{}
+\input{sections/q1.tex}
+\input{sections/q2.tex}
+\input{sections/q3.tex}
+\input{sections/q4.tex}
+
+\end{document}
