@@ -4,74 +4,78 @@
 
 \begin{enumerate}
 
-    \item Opening docstring comment has no corresponding closing tag
+      \item Opening docstring comment has no corresponding closing tag
 
-          \textbf{Stage at which they show up:}
-          Not shown
+            \textbf{Stage at which they show up:}
+            Not shown
 
-          \textbf{Fix:}
-          Add \texttt{*/} at the end of the comment.
-          Multi-line comments should be enclosed within \texttt{/* */}.
-          This is a semantic error and will not show up during compilation.
+            \textbf{Fix:}
+            Add \texttt{*/} at the end of the comment.
+            Multi-line comments should be enclosed within \texttt{/* */}.
+            This is a semantic error and will not show up during compilation.
 
-    \item Undefined type of array \texttt{c}
+      \item Undefined type of array \texttt{c}
 
-          \textbf{Stage at which they show up:}
-          Compilation
+            \textbf{Stage at which they show up:}
+            Compilation
 
-          \textbf{Fix:}
-          Add \texttt{int} before the array \texttt{c}
+            \textbf{Fix:}
+            Add \texttt{int} before the array \texttt{c}
 
-    \item Invalid values in array \texttt{c}
+      \item Invalid values in array \texttt{c}
 
-          \textbf{Stage at which they show up:}
-          Compilation
+            \textbf{Stage at which they show up:}
+            Compilation
 
-          \textbf{Fix:}
-          9ABC, DEF0 are not valid hexadecimal numbers and should be prefixed with \texttt{0x}.
+            \textbf{Fix:}
+            9ABC, DEF0 are not valid hexadecimal numbers and should be prefixed with \texttt{0x}.
 
-          Suggested fix:
-          \begin{lstlisting}[language=C, frame=single]
+            Suggested fix:
+            \begin{lstlisting}[language=C, frame=single]
 const int c[4] = {1234, 5678, 0x9ABC, 0xDEF0};
             \end{lstlisting}
 
-    \item Undefined loop variable \texttt{i}
+      \item Undefined loop variable \texttt{i}
 
-          \textbf{Stage at which they show up:}
-          Compilation
+            \textbf{Stage at which they show up:}
+            Compilation
 
-          \textbf{Fix:}
-          Add \texttt{int} before the loop variable \texttt{i}
+            \textbf{Fix:}
+            Add \texttt{int} before the loop variable \texttt{i}
 
-    \item Incorrect loop bounds
+      \item Incorrect loop bounds
 
-          \textbf{Stage at which they show up:}
-          Compilation
+            \textbf{Stage at which they show up:}
+            Compilation
 
-          \textbf{Fix:}
-          The array \texttt{c} has only 4 elements, indexed from 0 to 3.
-          The loop should run from 0 to 3, and not 0 to 4, as the latter will cause an out-of-bounds error.
+            \textbf{Fix:}
+            The array \texttt{c} has only 4 elements, indexed from 0 to 3.
+            The loop should run from 0 to 3, and not 0 to 4, as the latter will cause an out-of-bounds error.
 
-          Suggested fix:
-          \begin{lstlisting}[language=C, frame=single]
+            Suggested fix:
+            \begin{lstlisting}[language=C, frame=single]
 for (int i = 0; i < N; i++)
             \end{lstlisting}
 
-    \item Undefined \texttt{printff}
+      \item Undefined \texttt{printff}
 
-          \textbf{Stage at which they show up:}
-          Compilation, if \texttt{TEST} was defined previously, else will not show up
+            \textbf{Stage at which they show up:}
+            Compilation, if \texttt{TEST} was defined previously, else will not show up
 
-          \textbf{Fix:}
-          Replace \texttt{printff} with \texttt{printf}
+            \textbf{Fix:}
+            Replace \texttt{printff} with \texttt{printf}
 
-    \item Incorrect ordering in \texttt{printf} format string
+      \item Incorrect ordering in \texttt{printf} format string
 
-          \textbf{Stage at which they show up:}
-          Not shown up
+            \textbf{Stage at which they show up:}
+            Not shown up
 
-          \textbf{Fix:}
-          Should interchange the order of \texttt{x} and \texttt{y} in the format string.
-          This is a logical error and will not throw an error during compilation.
+            \textbf{Fix:}
+            Should interchange the order of \texttt{x} and \texttt{y} in the format string.
+            This is a logical error and will not throw an error during compilation.
 
 \end{enumerate}
+
+\subsection*{Suggested fixes}
+
+\lstinputlisting[language={C}, frame=single, caption={Code with suggestions incorporated}, linewidth=\linewidth]{../Codes/q3-fix.c}
