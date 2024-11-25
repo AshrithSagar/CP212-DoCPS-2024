@@ -33,6 +33,7 @@ int main() {
     // Set some brightness level between 0-10
     setBrightnessLevel(5);
 
-    // Additional logic can be implemented here without affecting PWM
+    // Additional logic can be implemented here
+    // without affecting PWM
   }
 }

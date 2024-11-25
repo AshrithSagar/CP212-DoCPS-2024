@@ -1,12 +1,22 @@
 \section*{Question 4: \small{IO Programming and System Design}}
 
+\subsection*{LED control using Polling}
+
 \lstinputlisting[language={C}, frame=single, caption={Polling}, linewidth=\linewidth]{../Codes/q4a.c}
 
 \clearpage
+\subsection*{LED control using SysTick Interrupts}
+
 \lstinputlisting[language={C}, frame=single, caption={Interrupts}, linewidth=\linewidth]{../Codes/q4b.c}
 
 \clearpage
-\lstinputlisting[language={C}, frame=single, caption={Enhancements}, linewidth=\linewidth]{../Codes/q4c-1.c}
+\subsection*{Enhancements using peripherals}
+
+\subsubsection*{Using PWM peripheral}
+
+\lstinputlisting[language={C}, frame=single, caption={LED control using PWM peripheral}, linewidth=\linewidth]{../Codes/q4c-2.c}
 
 \clearpage
-\lstinputlisting[language={C}, frame=single, caption={Enhancements}, linewidth=\linewidth]{../Codes/q4c-2.c}
+\subsubsection*{Using additional timers provided by vendors}
+
+\lstinputlisting[language={C}, frame=single, caption={LED control using additional timers instead of SysTick}, linewidth=\linewidth]{../Codes/q4c-1.c}
