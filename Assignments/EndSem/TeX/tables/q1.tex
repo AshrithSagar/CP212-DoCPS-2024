@@ -1,0 +1,14 @@
+\begin{tabular}{clc}
+    \toprule
+    \textbf{Label} & \textbf{Description}            & \textbf{Location}                                      \\ \midrule
+    (A)            & main function instruction codes & In ROM                                                 \\ \midrule
+    (B)            & UART receive data register      & In MCU IO Ports                                        \\ \midrule
+    (C)            & SysTick current value register  & In ARM Cortex Core peripherals                         \\ \midrule
+    (D)            & SysTick timer handler           & To be pointed out in the Vector table, which is in ROM \\ \midrule
+    (E)            & Stack pointer (SP)              & Register R13, so in Register bank                      \\ \midrule
+    (F)            & Reset value of SP               & First entry in vector table, in ROM                    \\ \midrule
+    (G)            & Stack                           & In RAM                                                 \\ \midrule
+    (H)            & Arithmetic logic unit (ALU)     & In Execute unit, in processor                          \\ \midrule
+    (I)            & NZCV flags                      & In APSR, register R15, in Register bank                \\ \midrule
+    (J)            & Breakpoint unit                 & In Debug unit                                          \\ \bottomrule
+\end{tabular}
