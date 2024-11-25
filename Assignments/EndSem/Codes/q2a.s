@@ -6,11 +6,11 @@ CIRCLE_AREA:
 ; Since the calling function already saves registers R0 and R1
 ; Here we only need to save the other registers
 
-; Save the registers into the stack frame
+; Save all the other registers into the stack frame
 PUSH R2, R3, R5, R6, R7
 
 ; The radius is available in R0
-; and R1 is free here but we will avoid touching it
+; R1 is free here to use, but we will avoid touching it
 
 ; Compute the square of the radius first and store in R0
 MUL R0, R0
