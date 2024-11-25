@@ -4,64 +4,55 @@
 void pinMode(int pin, int mode);
 void digitalWrite(int pin, int value);
 
-#include <stdint.h>
-
 #define LOW 0
 #define HIGH 1
 
 #define LED_PIN 8
 
-// Global variables
-volatile int brightnessLevel = 5; // Brightness level (0-10)
-volatile int onTime = 0;          // ON duration in ms
-volatile int offTime = 0;         // OFF duration in ms
-volatile int ledState = LOW;      // Current state of the LED
-volatile int counter = 0;         // Counter for timing
-extern uint32_t SystemCoreClock;  // Declare SystemCoreClock
+#define CLOCK 64000000UL // 64 MHz clock
 
-// Function prototypes
-void SysTickInit(void);
-void SysTick_Handler(void);
+#define IOREG(addr) (*((volatile long *)(addr)))
 
-void setup() {
-  // Set the LED pin as output
-  pinMode(LED_PIN, OUTPUT);
+#define SYST_CSR IOREG(0xE000E010)
+#define SYST_RVR IOREG(0xE000E014)
+#define SYST_CVR IOREG(0xE000E018)
 
-  // Initialize SysTick timer for interrupts
-  SysTickInit();
-}
+void timerInterruptEnable(int ms) {
+  /* Enable timer interrupts
+   * Limitation of 250ms because of the timer overflow in hardware
+   */
 
-void SysTickInit() {}
+  SYST_RVR = ms * (CLOCK / 1000);
+  /* SYST_RVR:
+   * Technically, it should be
+   * SYST_RVR = ms * (CLOCK / 1000) - 1;
+   */
 
-// SysTick interrupt handler
-void SysTick_Handler(void) {
-  counter++;
+  SYST_CVR = 0;
+  /* SYST_CVR:
+   * Any write operation to CVR clears it
+   */
 
-  // Determine ON/OFF duration based on brightness level
-  onTime = (brightnessLevel * 100) / 10;
-  offTime = 100 - onTime;
-
-  // Toggle LED state based on timing
-  if (ledState == HIGH) {
-    if (counter >= onTime) {      // If the ON time has elapsed
-      digitalWrite(LED_PIN, LOW); // Turn LED OFF
-      ledState = LOW;             // Update the LED state
-      counter = 0;                // Reset the counter
-    }
-  } else {
-    if (counter >= offTime) {      // If the OFF time has elapsed
-      digitalWrite(LED_PIN, HIGH); // Turn LED ON
-      ledState = HIGH;             // Update the LED state
-      counter = 0;                 // Reset the counter
-    }
-  }
-}
+  SYST_CSR = 7;
+  /* SYST_CSR:
+  - Bit-0: ENABLE; Enable/Disable clock;
+    - (1) => Enable clock
+  - Bit-1: TICKINT; Enabling interrupts;
+    - (1) => Enable interrupts
+  - Bit-2: CLKSOURCE; Internal/External clock;
+    - (1) => Use internal clock (the only option in nRF52833)
+  */
+};
 
 int main() {
-  setup();
-  while (1) {
-    /* Main loop can perform other tasks
-     * while SysTick manages LED brightness
-     */
-  }
+  // Set the brightness level to a value between 0 and 10
+  int brightnessLevel = 5;
+
+  // Calculate the ON time and OFF time based on brightness level
+  // Using percentage values
+  int onTime = (brightnessLevel * 100) / 10;
+  int offTime = 100 - onTime;
+
+  // Set the LED pin as output
+  pinMode(LED_PIN, OUTPUT);
 }
