@@ -30,14 +30,48 @@
           \textbf{Fix:}
           9ABC, DEF0 are not valid hexadecimal numbers and should be prefixed with \texttt{0x}.
 
-          Corrected line
+          Suggested fix:
           \begin{lstlisting}[language=C, frame=single]
 const int c[4] = {1234, 5678, 0x9ABC, 0xDEF0};
             \end{lstlisting}
 
-    \item Should be \texttt{printf} instead of \texttt{printff}
+    \item Undefined loop variable \texttt{i}
 
           \textbf{Stage at which they show up:}
           Compilation
+
+          \textbf{Fix:}
+          Add \texttt{int} before the loop variable \texttt{i}
+
+    \item Incorrect loop bounds
+
+          \textbf{Stage at which they show up:}
+          Compilation
+
+          \textbf{Fix:}
+          The array \texttt{c} has only 4 elements, indexed from 0 to 3.
+          The loop should run from 0 to 3, and not 0 to 4, as the latter will cause an out-of-bounds error.
+
+          Suggested fix:
+          \begin{lstlisting}[language=C, frame=single]
+for (int i = 0; i < N; i++)
+            \end{lstlisting}
+
+    \item Undefined \texttt{printff}
+
+          \textbf{Stage at which they show up:}
+          Compilation, if \texttt{TEST} was defined previously, else will not show up
+
+          \textbf{Fix:}
+          Replace \texttt{printff} with \texttt{printf}
+
+    \item Incorrect ordering in \texttt{printf} format string
+
+          \textbf{Stage at which they show up:}
+          Not shown up
+
+          \textbf{Fix:}
+          Should interchange the order of \texttt{x} and \texttt{y} in the format string.
+          This is a logical error and will not throw an error during compilation.
 
 \end{enumerate}
