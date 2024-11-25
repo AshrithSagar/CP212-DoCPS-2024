@@ -2,10 +2,42 @@
 
 \lstinputlisting[language={}, frame=single, caption={Incorrect code}, linewidth=\linewidth]{../Codes/q3.c}
 
-\begin{table}[htbp]
-    \centering
-    \input{tables/q3.tex}
-    \caption{
-        Errors \& Warnings and the stage at which they show up
-    }\label{tab:q3}
-\end{table}
+\begin{enumerate}
+
+    \item Opening docstring comment has no corresponding closing tag
+
+          \textbf{Stage at which they show up:}
+          Not shown
+
+          \textbf{Fix:}
+          Add \texttt{*/} at the end of the comment.
+          Multi-line comments should be enclosed within \texttt{/* */}.
+          This is a semantic error and will not show up during compilation.
+
+    \item Undefined type of array \texttt{c}
+
+          \textbf{Stage at which they show up:}
+          Compilation
+
+          \textbf{Fix:}
+          Add \texttt{int} before the array \texttt{c}
+
+    \item Invalid values in array \texttt{c}
+
+          \textbf{Stage at which they show up:}
+          Compilation
+
+          \textbf{Fix:}
+          9ABC, DEF0 are not valid hexadecimal numbers and should be prefixed with \texttt{0x}.
+
+          Corrected line
+          \begin{lstlisting}[language=C, frame=single]
+const int c[4] = {1234, 5678, 0x9ABC, 0xDEF0};
+            \end{lstlisting}
+
+    \item Should be \texttt{printf} instead of \texttt{printff}
+
+          \textbf{Stage at which they show up:}
+          Compilation
+
+\end{enumerate}
