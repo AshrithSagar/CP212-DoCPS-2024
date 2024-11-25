@@ -74,8 +74,18 @@ for (int i = 0; i < N; i++)
             Should interchange the order of \texttt{x} and \texttt{y} in the format string.
             This is a logical error and will not throw an error during compilation.
 
+      \item Return type mismatch
+
+            \textbf{Stage at which they show up:}
+            Compilation
+
+            \textbf{Fix:}
+            The function \texttt{poly} is defined to return a \texttt{double}.
+            Changing type of \texttt{y}  to \texttt{double} is better.
+
 \end{enumerate}
 
+\clearpage
 \subsection*{Suggested fixes}
 
 \lstinputlisting[language={C}, frame=single, caption={Code with suggestions incorporated}, linewidth=\linewidth]{../Codes/q3-fix.c}
