@@ -73,6 +73,24 @@ for (int i = 0; i < N; i++)
             \textbf{Fix:}
             Include the header file \texttt{math.h} at the beginning of the program.
 
+      \item Performance of \texttt{pow}
+
+            \textbf{Stage at which they show up:}
+            (Warning) Run-time
+
+            \textbf{Fix:}
+            The function \texttt{pow} is computationally expensive.
+            It is better to manually calculate the power of \texttt{x} within the same loop.
+
+            Suggested fix (optional):
+            \begin{lstlisting}[language=C, frame=single]
+double power = 1.0;
+for (int i = 0; i < N; i++) {
+      y += c[i] * power;
+      power *= x;
+}
+            \end{lstlisting}
+
       \item Undefined \texttt{printff}
 
             \textbf{Stage at which they show up:}
@@ -104,7 +122,6 @@ for (int i = 0; i < N; i++)
 
 \end{enumerate}
 
-\clearpage
 \subsection*{Suggested fixes}
 
 \lstinputlisting[language={C}, frame=single, caption={Code with suggestions incorporated}, linewidth=\linewidth]{../Codes/q3-fix.c}
