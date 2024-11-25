@@ -9,15 +9,45 @@ void digitalWrite(int pin, int value);
 
 #define LED_PIN 8
 
-void SysTickDelay(int milliseconds);
+#define CLOCK 64000000UL // 64 MHz clock
 
-void setup() {
-  // Set the LED pin as output
-  pinMode(LED_PIN, OUTPUT);
-}
+#define IOREG(addr) (*((volatile long *)(addr)))
 
-// Function to control LED brightness
-void loop() {
+#define SYST_CSR IOREG(0xE000E010)
+#define SYST_RVR IOREG(0xE000E014)
+#define SYST_CVR IOREG(0xE000E018)
+
+void timerDelay(int ms) {
+  /*
+   * Delay function using the SysTick timer
+   * ms: delay in milliseconds
+   * Uses the internal timer to implement a naive delay
+   */
+
+  while (ms > 0) {
+    ms--;
+
+    SYST_RVR = (CLOCK / 1000);
+    SYST_CVR = 0; // Any write operation to CVR clears it
+
+    SYST_CSR = 5;
+    /* SYST_CSR:
+    - Bit-0: ENABLE; Enable/Disable clock;
+      - (1) => Enable clock
+    - Bit-1: TICKINT; Enabling interrupts;
+      - (0) => No interrupts
+    - Bit-2: CLKSOURCE; Internal/External clock;
+      - (1) => Use internal clock (the only option in nRF52833)
+    */
+
+    while ((SYST_CSR & 0x00010000) == 0)
+      ; // Wait till COUNTFLAG (Bit-16) is set
+
+    SYST_CSR = 0; // Turn OFF
+  }
+};
+
+int main() {
   // Set the brightness level to a value between 0 and 10
   int brightnessLevel = 5;
 
@@ -26,24 +56,20 @@ void loop() {
   int onTime = (brightnessLevel * 100) / 10;
   int offTime = 100 - onTime;
 
-  // If brightness level is 0, keep LED off
-  if (brightnessLevel == 0) {
-    digitalWrite(LED_PIN, LOW);
-    return;
-  }
+  // Set the LED pin as output
+  pinMode(LED_PIN, OUTPUT);
 
-  // Turn the LED ON
-  digitalWrite(LED_PIN, HIGH);
-  SysTickDelay(onTime); // Wait for ON time
-
-  // Turn the LED OFF
-  digitalWrite(LED_PIN, LOW);
-  SysTickDelay(offTime); // Wait for OFF time
-}
-
-int main() {
-  setup();
   while (1) {
-    loop();
+    // Turn ON the LED
+    digitalWrite(LED_PIN, HIGH);
+
+    // Delay for the ON time
+    timerDelay(onTime);
+
+    // Turn OFF the LED
+    digitalWrite(LED_PIN, LOW);
+
+    // Delay for the OFF time
+    timerDelay(offTime);
   }
 }
