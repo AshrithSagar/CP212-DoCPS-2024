@@ -3,8 +3,9 @@
 #include "uart.h"
 
 void rx_callback(const char buf[], unsigned int n) {
-  // Print
-  myputchar(buf[0]);
+  for (int i = 0; i < n; i++) {
+    uart_putc(buf[i]);
+  }
 }
 
 void setup() {
@@ -17,5 +18,6 @@ void loop(void) {
   while (1) {
     c = uart_getc();
     radio_send(&c, 1);
+    myprintf("Sent: %c\n", c);
   }
 }
