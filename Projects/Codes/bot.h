@@ -56,5 +56,6 @@ void bot_init(StackBot *bot);
 void bot_move(StackBot *bot, Direction direction, int speed);
 void bot_stop(StackBot *bot);
 void bot_uart_control(StackBot *bot, int speed);
+void bot_radio_control(StackBot *bot, int speed);
 
 #endif // BOT_H
