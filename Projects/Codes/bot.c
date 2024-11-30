@@ -13,6 +13,7 @@ void bot_init(StackBot *bot) {
   uart_init();
   motor_init(bot);
   encoder_init(bot);
+  button_init(bot);
 
   myprintf("\nBot initialized\n");
 }
@@ -159,9 +160,8 @@ void bot_button_control(StackBot *bot, int speed) {
   bot->speed = speed;
   char input;
 
-  buttonInit();
-  Button btnA = {bot->buttonPins.btnA, HIGH};
-  Button btnB = {bot->buttonPins.btnB, HIGH};
+  const Button *btnA = &((Button){bot->buttonPins.btnA, HIGH});
+  const Button *btnB = &((Button){bot->buttonPins.btnB, HIGH});
 
   while (1) {
     if (isButtonPressed(btnA)) {
