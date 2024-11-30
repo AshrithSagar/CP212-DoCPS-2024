@@ -118,10 +118,10 @@ void radio_rx_callback(const char buf[], unsigned int n) {
 
 void bot_radio_control(StackBot *bot, int speed) {
   bot->speed = speed;
-  char input[3];
+  char input;
 
   const struct {
-    char key[3];
+    char *key;
     Direction direction;
   } KEY_MAP[] = {
       {"w", FORWARD}, // W key
@@ -132,6 +132,16 @@ void bot_radio_control(StackBot *bot, int speed) {
   };
 
   radio_init(radio_rx_callback);
+
+  while (1) {
+    input = uart_getc();
+    for (int i = 0; i < numStates; i++) {
+      if (input == KEY_MAP[i].key[0]) {
+        radio_send(&KEY_MAP[i].key[0], 1);
+        break;
+      }
+    }
+  }
 }
 
 StackBot *configStackBot(MotorPins motorPins, EncoderPins encoderPins) {
