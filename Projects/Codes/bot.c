@@ -164,12 +164,12 @@ void bot_button_control(StackBot *bot, int speed) {
   const Button *btnB = &((Button){bot->buttonPins.btnB, HIGH});
 
   while (1) {
-    if (isButtonPressed(btnA)) {
+    if (isButtonPressed(btnA) && isButtonPressed(btnB)) {
+      bot_stop(bot);
+    } else if (isButtonPressed(btnA)) {
       bot_move(bot, FORWARD, bot->speed);
     } else if (isButtonPressed(btnB)) {
       bot_move(bot, REVERSE, bot->speed);
-    } else {
-      bot_move(bot, STILL, bot->speed);
     }
   }
 }
