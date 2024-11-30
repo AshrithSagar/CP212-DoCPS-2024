@@ -1,7 +1,6 @@
 #include "test.h"
 
 int main() {
-  setupSender();
-  // setupReceiver();
+  setup();
   loop();
 }

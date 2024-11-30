@@ -1,3 +1,2 @@
-void setupReceiver(void);
-void setupSender(void);
+void setup(void);
 void loop(void);
