@@ -1,7 +1,7 @@
 #include "radio.h"
 #include <string.h>
 
-#define GROUP 17
+#define GROUP 25
 #define FREQ 7 /* Frequency 2407 MHz */
 #define RADIO_PACKET 128
 
