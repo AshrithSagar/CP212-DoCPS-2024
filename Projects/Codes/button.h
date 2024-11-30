@@ -9,5 +9,6 @@ typedef struct {
 } Button;
 
 void buttonInit(void);
+bool isButtonPressed(const Button *button);
 
 #endif // BUTTON_H

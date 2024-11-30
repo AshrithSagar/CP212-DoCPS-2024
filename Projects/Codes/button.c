@@ -1,15 +1,13 @@
 /* Push buttons driver */
 #include "button.h"
+#include "bot.h"
 #include "gpio.h"
 #include <stdbool.h>
 
-Button btnA = {14, HIGH};
-Button btnB = {23, HIGH};
-
-void buttonInit(void) {
+void button_init(StackBot *bot) {
   /* Initialize the button pins as INPUT */
-  pinMode(btnA.pin, INPUT, PULL_NONE);
-  pinMode(btnB.pin, INPUT, PULL_NONE);
+  pinMode(bot->buttonPins.btnA, INPUT, PULL_NONE);
+  pinMode(bot->buttonPins.btnB, INPUT, PULL_NONE);
 }
 
 bool isButtonPressed(const Button *button) {

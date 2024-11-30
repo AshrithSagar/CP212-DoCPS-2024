@@ -1,4 +1,5 @@
 #include "bot.h"
+#include "button.h"
 #include "encoder.h"
 #include "motor.h"
 #include "printlib.h"
@@ -154,10 +155,31 @@ void bot_radio_control(StackBot *bot, int speed) {
   }
 }
 
-StackBot *configStackBot(MotorPins motorPins, EncoderPins encoderPins) {
+void bot_button_control(StackBot *bot, int speed) {
+  bot->speed = speed;
+  char input;
+
+  buttonInit();
+  Button btnA = {bot->buttonPins.btnA, HIGH};
+  Button btnB = {bot->buttonPins.btnB, HIGH};
+
+  while (1) {
+    if (isButtonPressed(btnA)) {
+      bot_move(bot, FORWARD, bot->speed);
+    } else if (isButtonPressed(btnB)) {
+      bot_move(bot, REVERSE, bot->speed);
+    } else {
+      bot_move(bot, STILL, bot->speed);
+    }
+  }
+}
+
+StackBot *configStackBot(MotorPins motorPins, EncoderPins encoderPins,
+                         ButtonPins buttonPins) {
   StackBot *bot = (StackBot *)malloc(sizeof(StackBot));
   bot->motorPins = motorPins;
   bot->encoderPins = encoderPins;
+  bot->buttonPins = buttonPins;
   bot->state = STILL;
   bot->init = bot_init;
   bot->move = bot_move;
