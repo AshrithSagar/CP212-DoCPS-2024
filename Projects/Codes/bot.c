@@ -95,6 +95,11 @@ void radio_rx_callback(const char buf[], unsigned int n) {
     return;
   }
   char command = buf[0];
+  if (command >= '0' && command <= '9') {
+    botG->speed = (command == '0') ? 100 : (command - '0') * 10;
+    bot_move(botG, botG->state, botG->speed);
+    return;
+  }
   switch (command) {
   case 'w':
     bot_move(botG, FORWARD, botG->speed);
@@ -135,7 +140,12 @@ void bot_radio_control(StackBot *bot, int speed) {
 
   while (1) {
     input = uart_getc();
-    for (int i = 0; i < numStates; i++) {
+    if (input >= '0' && input <= '9') {
+      bot->speed = (input == '0') ? 100 : (input - '0') * 10;
+      radio_send(&input, 1);
+    }
+
+    for (int i = 0; i < sizeof(KEY_MAP) / sizeof(KEY_MAP[0]); i++) {
       if (input == KEY_MAP[i].key[0]) {
         radio_send(&KEY_MAP[i].key[0], 1);
         break;
