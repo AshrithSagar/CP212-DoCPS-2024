@@ -1,9 +1,74 @@
+/**
+ * @file bot.c
+ * @brief Implementation of the StackBot control functions.
+ *
+ * This file contains the implementation of functions to initialize, control,
+ * and manage the state of a StackBot robot. It includes functions for motor
+ * control, UART communication, and bot configuration.
+ */
+
 #include "bot.h"
 #include "encoder.h"
 #include "motor.h"
 #include "printlib.h"
 #include "uart.h"
 #include <stdlib.h>
+
+/**
+ * @brief Initializes the StackBot.
+ *
+ * This function initializes the UART, motor, and encoder for the StackBot.
+ * It also prints a message indicating that the bot has been initialized.
+ *
+ * @param bot Pointer to the StackBot structure.
+ */
+void bot_init(StackBot *bot);
+
+/**
+ * @brief Stops the StackBot.
+ *
+ * This function sets the bot's state to STILL and turns off the motor.
+ *
+ * @param bot Pointer to the StackBot structure.
+ */
+void bot_stop(StackBot *bot);
+
+/**
+ * @brief Moves the StackBot in a specified direction at a specified speed.
+ *
+ * This function controls the movement of the StackBot based on the given
+ * direction and speed. It updates the bot's state and speed accordingly.
+ *
+ * @param bot Pointer to the StackBot structure.
+ * @param direction The direction to move the bot (FORWARD, REVERSE, LEFT,
+ * RIGHT, STILL).
+ * @param speed The speed at which to move the bot (0-100).
+ */
+void bot_move(StackBot *bot, Direction direction, int speed);
+
+/**
+ * @brief Controls the StackBot using UART input.
+ *
+ * This function allows the StackBot to be controlled via UART input. It
+ * interprets arrow keys for direction and numeric keys for speed.
+ *
+ * @param bot Pointer to the StackBot structure.
+ * @param speed Initial speed of the bot.
+ */
+void bot_uart_control(StackBot *bot, int speed);
+
+/**
+ * @brief Configures and allocates memory for a new StackBot.
+ *
+ * This function allocates memory for a new StackBot structure and initializes
+ * its motor and encoder pins. It also sets the initial state and assigns
+ * function pointers for bot operations.
+ *
+ * @param motorPins Motor pin configuration.
+ * @param encoderPins Encoder pin configuration.
+ * @return Pointer to the newly configured StackBot structure.
+ */
+StackBot *configStackBot(MotorPins motorPins, EncoderPins encoderPins);
 
 void bot_init(StackBot *bot) {
   uart_init();
