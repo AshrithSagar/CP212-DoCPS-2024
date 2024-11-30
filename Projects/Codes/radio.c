@@ -102,7 +102,7 @@ void radio_send(void *buf, unsigned int n) {
   RADIO_RXEN = 1;
 }
 
-void bspRADIO_IRQHandler(void) {
+void RADIO_IRQHandler(void) {
 
   static char buf[RADIO_PACKET]; // static, not on stack
   int n;
